@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public class Stack {
     private JPanel mainPanel;
-    private JList list1;
+    private JList stackValues;
     private JButton buttonPop;
     private JButton buttonPush;
     private JTextField textFieldPush;
