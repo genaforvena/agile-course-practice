@@ -352,5 +352,9 @@ include "code/zhbanova-anna/Infrastructure"
 project(":code/zhbanova-anna/Infrastructure").name = "zhbanova-anna-Infrastructure"
 
 // Zykov Ilya
-include "code/zykov-ilya"
-project(":code/zykov-ilya").name = "zykov-ilya-Model"
+include "code/zykov-ilya/Model"
+project(":code/zykov-ilya/Model").name = "zykov-ilya-Model"
+include "code/zykov-ilya/ViewModel"
+project(":code/zykov-ilya/ViewModel").name = "zykov-ilya-ViewModel"
+include "code/zykov-ilya/View"
+project(":code/zykov-ilya/View").name = "zykov-ilya-View"
