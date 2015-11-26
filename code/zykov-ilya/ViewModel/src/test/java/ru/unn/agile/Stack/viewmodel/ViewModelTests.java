@@ -20,4 +20,16 @@ public class ViewModelTests {
         assertEquals("", viewModel.getTextFieldPush());
         assertEquals("", viewModel.getResult());
     }
+
+    @Test
+    public void byDefault_ConvertButtonIsDisabled() {
+        assertFalse(viewModel.isPushButtonEnabled());
+    }
+
+    @Test
+    public void whenEnterPushValue_ConvertButtonIsEnabled() {
+        viewModel.setTextFieldPush("1");
+
+        assertTrue(viewModel.isPushButtonEnabled());
+    }
 }
