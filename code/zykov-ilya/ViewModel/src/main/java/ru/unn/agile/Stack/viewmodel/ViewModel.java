@@ -1,14 +1,19 @@
 package ru.unn.agile.Stack.viewmodel;
 
+import ru.unn.agile.Stack.Model.Stack;
+
+import java.util.ArrayList;
+
 public class ViewModel {
     private String textFieldPush;
-    private String result;
+    private Stack stack;
 
     private boolean pushButtonEnabled = false;
+    private boolean popButtonEnabled = false;
 
     public  ViewModel() {
         textFieldPush = "";
-        result = "";
+        stack = new Stack();
     }
 
     public String getTextFieldPush() {
@@ -16,17 +21,37 @@ public class ViewModel {
     }
 
     public void setTextFieldPush(String textFieldPush) {
+        if (textFieldPush.equals("")) {
+            pushButtonEnabled = false;
+            return;
+        }
+
         this.textFieldPush = textFieldPush;
         pushButtonEnabled = true;
     }
 
-    public String getResult() {
-        return result;
+    public ArrayList getStackAsList() {
+        return stack.toArrayList();
     }
 
     public boolean isPushButtonEnabled() {
         return pushButtonEnabled;
     }
 
+    public boolean isPopButtonEnabled() {
+        return popButtonEnabled;
+    }
 
+    public void pressPushButton() {
+        stack.push(textFieldPush);
+        popButtonEnabled = true;
+    }
+
+    public void pressPopButton() {
+        stack.pop();
+
+        if (stack.peak() == null) {
+            popButtonEnabled = false;
+        }
+    }
 }

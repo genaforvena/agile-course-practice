@@ -5,8 +5,6 @@ import ru.unn.agile.Stack.viewmodel.ViewModel;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.event.UndoableEditEvent;
-import javax.swing.event.UndoableEditListener;
 
 public class Stack {
     private ViewModel viewModel;
@@ -20,12 +18,16 @@ public class Stack {
     private Stack(final ViewModel viewModel) {
         this.viewModel = viewModel;
 
-        bind();
-
         buttonPush.addActionListener(e -> {
+            backBind();
+            viewModel.pressPushButton();
+            bind();
         });
 
         buttonPop.addActionListener(e -> {
+            backBind();
+            viewModel.pressPopButton();
+            bind();
         });
 
         textFieldPush.getDocument().addDocumentListener(new DocumentListener() {
@@ -47,6 +49,9 @@ public class Stack {
                 bind();
             }
         });
+
+
+        bind();
     }
 
     public static void main(String[] args) {
@@ -59,6 +64,8 @@ public class Stack {
 
     private void bind() {
         buttonPush.setEnabled(viewModel.isPushButtonEnabled());
+        buttonPop.setEnabled(viewModel.isPopButtonEnabled());
+        stackValues.setListData(viewModel.getStackAsList().toArray());
     }
 
     private void backBind() {
