@@ -6,8 +6,8 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-public class Stack {
-    private ViewModel viewModel;
+public final class Stack {
+    private final ViewModel viewModel;
 
     private JPanel mainPanel;
     private JList stackValues;
@@ -32,19 +32,19 @@ public class Stack {
 
         textFieldPush.getDocument().addDocumentListener(new DocumentListener() {
             @Override
-            public void insertUpdate(DocumentEvent documentEvent) {
+            public void insertUpdate(final DocumentEvent documentEvent) {
                 backBind();
                 bind();
             }
 
             @Override
-            public void removeUpdate(DocumentEvent documentEvent) {
+            public void removeUpdate(final DocumentEvent documentEvent) {
                 backBind();
                 bind();
             }
 
             @Override
-            public void changedUpdate(DocumentEvent documentEvent) {
+            public void changedUpdate(final DocumentEvent documentEvent) {
                 backBind();
                 bind();
             }
@@ -54,7 +54,7 @@ public class Stack {
         bind();
     }
 
-    public static void main(String[] args) {
+    public static void main(final String[] args) {
         JFrame frame = new JFrame("Stack");
         frame.setContentPane(new Stack(new ViewModel()).mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -62,6 +62,7 @@ public class Stack {
         frame.setVisible(true);
     }
 
+    @SuppressWarnings("unchecked")
     private void bind() {
         buttonPush.setEnabled(viewModel.isPushButtonEnabled());
         buttonPop.setEnabled(viewModel.isPopButtonEnabled());

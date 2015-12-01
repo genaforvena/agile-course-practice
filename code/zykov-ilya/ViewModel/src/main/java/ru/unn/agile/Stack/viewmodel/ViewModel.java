@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class ViewModel {
     private String textFieldPush;
-    private Stack stack;
+    private final Stack stack;
 
     private boolean pushButtonEnabled = false;
     private boolean popButtonEnabled = false;
@@ -20,8 +20,8 @@ public class ViewModel {
         return textFieldPush;
     }
 
-    public void setTextFieldPush(String textFieldPush) {
-        if (textFieldPush.equals("")) {
+    public void setTextFieldPush(final String textFieldPush) {
+        if ("".equals(textFieldPush)) {
             pushButtonEnabled = false;
             return;
         }

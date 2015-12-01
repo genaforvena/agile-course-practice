@@ -12,10 +12,14 @@ public class ViewModelTests {
     private ViewModel viewModel;
 
     @Before
-    public void setUp() { viewModel = new ViewModel(); }
+    public void setUp() {
+        viewModel = new ViewModel();
+    }
 
     @After
-    public void tearDown() { viewModel = null; }
+    public void tearDown() {
+        viewModel = null;
+    }
 
     @Test
     public void canSetDefaultValues() {
@@ -24,19 +28,19 @@ public class ViewModelTests {
     }
 
     @Test
-    public void byDefault_ConvertButtonIsDisabled() {
+    public void byDefaultConvertButtonIsDisabled() {
         assertFalse(viewModel.isPushButtonEnabled());
     }
 
     @Test
-    public void whenEnterPushValue_ConvertPushButtonIsEnabled() {
+    public void whenEnterPushValueConvertPushButtonIsEnabled() {
         viewModel.setTextFieldPush("1");
 
         assertTrue(viewModel.isPushButtonEnabled());
     }
 
     @Test
-    public void whenClearArabicNumber_ConvertPushButtonIsDisabled() {
+    public void whenClearArabicNumberConvertPushButtonIsDisabled() {
         viewModel.setTextFieldPush("1");
         viewModel.setTextFieldPush("");
 
@@ -44,7 +48,7 @@ public class ViewModelTests {
     }
 
     @Test
-    public void whenPush1_DisplayStackWith1() {
+    public void whenPush1DisplayStackWith1() {
         viewModel.setTextFieldPush("1");
         viewModel.pressPushButton();
 
@@ -52,7 +56,7 @@ public class ViewModelTests {
     }
 
     @Test
-    public void whenPopFromStack1_DisplayStackWithEmpty() {
+    public void whenPopFromStack1DisplayStackWithEmpty() {
         viewModel.setTextFieldPush("1");
         viewModel.pressPushButton();
         viewModel.pressPopButton();
@@ -61,12 +65,12 @@ public class ViewModelTests {
     }
 
     @Test
-    public void byDefault_ConvertPopButtonIsDisabled() {
+    public void byDefaultConvertPopButtonIsDisabled() {
         assertFalse(viewModel.isPopButtonEnabled());
     }
 
     @Test
-    public void whenStackIsNotEmpty_ConvertPopButtonEnabled() {
+    public void whenStackIsNotEmptyConvertPopButtonEnabled() {
         viewModel.setTextFieldPush("10");
         viewModel.pressPushButton();
 
@@ -74,7 +78,7 @@ public class ViewModelTests {
     }
 
     @Test
-    public void whenStackIsEmpty_ConvertPopButtonDisabled() {
+    public void whenStackIsEmptyConvertPopButtonDisabled() {
         viewModel.setTextFieldPush("10");
         viewModel.pressPushButton();
         viewModel.pressPopButton();
