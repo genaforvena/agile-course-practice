@@ -62,7 +62,7 @@ public final class Stack {
         frame.setVisible(true);
     }
 
-    @SuppressWarnings("unchecked")
+    //@SuppressWarnings("unchecked")
     private void bind() {
         buttonPush.setEnabled(viewModel.isPushButtonEnabled());
         buttonPop.setEnabled(viewModel.isPopButtonEnabled());
