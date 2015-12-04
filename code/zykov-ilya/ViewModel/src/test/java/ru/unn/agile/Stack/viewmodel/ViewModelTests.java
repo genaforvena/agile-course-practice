@@ -5,6 +5,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
+import java.util.LinkedList;
 
 import static org.junit.Assert.*;
 
@@ -19,12 +20,6 @@ public class ViewModelTests {
     @After
     public void tearDown() {
         viewModel = null;
-    }
-
-    @Test
-    public void canSetDefaultValues() {
-        assertEquals("", viewModel.getTextFieldPush());
-        assertEquals(Arrays.asList(), viewModel.getStackAsList());
     }
 
     @Test
@@ -103,6 +98,11 @@ public class ViewModelTests {
             viewModel.pressPushButton();
         }
 
-        assertEquals(Arrays.asList("1", "2", "3", "4", "5"), viewModel.getStackAsList());
+        LinkedList<String> exeptedValues = new LinkedList<String>();
+        for (Integer i = 1; i < 6; i++) {
+            exeptedValues.add(i.toString());
+        }
+
+        assertEquals(exeptedValues, viewModel.getStackAsList());
     }
 }

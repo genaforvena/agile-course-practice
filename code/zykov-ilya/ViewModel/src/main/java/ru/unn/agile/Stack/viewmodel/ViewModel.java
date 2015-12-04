@@ -9,11 +9,13 @@ public class ViewModel {
     private String textFieldPush;
     private final Stack stack;
 
-    private boolean pushButtonEnabled = false;
-    private boolean popButtonEnabled = false;
+    private boolean pushButtonEnabled;
+    private boolean popButtonEnabled;
 
     public  ViewModel() {
         textFieldPush = "";
+        pushButtonEnabled = false;
+        pushButtonEnabled = false;
         stack = new Stack();
     }
 
@@ -46,7 +48,7 @@ public class ViewModel {
     public void pressPopButton() {
         stack.pop();
 
-        if (stack.peak() == null) {
+        if (stack.isEmpty()) {
             popButtonEnabled = false;
         }
     }
