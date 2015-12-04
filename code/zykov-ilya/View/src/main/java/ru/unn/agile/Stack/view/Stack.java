@@ -5,29 +5,36 @@ import ru.unn.agile.Stack.viewmodel.ViewModel;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public final class Stack {
-    private final ViewModel viewModel;
-
     private JPanel mainPanel;
-    private JList stackValues;
+    private JList<String> stackValues;
     private JButton buttonPop;
     private JButton buttonPush;
     private JTextField textFieldPush;
+    private final ViewModel viewModel;
 
     private Stack(final ViewModel viewModel) {
         this.viewModel = viewModel;
 
-        buttonPush.addActionListener(e -> {
-            backBind();
-            viewModel.pressPushButton();
-            bind();
+        buttonPush.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent actionEvent) {
+                backBind();
+                viewModel.pressPushButton();
+                bind();
+            }
         });
 
-        buttonPop.addActionListener(e -> {
-            backBind();
-            viewModel.pressPopButton();
-            bind();
+        buttonPop.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent actionEvent) {
+                backBind();
+                viewModel.pressPopButton();
+                bind();
+            }
         });
 
         textFieldPush.getDocument().addDocumentListener(new DocumentListener() {
@@ -62,11 +69,10 @@ public final class Stack {
         frame.setVisible(true);
     }
 
-    //@SuppressWarnings("unchecked")
     private void bind() {
         buttonPush.setEnabled(viewModel.isPushButtonEnabled());
         buttonPop.setEnabled(viewModel.isPopButtonEnabled());
-        stackValues.setListData(viewModel.getStackAsList().toArray());
+        stackValues.setListData(viewModel.getStackAsStringArray());
     }
 
     private void backBind() {

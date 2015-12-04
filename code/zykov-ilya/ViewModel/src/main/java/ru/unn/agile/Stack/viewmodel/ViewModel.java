@@ -3,6 +3,7 @@ package ru.unn.agile.Stack.viewmodel;
 import ru.unn.agile.Stack.Model.Stack;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class ViewModel {
     private String textFieldPush;
@@ -53,5 +54,10 @@ public class ViewModel {
         if (stack.peak() == null) {
             popButtonEnabled = false;
         }
+    }
+
+    public String[] getStackAsStringArray() {
+        Object[] array = getStackAsList().toArray();
+        return Arrays.copyOf(array, array.length, String[].class);
     }
 }

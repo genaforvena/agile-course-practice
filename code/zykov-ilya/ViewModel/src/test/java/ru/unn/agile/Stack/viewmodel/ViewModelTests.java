@@ -88,16 +88,10 @@ public class ViewModelTests {
 
     @Test
     public void add1234567valuesToStack() {
-        viewModel.setTextFieldPush("1");
-        viewModel.pressPushButton();
-        viewModel.setTextFieldPush("2");
-        viewModel.pressPushButton();
-        viewModel.setTextFieldPush("3");
-        viewModel.pressPushButton();
-        viewModel.setTextFieldPush("4");
-        viewModel.pressPushButton();
-        viewModel.setTextFieldPush("5");
-        viewModel.pressPushButton();
+        for (Integer i = 1; i < 6; i++) {
+            viewModel.setTextFieldPush(i.toString());
+            viewModel.pressPushButton();
+        }
 
         assertEquals(Arrays.asList("1", "2", "3", "4", "5"), viewModel.getStackAsList());
     }
