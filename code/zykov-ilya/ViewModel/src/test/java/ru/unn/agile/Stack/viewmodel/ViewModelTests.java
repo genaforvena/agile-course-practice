@@ -38,14 +38,12 @@ public class ViewModelTests {
     }
 
     @Test
-    public void byDefaultPushTextFieldIsEmpty()
-    {
+    public void byDefaultPushTextFieldIsEmpty() {
         assertEquals("", viewModel.getTextFieldPush());
     }
 
     @Test
-    public void byDefaultStackIsEmpty()
-    {
+    public void byDefaultStackIsEmpty() {
         assertEquals(Arrays.asList(), viewModel.getStackAsList());
     }
 
