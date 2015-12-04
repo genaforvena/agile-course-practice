@@ -22,13 +22,8 @@ public class ViewModel {
     }
 
     public void setTextFieldPush(final String textFieldPush) {
-        if ("".equals(textFieldPush)) {
-            pushButtonEnabled = false;
-            return;
-        }
-
         this.textFieldPush = textFieldPush;
-        pushButtonEnabled = true;
+        pushButtonEnabled = !"".equals(textFieldPush);
     }
 
     public ArrayList getStackAsList() {

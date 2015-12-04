@@ -8,7 +8,7 @@ import javax.swing.event.DocumentListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public final class Stack {
+public final class StackView {
     private JPanel mainPanel;
     private JList<String> stackValues;
     private JButton buttonPop;
@@ -16,7 +16,7 @@ public final class Stack {
     private JTextField textFieldPush;
     private final ViewModel viewModel;
 
-    private Stack(final ViewModel viewModel) {
+    private StackView(final ViewModel viewModel) {
         this.viewModel = viewModel;
 
         buttonPush.addActionListener(new ActionListener() {
@@ -62,8 +62,8 @@ public final class Stack {
     }
 
     public static void main(final String[] args) {
-        JFrame frame = new JFrame("Stack");
-        frame.setContentPane(new Stack(new ViewModel()).mainPanel);
+        JFrame frame = new JFrame("StackView");
+        frame.setContentPane(new StackView(new ViewModel()).mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);

@@ -28,8 +28,25 @@ public class ViewModelTests {
     }
 
     @Test
-    public void byDefaultConvertButtonIsDisabled() {
+    public void byDefaultPushButtonIsDisabled() {
         assertFalse(viewModel.isPushButtonEnabled());
+    }
+
+    @Test
+    public void byDefaultPopButtonIsDisabled() {
+        assertFalse(viewModel.isPopButtonEnabled());
+    }
+
+    @Test
+    public void byDefaultPushTextFieldIsEmpty()
+    {
+        assertEquals("", viewModel.getTextFieldPush());
+    }
+
+    @Test
+    public void byDefaultStackIsEmpty()
+    {
+        assertEquals(Arrays.asList(), viewModel.getStackAsList());
     }
 
     @Test
@@ -40,7 +57,7 @@ public class ViewModelTests {
     }
 
     @Test
-    public void whenClearArabicNumberConvertPushButtonIsDisabled() {
+    public void whenClearPushTextFieldPushButtonIsDisabled() {
         viewModel.setTextFieldPush("1");
         viewModel.setTextFieldPush("");
 
@@ -65,11 +82,6 @@ public class ViewModelTests {
     }
 
     @Test
-    public void byDefaultConvertPopButtonIsDisabled() {
-        assertFalse(viewModel.isPopButtonEnabled());
-    }
-
-    @Test
     public void whenStackIsNotEmptyConvertPopButtonEnabled() {
         viewModel.setTextFieldPush("10");
         viewModel.pressPushButton();
@@ -87,7 +99,7 @@ public class ViewModelTests {
     }
 
     @Test
-    public void add1234567valuesToStack() {
+    public void addSomeValuesToStack() {
         for (Integer i = 1; i < 6; i++) {
             viewModel.setTextFieldPush(i.toString());
             viewModel.pressPushButton();
