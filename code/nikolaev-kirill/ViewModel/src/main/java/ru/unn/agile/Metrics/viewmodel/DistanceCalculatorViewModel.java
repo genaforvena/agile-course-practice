@@ -23,8 +23,11 @@ public class DistanceCalculatorViewModel {
     private final StringProperty metricName = new SimpleStringProperty();
     private final List<ValueChangeListener> valueChangeListeners = new ArrayList<>();
     private final DistanceCalculator calculator = new DistanceCalculator();
+    private ILogger logger;
 
-    public DistanceCalculatorViewModel() {
+    public DistanceCalculatorViewModel(ILogger logger) {
+        this.logger = logger;
+
         result.set("");
         firstVector.set("");
         secondVector.set("");
@@ -83,6 +86,10 @@ public class DistanceCalculatorViewModel {
     }
     public boolean isCalculateButtonDisabled() {
         return calculateButtonDisabled.get();
+    }
+
+    public ArrayList<String> getLog() {
+        return logger.getLog();
     }
 
     public String getInputStatus() {

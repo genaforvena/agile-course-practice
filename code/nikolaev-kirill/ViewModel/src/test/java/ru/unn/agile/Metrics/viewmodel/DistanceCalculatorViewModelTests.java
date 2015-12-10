@@ -3,6 +3,8 @@ package ru.unn.agile.Metrics.viewmodel;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.junit.Assert.*;
 
 public class DistanceCalculatorViewModelTests {
@@ -11,7 +13,7 @@ public class DistanceCalculatorViewModelTests {
 
     @Before
     public void setUp() {
-        viewModel = new DistanceCalculatorViewModel();
+        viewModel = new DistanceCalculatorViewModel(new FakeLogger());
     }
 
     @Test
@@ -234,5 +236,11 @@ public class DistanceCalculatorViewModelTests {
         viewModel.setMetric("RHO FOUR");
         viewModel.calculate();
         assertEquals("3.0", viewModel.getResult());
+    }
+
+    @Test
+    public void logIsEmptyByDefault() {
+        ArrayList<String> log = viewModel.getLog();
+        assertTrue(log.isEmpty());
     }
 }
