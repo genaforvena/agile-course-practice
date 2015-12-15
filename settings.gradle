@@ -47,8 +47,12 @@ project(":code/kornyakov-kirill-lab3/Infrastructure").name = "kornyakov-kirill-l
 // Chataev Gleb
 // Cheboksarinov Andrej
 // Eremeeva Aleksandra
-include "code/eremeeva-alexandra/eremeeva-alexandra-lab1"
-project(":code/eremeeva-alexandra/eremeeva-alexandra-lab1").name = "eremeeva-alexandra-lab1-Model"
+include "code/eremeeva-alexandra/Model"
+project(":code/eremeeva-alexandra/Model").name = "eremeeva-alexandra-Model"
+include "code/eremeeva-alexandra/View"
+project(":code/eremeeva-alexandra/View").name = "eremeeva-alexandra-View"
+include "code/eremeeva-alexandra/ViewModel"
+project(":code/eremeeva-alexandra/ViewModel").name = "eremeeva-alexandra-ViewModel"
 // Esyagin Ivan
 
 // Filicheva Svetlana
