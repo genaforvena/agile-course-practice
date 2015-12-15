@@ -243,4 +243,50 @@ public class DistanceCalculatorViewModelTests {
         ArrayList<String> log = viewModel.getLog();
         assertTrue(log.isEmpty());
     }
+
+    @Test
+    public void logContainsMessageAfterCalculation() {
+        viewModel.setFirstVector("-4.1 6.3 -7.4 9.5 -1.6 0.7");
+        viewModel.setSecondVector("-5.1 4.3 -5.4 7.5 -3.6 2.7");
+        viewModel.setMetric("RHO FOUR");
+        viewModel.calculate();
+        String message = viewModel.getLastLogMessage();
+        assertTrue(message.matches(".*" + viewModel.CALCULATE_PRESSED + ".*\\n"));
+    }
+
+    @Test
+    public void logContainsMetricAfterCalculation() {
+        viewModel.setFirstVector("-4.1 6.3 -7.4 5.5 -1.6");
+        viewModel.setSecondVector("-3.1 8.3 -4.4 2.5 -0.6");
+        viewModel.setMetric("RHO THREE");
+        viewModel.calculate();
+        String message = viewModel.getLastLogMessage();
+        assertTrue(message.matches(".*" + "Metric: " + viewModel.getMetricName() + ".*\\n"));
+    }
+
+    @Test
+    public void logContainsInputVectorsInProperFormatAfterCalculation() {
+        viewModel.setFirstVector("-4.1 6.3 -7.4 0.5");
+        viewModel.setSecondVector("-3.1 9.3 -2.4 1.5");
+        viewModel.setMetric("RHO TWO");
+        viewModel.calculate();
+        String message = viewModel.getLastLogMessage();
+        assertTrue(message.matches(".*" + "Arguments: \\[" + viewModel.firstVectorProperty().get()
+                + "\\]; \\[" + viewModel.secondVectorProperty().get() + "\\].*\\n"));
+    }
+
+    @Test
+    public void canSeeMetricChangeInLog() {
+        viewModel.onMetricChange("RHO INF", "RHO ONE");
+        String message = viewModel.getLastLogMessage();
+        assertTrue(message.matches(".*" + viewModel.METRIC_CHANGED + "RHO ONE" + ".*\\n"));
+    }
+
+    @Test
+    public void metricNotLoggedIfNotChanged() {
+        viewModel.onMetricChange("RHO INF", "RHO INF");
+        ArrayList<String> log = viewModel.getLog();
+        assertTrue(log.isEmpty());
+    }
+
 }

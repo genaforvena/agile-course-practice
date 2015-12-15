@@ -15,6 +15,8 @@ import java.util.List;
 public class DistanceCalculatorViewModel {
     public static final String HELP_MESSAGE = "Provide input vectors: decimal or integer numbers "
             + "separated by single whitespaces";
+    public static final String CALCULATE_PRESSED = "Calculate button has been pressed.";
+    public static final String METRIC_CHANGED = "Metric has been changed to: ";
     private final StringProperty result = new SimpleStringProperty();
     private final StringProperty firstVector = new SimpleStringProperty();
     private final StringProperty secondVector = new SimpleStringProperty();
@@ -25,28 +27,13 @@ public class DistanceCalculatorViewModel {
     private final DistanceCalculator calculator = new DistanceCalculator();
     private ILogger logger;
 
+    public DistanceCalculatorViewModel() {
+        initialize();
+    }
+
     public DistanceCalculatorViewModel(ILogger logger) {
         this.logger = logger;
-
-        result.set("");
-        firstVector.set("");
-        secondVector.set("");
-        statusMessage.set(HELP_MESSAGE);
-        calculateButtonDisabled.set(true);
-        metricName.set("RHO INF");
-
-        final List<StringProperty> fields = new ArrayList<StringProperty>() {
-            {
-                add(firstVector);
-                add(secondVector);
-            }
-        };
-
-        for (StringProperty field: fields) {
-            final ValueChangeListener listener = new ValueChangeListener();
-            field.addListener(listener);
-            valueChangeListeners.add(listener);
-        }
+        initialize();
     }
 
     public StringProperty firstVectorProperty() {
@@ -65,6 +52,9 @@ public class DistanceCalculatorViewModel {
 
     public void setMetric(final String metricString) {
         metricName.set(metricString);
+    }
+    public String getMetricName() {
+        return metricName.get();
     }
 
     public StringProperty statusMessageProperty() {
@@ -90,6 +80,10 @@ public class DistanceCalculatorViewModel {
 
     public ArrayList<String> getLog() {
         return logger.getLog();
+    }
+
+    public String getLastLogMessage() {
+        return logger.getLastMessage();
     }
 
     public String getInputStatus() {
@@ -126,6 +120,37 @@ public class DistanceCalculatorViewModel {
         Metric metric = parseMetric(metricName.get());
         result.set(Float.toString(calculator.calculateDistance(firstVector, secondVector,
                 metric)));
+        logger.add(CALCULATE_PRESSED + " Arguments: [" + firstVectorProperty().get() + "]; ["
+                + secondVectorProperty().get() + "] Metric: " + metricName.get() + "\n");
+    }
+
+    public void onMetricChange(String oldValue, String newValue) {
+        if(oldValue.equals(newValue)) {
+            return;
+        }
+        logger.add(METRIC_CHANGED + newValue + "\n");
+    }
+
+    private void initialize() {
+        result.set("");
+        firstVector.set("");
+        secondVector.set("");
+        statusMessage.set(HELP_MESSAGE);
+        calculateButtonDisabled.set(true);
+        metricName.set("RHO INF");
+
+        final List<StringProperty> fields = new ArrayList<StringProperty>() {
+            {
+                add(firstVector);
+                add(secondVector);
+            }
+        };
+
+        for (StringProperty field: fields) {
+            final ValueChangeListener listener = new ValueChangeListener();
+            field.addListener(listener);
+            valueChangeListeners.add(listener);
+        }
     }
 
     private float[] parseVector(final String rawVector) {
