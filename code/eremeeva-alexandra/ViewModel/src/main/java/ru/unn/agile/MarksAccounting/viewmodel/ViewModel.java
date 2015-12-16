@@ -455,7 +455,7 @@ public class ViewModel {
         }
     }
 
-    private GregorianCalendar parseDate(final String strDate) {
+    public GregorianCalendar parseDate(final String strDate) {
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
         Date date;
         try {

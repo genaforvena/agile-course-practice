@@ -16,10 +16,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
@@ -52,7 +49,7 @@ public class ViewModelTests {
         tempTableOfMarks.addStudent(new Group("1"), new Student("Sidorov"));
         tempTableOfMarks.addStudent(new Group("1"), new Student("Petrov"));
         tempTableOfMarks.addStudent(new Group("3"), new Student("Ivanov"));
-        tempTableOfMarks.addNewMark(new Mark(4, "Maths", parseDate("10-05-2015")),
+        tempTableOfMarks.addNewMark(new Mark(4, "Maths", viewModel.parseDate("10-05-2015")),
                 new Student("Sidorov"), new Group("1"));
         viewModel.setTableOfMarks(tempTableOfMarks);
     }
@@ -68,29 +65,26 @@ public class ViewModelTests {
         tableOfMarks.addStudent(new Group("1"), new Student("Sidorov"));
         tableOfMarks.addStudent(new Group("1"), new Student("Petrov"));
         tableOfMarks.addStudent(new Group("3"), new Student("Ivanov"));
-        tableOfMarks.addNewMark(new Mark(4, "Maths", parseDate("10-05-2015")),
+        tableOfMarks.addNewMark(new Mark(4, "Maths", viewModel.parseDate("10-05-2015")),
                 new Student("Sidorov"), new Group("1"));
-    }
-
-    private GregorianCalendar parseDate(final String strDate) {
-        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
-        Date date;
-        try {
-            date = dateFormat.parse(strDate);
-        } catch (ParseException e) {
-            return new GregorianCalendar(0, 0, 0);
-        }
-        GregorianCalendar tempDate = new GregorianCalendar();
-        tempDate.setTime(date);
-        return tempDate;
     }
 
     @Test
     public void testParseDate() {
-        GregorianCalendar date = parseDate("10-05-2015");
+        GregorianCalendar date = viewModel.parseDate("10-05-2015");
         SimpleDateFormat fmt = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
         fmt.setCalendar(date);
         assertEquals("10-05-2015", fmt.format(date.getTime()));
+    }
+
+    private boolean comboBoxEqualing(final ComboBoxModel<String> expectedCB,
+                                     final ComboBoxModel<String> realCB) {
+        for (int i = 0; i < realCB.getSize(); i++) {
+            if (!expectedCB.getElementAt(i).equals(realCB.getElementAt(i))) {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Test
@@ -100,10 +94,7 @@ public class ViewModelTests {
         temp[1] = "2";
         temp[2] = "3";
         ComboBoxModel<String> trueComboBoxModel = new JComboBox<String>(temp).getModel();
-        ComboBoxModel comboBoxModel = viewModel.getGroupComboBoxModel();
-        for (int i = 0; i < comboBoxModel.getSize(); i++) {
-            assertEquals(trueComboBoxModel.getElementAt(i), comboBoxModel.getElementAt(i));
-        }
+        assertTrue(comboBoxEqualing(trueComboBoxModel, viewModel.getGroupComboBoxModel()));
     }
 
     @Test
@@ -113,10 +104,7 @@ public class ViewModelTests {
         temp[1] = "Maths";
         ComboBoxModel<String> trueComboBoxModel = new JComboBox<String>(temp).getModel();
         viewModel.setCurrentGroup("1");
-        ComboBoxModel comboBoxModel = viewModel.getSubjectComboBoxModel();
-        for (int i = 0; i < comboBoxModel.getSize(); i++) {
-            assertEquals(trueComboBoxModel.getElementAt(i), comboBoxModel.getElementAt(i));
-        }
+        assertTrue(comboBoxEqualing(trueComboBoxModel, viewModel.getSubjectComboBoxModel()));
     }
 
     @Test
@@ -127,10 +115,7 @@ public class ViewModelTests {
         ComboBoxModel<String> trueComboBoxModel = new JComboBox<String>(temp).getModel();
         viewModel.activateDialog();
         viewModel.setDialogGroup("1");
-        ComboBoxModel comboBoxModel = viewModel.getSubjectComboBoxModel();
-        for (int i = 0; i < comboBoxModel.getSize(); i++) {
-            assertEquals(trueComboBoxModel.getElementAt(i), comboBoxModel.getElementAt(i));
-        }
+        assertTrue(comboBoxEqualing(trueComboBoxModel, viewModel.getSubjectComboBoxModel()));
     }
 
     @Test
@@ -140,10 +125,7 @@ public class ViewModelTests {
         temp[1] = "Sidorov";
         ComboBoxModel<String> trueComboBoxModel = new JComboBox<String>(temp).getModel();
         viewModel.setCurrentGroup("1");
-        ComboBoxModel comboBoxModel = viewModel.getStudentComboBoxModel();
-        for (int i = 0; i < comboBoxModel.getSize(); i++) {
-            assertEquals(trueComboBoxModel.getElementAt(i), comboBoxModel.getElementAt(i));
-        }
+        assertTrue(comboBoxEqualing(trueComboBoxModel, viewModel.getStudentComboBoxModel()));
     }
 
     @Test
@@ -154,10 +136,7 @@ public class ViewModelTests {
         ComboBoxModel<String> trueComboBoxModel = new JComboBox<String>(temp).getModel();
         viewModel.activateDialog();
         viewModel.setDialogGroup("1");
-        ComboBoxModel comboBoxModel = viewModel.getStudentComboBoxModel();
-        for (int i = 0; i < comboBoxModel.getSize(); i++) {
-            assertEquals(trueComboBoxModel.getElementAt(i), comboBoxModel.getElementAt(i));
-        }
+        assertTrue(comboBoxEqualing(trueComboBoxModel, viewModel.getStudentComboBoxModel()));
     }
 
     @Test
@@ -287,7 +266,7 @@ public class ViewModelTests {
         viewModel.setDialogInputTextBox("5");
         viewModel.change();
         viewModel.returnedToMainForm();
-        tableOfMarks.addNewMark(new Mark(5, "Maths", parseDate("11-11-2015")),
+        tableOfMarks.addNewMark(new Mark(5, "Maths", viewModel.parseDate("11-11-2015")),
                 new Student("Sidorov"), new Group("1"));
         assertEquals(tableOfMarks, viewModel.getTableOfMarks());
     }
@@ -490,7 +469,7 @@ public class ViewModelTests {
         viewModel.change();
         viewModel.returnedToMainForm();
         tableOfMarks.deleteMark(new Group("1"), new Student("Sidorov"),
-                "Maths", parseDate("10-05-2015"));
+                "Maths", viewModel.parseDate("10-05-2015"));
         assertEquals(tableOfMarks, viewModel.getTableOfMarks());
     }
 
