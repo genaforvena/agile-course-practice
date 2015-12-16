@@ -45,10 +45,10 @@ public class TableOfMarks {
             if (i == 0) {
                 groups.add(i, new Group(newGroup.getNumber()));
             } else {
-                if (!getGroups().get(i - 1).getNumber().equals(newGroup.getNumber())) {
-                    groups.add(i, new Group(newGroup.getNumber()));
-                } else {
+                if (getGroups().get(i - 1).getNumber().equals(newGroup.getNumber())) {
                     throw new GroupAlreadyExistsException("This group already exists");
+                } else {
+                    groups.add(i, new Group(newGroup.getNumber()));
                 }
             }
         }

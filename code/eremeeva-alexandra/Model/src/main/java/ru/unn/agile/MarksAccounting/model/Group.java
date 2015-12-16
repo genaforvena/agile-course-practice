@@ -59,10 +59,10 @@ public class Group {
             if (i == 0) {
                 this.students.add(i, new Student(newStudent.getName()));
             } else {
-                if (!getStudents().get(i - 1).getName().equals(newStudent.getName())) {
-                    this.students.add(i, new Student(newStudent.getName()));
-                } else {
+                if (getStudents().get(i - 1).getName().equals(newStudent.getName())) {
                     throw new StudentAlreadyExistsException("This student already exists");
+                } else {
+                    this.students.add(i, new Student(newStudent.getName()));
                 }
             }
         }
@@ -81,10 +81,10 @@ public class Group {
             if (i == 0) {
                 this.academicSubjects.add(i, newAcademicSubject);
             } else {
-                if (!getAcademicSubjects().get(i - 1).equals(newAcademicSubject)) {
-                    this.academicSubjects.add(i, newAcademicSubject);
-                } else {
+                if (getAcademicSubjects().get(i - 1).equals(newAcademicSubject)) {
                     throw new SubjectAlreadyExistsException("This subject already exists");
+                } else {
+                    this.academicSubjects.add(i, newAcademicSubject);
                 }
             }
         }
