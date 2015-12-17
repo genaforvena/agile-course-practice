@@ -17,6 +17,7 @@ public class DistanceCalculatorViewModel {
             + "separated by single whitespaces";
     public static final String CALCULATE_PRESSED = "Calculate button has been pressed.";
     public static final String METRIC_CHANGED = "Metric has been changed to: ";
+    public static final String INPUT_UPDATED = "Input vector has been updated.";
     private final StringProperty result = new SimpleStringProperty();
     private final StringProperty firstVector = new SimpleStringProperty();
     private final StringProperty secondVector = new SimpleStringProperty();
@@ -31,7 +32,7 @@ public class DistanceCalculatorViewModel {
         initialize();
     }
 
-    public DistanceCalculatorViewModel(ILogger logger) {
+    public DistanceCalculatorViewModel(final ILogger logger) {
         this.logger = logger;
         initialize();
     }
@@ -121,14 +122,28 @@ public class DistanceCalculatorViewModel {
         result.set(Float.toString(calculator.calculateDistance(firstVector, secondVector,
                 metric)));
         logger.add(CALCULATE_PRESSED + " Arguments: [" + firstVectorProperty().get() + "]; ["
-                + secondVectorProperty().get() + "] Metric: " + metricName.get() + "\n");
+                + secondVectorProperty().get() + "] Metric: " + metricName.get());
     }
 
-    public void onMetricChange(String oldValue, String newValue) {
-        if(oldValue.equals(newValue)) {
+    public void onMetricChange(final String oldValue, final String newValue) {
+        if (oldValue.equals(newValue)) {
             return;
         }
-        logger.add(METRIC_CHANGED + newValue + "\n");
+        logger.add(METRIC_CHANGED + newValue);
+    }
+
+    public void onFocusChange(final Boolean oldValue, final Boolean newValue) {
+        if (!oldValue && newValue) {
+            return;
+        }
+        for (ValueChangeListener listener: valueChangeListeners) {
+            if (listener.valueIsChanged()) {
+                logger.add(INPUT_UPDATED + " Arguments: ["
+                        + firstVectorProperty().get() + "]; ["
+                        + secondVectorProperty().get() + "]");
+                listener.savePrevValue();
+            }
+        }
     }
 
     private void initialize() {
@@ -187,10 +202,22 @@ public class DistanceCalculatorViewModel {
     }
 
     private class ValueChangeListener implements ChangeListener<String> {
+        private String prevValue = "";
+        private String currValue = "";
+
         @Override
         public void changed(final ObservableValue<? extends String> observable,
                             final String oldValue, final String newValue) {
             statusMessage.set(getInputStatus());
+            currValue = newValue;
+        }
+
+        public boolean valueIsChanged() {
+            return !prevValue.equals(currValue);
+        }
+
+        public void savePrevValue() {
+            prevValue = currValue;
         }
     }
 }

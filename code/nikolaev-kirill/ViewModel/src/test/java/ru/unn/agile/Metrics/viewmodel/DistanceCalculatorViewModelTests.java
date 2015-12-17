@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 
 public class DistanceCalculatorViewModelTests {
 
-    private DistanceCalculatorViewModel viewModel;
+    public DistanceCalculatorViewModel viewModel;
 
     @Before
     public void setUp() {
@@ -251,7 +251,7 @@ public class DistanceCalculatorViewModelTests {
         viewModel.setMetric("RHO FOUR");
         viewModel.calculate();
         String message = viewModel.getLastLogMessage();
-        assertTrue(message.matches(".*" + viewModel.CALCULATE_PRESSED + ".*\\n"));
+        assertTrue(message.matches(".*" + viewModel.CALCULATE_PRESSED + ".*"));
     }
 
     @Test
@@ -261,7 +261,7 @@ public class DistanceCalculatorViewModelTests {
         viewModel.setMetric("RHO THREE");
         viewModel.calculate();
         String message = viewModel.getLastLogMessage();
-        assertTrue(message.matches(".*" + "Metric: " + viewModel.getMetricName() + ".*\\n"));
+        assertTrue(message.matches(".*" + "Metric: " + viewModel.getMetricName() + ".*"));
     }
 
     @Test
@@ -272,14 +272,14 @@ public class DistanceCalculatorViewModelTests {
         viewModel.calculate();
         String message = viewModel.getLastLogMessage();
         assertTrue(message.matches(".*" + "Arguments: \\[" + viewModel.firstVectorProperty().get()
-                + "\\]; \\[" + viewModel.secondVectorProperty().get() + "\\].*\\n"));
+                + "\\]; \\[" + viewModel.secondVectorProperty().get() + "\\].*"));
     }
 
     @Test
     public void canSeeMetricChangeInLog() {
         viewModel.onMetricChange("RHO INF", "RHO ONE");
         String message = viewModel.getLastLogMessage();
-        assertTrue(message.matches(".*" + viewModel.METRIC_CHANGED + "RHO ONE" + ".*\\n"));
+        assertTrue(message.matches(".*" + viewModel.METRIC_CHANGED + "RHO ONE" + ".*"));
     }
 
     @Test
@@ -289,4 +289,45 @@ public class DistanceCalculatorViewModelTests {
         assertTrue(log.isEmpty());
     }
 
+    @Test
+    public void inputArgumentsAreProperlyLogged() {
+        viewModel.setFirstVector("4.1 -5.2 6.3 -7.4");
+        viewModel.setSecondVector("3.1 -9.2 8.3 -2.4");
+        viewModel.onFocusChange(Boolean.TRUE, Boolean.FALSE);
+        String message = viewModel.getLastLogMessage();
+        assertTrue(message.matches(".*" + viewModel.INPUT_UPDATED + " Arguments: \\["
+                + viewModel.firstVectorProperty().get() + "\\]; \\["
+                + viewModel.secondVectorProperty().get() + "\\].*"));
+    }
+
+    @Test
+    public void noLogMessageWhenGainFocus() {
+        viewModel.setFirstVector("4.0 5.0");
+        viewModel.onFocusChange(Boolean.FALSE, Boolean.TRUE);
+        viewModel.setSecondVector("1 -2.0 3");
+        ArrayList<String> log = viewModel.getLog();
+        assertTrue(log.isEmpty());
+    }
+
+    @Test
+    public void sameVectorNotLoggedTwice() {
+        viewModel.setFirstVector("4.0 5.0");
+        viewModel.onFocusChange(Boolean.TRUE, Boolean.FALSE);
+        viewModel.setFirstVector("4.0 5.0");
+        viewModel.onFocusChange(Boolean.TRUE, Boolean.FALSE);
+        ArrayList<String> log = viewModel.getLog();
+        assertTrue(log.size() == 1);
+    }
+
+    @Test
+    public void canPutSeveralDifferentMessagesInLog() {
+        viewModel.setFirstVector("4.1 -5.2 6.3 -7.4");
+        viewModel.onFocusChange(Boolean.TRUE, Boolean.FALSE);
+        viewModel.setSecondVector("3.1 -9.2 8.3 -2.4");
+        viewModel.onFocusChange(Boolean.TRUE, Boolean.FALSE);
+        viewModel.onMetricChange("RHO INF", "RHO TWO");
+        viewModel.calculate();
+        ArrayList<String> log = viewModel.getLog();
+        assertEquals(4, log.size());
+    }
 }

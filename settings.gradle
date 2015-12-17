@@ -178,6 +178,7 @@ include "code/nesmelov-aleksey/View"
 project(":code/nesmelov-aleksey/View").name = "nesmelov-aleksey-View"
 include "code/nesmelov-aleksey/ViewModel"
 project(":code/nesmelov-aleksey/ViewModel").name = "nesmelov-aleksey-ViewModel"
+
 // Nikolaev Kirill
 include "code/nikolaev-kirill/Model"
 project(":code/nikolaev-kirill/Model").name = "nikolaev-kirill-Model"
@@ -185,6 +186,8 @@ include "code/nikolaev-kirill/ViewModel"
 project(":code/nikolaev-kirill/ViewModel").name = "nikolaev-kirill-ViewModel"
 include "code/nikolaev-kirill/View"
 project(":code/nikolaev-kirill/View").name = "nikolaev-kirill-View"
+include "code/nikolaev-kirill/Infrastructure"
+project(":code/nikolaev-kirill/Infrastructure").name = "nikolaev-kirill-Infrastructure"
 
 // Nistratov Andrej
 // Nistratov Artyom
