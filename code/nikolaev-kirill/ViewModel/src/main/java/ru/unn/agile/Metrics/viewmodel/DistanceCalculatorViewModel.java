@@ -22,6 +22,7 @@ public class DistanceCalculatorViewModel {
     private final StringProperty firstVector = new SimpleStringProperty();
     private final StringProperty secondVector = new SimpleStringProperty();
     private final StringProperty statusMessage = new SimpleStringProperty();
+    private final StringProperty logText = new SimpleStringProperty();
     private final BooleanProperty calculateButtonDisabled = new SimpleBooleanProperty();
     private final StringProperty metricName = new SimpleStringProperty();
     private final List<ValueChangeListener> valueChangeListeners = new ArrayList<>();
@@ -72,11 +73,22 @@ public class DistanceCalculatorViewModel {
         return result.get();
     }
 
+    public StringProperty logTextProperty() {
+        return logText;
+    }
+    public String getLogText() {
+        return logText.get();
+    }
+
     public BooleanProperty calculateButtonDisabledProperty() {
         return calculateButtonDisabled;
     }
     public boolean isCalculateButtonDisabled() {
         return calculateButtonDisabled.get();
+    }
+
+    public void setLogger(final ILogger logger) {
+        this.logger = logger;
     }
 
     public ArrayList<String> getLog() {
@@ -123,6 +135,7 @@ public class DistanceCalculatorViewModel {
                 metric)));
         logger.add(CALCULATE_PRESSED + " Arguments: [" + firstVectorProperty().get() + "]; ["
                 + secondVectorProperty().get() + "] Metric: " + metricName.get());
+        updateLogText();
     }
 
     public void onMetricChange(final String oldValue, final String newValue) {
@@ -130,6 +143,7 @@ public class DistanceCalculatorViewModel {
             return;
         }
         logger.add(METRIC_CHANGED + newValue);
+        updateLogText();
     }
 
     public void onFocusChange(final Boolean oldValue, final Boolean newValue) {
@@ -142,6 +156,7 @@ public class DistanceCalculatorViewModel {
                         + firstVectorProperty().get() + "]; ["
                         + secondVectorProperty().get() + "]");
                 listener.savePrevValue();
+                updateLogText();
             }
         }
     }
@@ -150,6 +165,7 @@ public class DistanceCalculatorViewModel {
         result.set("");
         firstVector.set("");
         secondVector.set("");
+        logText.set("");
         statusMessage.set(HELP_MESSAGE);
         calculateButtonDisabled.set(true);
         metricName.set("RHO INF");
@@ -166,6 +182,15 @@ public class DistanceCalculatorViewModel {
             field.addListener(listener);
             valueChangeListeners.add(listener);
         }
+    }
+
+    private void updateLogText() {
+        ArrayList<String> fullLog = logger.getLog();
+        String text = "";
+        for (String message: fullLog) {
+            text += message + "\n";
+        }
+        logText.set(text);
     }
 
     private float[] parseVector(final String rawVector) {

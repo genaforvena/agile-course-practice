@@ -9,7 +9,11 @@ import static org.junit.Assert.*;
 
 public class DistanceCalculatorViewModelTests {
 
-    public DistanceCalculatorViewModel viewModel;
+    private DistanceCalculatorViewModel viewModel;
+
+    public void setViewModel(final DistanceCalculatorViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
 
     @Before
     public void setUp() {
