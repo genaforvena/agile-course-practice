@@ -7,14 +7,15 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 public class TextLogger implements ILogger {
     private static final byte NEW_LINE = 0xA;
     private static final byte CARRIAGE_RETURN = 0xD;
-    private BufferedWriter writer;
-    private String fileName;
+    private final BufferedWriter writer;
+    private final String fileName;
 
-    public TextLogger(String fileName) {
+    public TextLogger(final String fileName) {
         this.fileName = fileName;
         BufferedWriter logWriter = null;
         try {
@@ -83,7 +84,7 @@ public class TextLogger implements ILogger {
     }
 
     private String getCurrentDateAndTime() {
-        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss", Locale.US);
         Date date = new Date();
         return dateFormat.format(date);
     }
