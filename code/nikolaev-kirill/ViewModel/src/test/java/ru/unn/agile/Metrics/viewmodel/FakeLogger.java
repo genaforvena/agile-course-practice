@@ -14,8 +14,4 @@ public class FakeLogger implements ILogger {
         return log;
     }
 
-    @Override
-    public String getLastMessage() {
-        return log.get(log.size() - 1);
-    }
 }

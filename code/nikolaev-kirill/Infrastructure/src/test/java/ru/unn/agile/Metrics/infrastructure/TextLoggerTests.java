@@ -21,20 +21,12 @@ public class TextLoggerTests {
     }
 
     @Test
-    public void byDefaultLastLogMessageIsEmptyString() {
-        String logMessage = logger.getLastMessage();
-
-        assertTrue(logMessage.isEmpty());
-    }
-
-    @Test
     public void canWriteMessageInLog() {
         String testMessage = "Test: [-1.0]; TEST";
 
         logger.add(testMessage);
 
-        String logMessage = logger.getLastMessage();
-        assertTrue(logMessage.contains(testMessage));
+        assertTrue(getLastLogMessage().contains(testMessage));
     }
 
     @Test
@@ -55,8 +47,7 @@ public class TextLoggerTests {
         logger.add(testMessages[0]);
         logger.add(testMessages[1]);
 
-        String lastMessage = logger.getLastMessage();
-        assertTrue(lastMessage.matches(".*" + testMessages[1] + "$"));
+        assertTrue(getLastLogMessage().matches(".*" + testMessages[1] + "$"));
     }
 
     @Test
@@ -65,7 +56,11 @@ public class TextLoggerTests {
 
         logger.add(testMessage);
 
-        String lastMessage = logger.getLastMessage();
-        assertTrue(lastMessage.matches("\\d{2}.\\d{2}.\\d{4} \\d{2}:\\d{2}:\\d{2} > .*"));
+        assertTrue(getLastLogMessage().matches("\\d{2}.\\d{2}.\\d{4} \\d{2}:\\d{2}:\\d{2} > .*"));
+    }
+
+    private String getLastLogMessage() {
+        ArrayList<String> log = logger.getLog();
+        return log.get(log.size() - 1);
     }
 }

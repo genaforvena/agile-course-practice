@@ -96,7 +96,8 @@ public class DistanceCalculatorViewModel {
     }
 
     public String getLastLogMessage() {
-        return logger.getLastMessage();
+        ArrayList<String> log = getLog();
+        return log.get(log.size() - 1);
     }
 
     public String getInputStatus() {

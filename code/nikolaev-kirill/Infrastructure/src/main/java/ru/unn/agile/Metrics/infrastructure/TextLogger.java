@@ -10,8 +10,6 @@ import java.util.Date;
 import java.util.Locale;
 
 public class TextLogger implements ILogger {
-    private static final byte NEW_LINE = 0xA;
-    private static final byte CARRIAGE_RETURN = 0xD;
     private final BufferedWriter writer;
     private final String fileName;
 
@@ -51,36 +49,6 @@ public class TextLogger implements ILogger {
             e.printStackTrace();
         }
         return log;
-    }
-
-    @Override
-    public String getLastMessage() {
-        String lastMessage = "";
-        try {
-            RandomAccessFile reader = new RandomAccessFile(fileName, "r");
-            long length = reader.length() - 1;
-            StringBuilder builder = new StringBuilder();
-            for (long filePointer = length; filePointer != -1; filePointer--) {
-                reader.seek(filePointer);
-                byte readByte = reader.readByte();
-                if (readByte == NEW_LINE) {
-                    if (filePointer == length) {
-                        continue;
-                    }
-                    break;
-                } else if (readByte == CARRIAGE_RETURN) {
-                    if (filePointer == length - 1) {
-                        continue;
-                    }
-                    break;
-                }
-                builder.append((char) readByte);
-            }
-            lastMessage = builder.reverse().toString();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return lastMessage;
     }
 
     private String getCurrentDateAndTime() {
