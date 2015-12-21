@@ -3,7 +3,7 @@ package ru.unn.agile.Metrics.viewmodel;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -276,7 +276,7 @@ public class DistanceCalculatorViewModelTests {
 
     @Test
     public void logIsEmptyByDefault() {
-        ArrayList<String> log = viewModel.getLog();
+        List<String> log = viewModel.getLog();
         assertTrue(log.isEmpty());
     }
 
@@ -323,7 +323,7 @@ public class DistanceCalculatorViewModelTests {
     public void metricNotLoggedIfNotChanged() {
         viewModel.onMetricChange("RHO INF", "RHO INF");
 
-        ArrayList<String> log = viewModel.getLog();
+        List<String> log = viewModel.getLog();
         assertTrue(log.isEmpty());
     }
 
@@ -345,7 +345,7 @@ public class DistanceCalculatorViewModelTests {
 
         viewModel.onFocusChange(Boolean.FALSE, Boolean.TRUE);
 
-        ArrayList<String> log = viewModel.getLog();
+        List<String> log = viewModel.getLog();
         assertTrue(log.isEmpty());
     }
 
@@ -356,7 +356,7 @@ public class DistanceCalculatorViewModelTests {
         viewModel.onFocusChange(Boolean.TRUE, Boolean.FALSE);
         viewModel.onFocusChange(Boolean.TRUE, Boolean.FALSE);
 
-        ArrayList<String> log = viewModel.getLog();
+        List<String> log = viewModel.getLog();
         assertTrue(log.size() == 1);
     }
 
@@ -370,7 +370,7 @@ public class DistanceCalculatorViewModelTests {
 
         viewModel.calculate();
 
-        ArrayList<String> log = viewModel.getLog();
+        List<String> log = viewModel.getLog();
         assertEquals(4, log.size());
     }
 

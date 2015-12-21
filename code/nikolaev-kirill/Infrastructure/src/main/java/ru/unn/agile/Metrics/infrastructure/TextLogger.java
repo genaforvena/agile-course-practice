@@ -7,17 +7,18 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 public class TextLogger implements ILogger {
-    private final BufferedWriter writer;
+    private final FileWriter writer;
     private final String fileName;
 
     public TextLogger(final String fileName) {
         this.fileName = fileName;
-        BufferedWriter logWriter = null;
+        FileWriter logWriter = null;
         try {
-            logWriter = new BufferedWriter(new FileWriter(fileName));
+            logWriter = new FileWriter(fileName);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -27,8 +28,7 @@ public class TextLogger implements ILogger {
     @Override
     public void add(final String message) {
         try {
-            writer.write(getCurrentDateAndTime() + " > " + message);
-            writer.newLine();
+            writer.write(getCurrentDateAndTime() + " > " + message + System.lineSeparator());
             writer.flush();
         } catch (IOException e) {
             e.printStackTrace();
@@ -36,7 +36,7 @@ public class TextLogger implements ILogger {
     }
 
     @Override
-    public ArrayList<String> getLog() {
+    public List<String> get() {
         ArrayList<String> log = new ArrayList<>();
         try {
             BufferedReader reader = new BufferedReader(new FileReader(fileName));

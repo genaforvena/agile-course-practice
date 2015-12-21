@@ -91,12 +91,12 @@ public class DistanceCalculatorViewModel {
         this.logger = logger;
     }
 
-    public ArrayList<String> getLog() {
-        return logger.getLog();
+    public List<String> getLog() {
+        return logger.get();
     }
 
     public String getLastLogMessage() {
-        ArrayList<String> log = getLog();
+        List<String> log = getLog();
         return log.get(log.size() - 1);
     }
 
@@ -186,7 +186,7 @@ public class DistanceCalculatorViewModel {
     }
 
     private void updateLogText() {
-        ArrayList<String> fullLog = logger.getLog();
+        List<String> fullLog = logger.get();
         String text = "";
         for (String message: fullLog) {
             text += message + "\n";

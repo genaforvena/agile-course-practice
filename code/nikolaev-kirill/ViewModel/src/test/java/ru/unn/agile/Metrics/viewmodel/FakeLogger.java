@@ -1,6 +1,7 @@
 package ru.unn.agile.Metrics.viewmodel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class FakeLogger implements ILogger {
     private ArrayList<String> log = new ArrayList<>();
@@ -10,8 +11,7 @@ public class FakeLogger implements ILogger {
     }
 
     @Override
-    public ArrayList<String> getLog() {
+    public List<String> get() {
         return log;
     }
-
 }

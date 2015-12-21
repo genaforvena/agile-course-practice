@@ -1,8 +1,8 @@
 package ru.unn.agile.Metrics.viewmodel;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public interface ILogger {
     void add(String message);
-    ArrayList<String> getLog();
+    List<String> get();
 }
