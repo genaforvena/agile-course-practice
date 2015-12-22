@@ -10,11 +10,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class TextLogger implements ILogger {
+public class CsvLogger implements ILogger {
     private final FileWriter writer;
     private final String fileName;
 
-    public TextLogger(final String fileName) {
+    public CsvLogger(final String fileName) {
         this.fileName = fileName;
         FileWriter logWriter = null;
         try {
@@ -28,7 +28,7 @@ public class TextLogger implements ILogger {
     @Override
     public void add(final String message) {
         try {
-            writer.write(getCurrentDateAndTime() + " > " + message + System.lineSeparator());
+            writer.write(getCurrentDateAndTime() + ",\"" + message + "\"" + System.lineSeparator());
             writer.flush();
         } catch (IOException e) {
             e.printStackTrace();

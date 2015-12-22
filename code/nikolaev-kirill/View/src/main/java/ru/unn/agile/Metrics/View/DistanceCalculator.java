@@ -7,7 +7,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import ru.unn.agile.Metrics.viewmodel.DistanceCalculatorViewModel;
-import ru.unn.agile.Metrics.infrastructure.TextLogger;
+import ru.unn.agile.Metrics.infrastructure.CsvLogger;
 
 public class DistanceCalculator {
 
@@ -27,7 +27,7 @@ public class DistanceCalculator {
 
     @FXML
     public void initialize() {
-        viewModel.setLogger(new TextLogger("./TextLogger.log"));
+        viewModel.setLogger(new CsvLogger("./Log.csv"));
 
         ChangeListener<Boolean> focusChangeListener = new ChangeListener<Boolean>() {
             @Override

@@ -8,12 +8,12 @@ import java.util.List;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
-public class TextLoggerTests {
-    private TextLogger logger;
+public class CsvLoggerTests {
+    private CsvLogger logger;
 
     @Before
     public void setUp() {
-        logger = new TextLogger("./TestTextLogger.log");
+        logger = new CsvLogger("./TestRealLogger.csv");
     }
 
     @Test
@@ -57,7 +57,7 @@ public class TextLoggerTests {
 
         logger.add(testMessage);
 
-        assertTrue(getLastLogMessage().matches("\\d{2}.\\d{2}.\\d{4} \\d{2}:\\d{2}:\\d{2} > .*"));
+        assertTrue(getLastLogMessage().matches("\\d{2}.\\d{2}.\\d{4} \\d{2}:\\d{2}:\\d{2}.*"));
     }
 
     private String getLastLogMessage() {
