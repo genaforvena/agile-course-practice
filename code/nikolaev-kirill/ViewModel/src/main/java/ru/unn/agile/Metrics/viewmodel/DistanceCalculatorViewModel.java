@@ -11,8 +11,6 @@ import ru.unn.agile.Metrics.model.Metric;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class DistanceCalculatorViewModel {
     public static final String HELP_MESSAGE = "Provide input vectors: decimal or integer numbers "
@@ -191,13 +189,7 @@ public class DistanceCalculatorViewModel {
         List<String> fullLog = logger.get();
         String text = "";
         for (String message: fullLog) {
-            Pattern pattern = Pattern.compile("^(.*),\"(.*)\"$");
-            Matcher matcher = pattern.matcher(message);
-            if (matcher.matches()) {
-                text += matcher.group(1) + " > " + matcher.group(2) + "\n";
-            } else {
-                text += message + '\n';
-            }
+            text += message + '\n';
         }
         logText.set(text);
     }
