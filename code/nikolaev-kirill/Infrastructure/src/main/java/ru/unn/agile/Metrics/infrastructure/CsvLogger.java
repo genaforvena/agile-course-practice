@@ -42,7 +42,7 @@ public class CsvLogger implements ILogger {
     @Override
     public List<String> get() {
         ArrayList<String> log = new ArrayList<>();
-        Pattern pattern = Pattern.compile("^(?<date>.*),\"(?<message>.*)\"$");
+        Pattern pattern = Pattern.compile("^(?<date>.*)" + DELIMITER +"\"(?<message>.*)\"$");
         try {
             BufferedReader reader = new BufferedReader(new FileReader(fileName));
             String line = reader.readLine();
