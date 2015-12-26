@@ -1,5 +1,6 @@
 package ru.unn.agile.pomodoro;
 
+import javax.swing.event.EventListenerList;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -8,8 +9,8 @@ public class SessionManager  implements ActionListener {
     static final int BREAK_MINUTE_COUNT = 5;
     static final int BIG_BREAK_MINUTE_COUNT = 30;
     private int pomodoroCount;
-
     private String status;
+    private final EventListenerList pomodoroInfoListeners = new EventListenerList();
 
     private final IObservableTimer internalTimer;
     private final SessionTimeManager sessionTimeManager;
@@ -33,12 +34,15 @@ public class SessionManager  implements ActionListener {
     @Override
     public void actionPerformed(final ActionEvent e) {
         updateSessionTime();
+        fireActionPerformed(new ActionEvent(this, 0, "Time changed"));
     }
 
     public int getPomodoroCount() {
         return pomodoroCount;
     }
-
+    public PomodoroTime getPomodoroTime() {
+        return sessionTimeManager.getTime();
+    }
     public String getStatus() {
         return status;
     }
@@ -109,5 +113,23 @@ public class SessionManager  implements ActionListener {
 
     private void addOnePomodoroToday() {
         pomodoroCount += 1;
+    }
+
+    public void addActionListener(final ActionListener listener) {
+        pomodoroInfoListeners.add(ActionListener.class, listener);
+    }
+
+    public void removeActionListener(final ActionListener listener) {
+        pomodoroInfoListeners.remove(ActionListener.class, listener);
+    }
+
+    private void fireActionPerformed(final ActionEvent e) {
+        Object[] listeners = pomodoroInfoListeners.getListenerList();
+
+        for (int i = listeners.length - 2; i >= 0; i -= 2) {
+            if (listeners[i] == ActionListener.class) {
+                ((ActionListener) listeners[i + 1]).actionPerformed(e);
+            }
+        }
     }
 }

@@ -10,6 +10,7 @@ public class SessionTimeManager {
     public void setTime(final int minute, final int second) {
         pomodoroTime.setMinuteCount(minute);
         pomodoroTime.setSecondCount(second);
+
     }
 
     public PomodoroTime getTime() {

@@ -1,0 +1,68 @@
+package ru.unn.agile.PomodoroTimer.view;
+
+
+import ru.unn.agile.PomodoroTimer.viewmodel.PomodoroTimerViewModel;
+import ru.unn.agile.pomodoro.ObservableTimer;
+import ru.unn.agile.pomodoro.SessionManager;
+import ru.unn.agile.pomodoro.SessionTimeManager;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+public final class PomodoroTimerView implements ActionListener {
+    private JButton startTimerButton;
+    private JPanel mainPanel;
+    private JLabel minutesLabel;
+    private JLabel secondsLabel;
+    private JLabel pomodoroCountLabel;
+    private JLabel currentStatusLabel;
+
+    private final PomodoroTimerViewModel viewModel;
+
+    public static void main(final String[] args) {
+        JFrame frame = new JFrame("PomodoroTimerView");
+        SessionManager sessionManager = new SessionManager(new SessionTimeManager(),
+                new ObservableTimer());
+        PomodoroTimerViewModel viewModel = new PomodoroTimerViewModel(sessionManager);
+        frame.setContentPane(new PomodoroTimerView(viewModel).mainPanel);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+    }
+    @Override
+    public void actionPerformed(final ActionEvent e) {
+        backBind();
+        bind();
+    }
+
+    private PomodoroTimerView(final PomodoroTimerViewModel viewModel) {
+        this.viewModel = viewModel;
+        this.viewModel.addPomodoroTimerViewModelChangeListener(this);
+
+        startTimerButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                bind();
+                viewModel.startSession();
+                backBind();
+            }
+        });
+
+    }
+    private void bind() {
+        viewModel.setPomodoroCount(pomodoroCountLabel.getText());
+        viewModel.setCurrentStatus(currentStatusLabel.getText());
+        viewModel.setSeconds(secondsLabel.getText());
+        viewModel.setMinutes(minutesLabel.getText());
+    }
+
+    private void backBind() {
+        startTimerButton.setEnabled(viewModel.getCanStartTimer());
+
+        pomodoroCountLabel.setText(viewModel.getPomodoroCount());
+        currentStatusLabel.setText(viewModel.getCurrentStatus());
+        secondsLabel.setText(viewModel.getSeconds());
+        minutesLabel.setText(viewModel.getMinutes());
+    }
+}
