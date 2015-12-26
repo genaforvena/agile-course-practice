@@ -1,34 +1,57 @@
 package ru.unn.agile.PercentAccretion.viewmodel;
 
+import com.sun.xml.internal.ws.commons.xmlutil.Converter;
 import ru.unn.agile.PercentAccretion.Model.PercentAccretionFactory;
 import ru.unn.agile.PercentAccretion.Model.PercentAccretion;
 import ru.unn.agile.PercentAccretion.Model.PercentData;
 
+import java.util.List;
+
 public class PercentAccretionViewModel {
-    public enum PercentAccretionErrors {
-        FIELD_IS_EMPTY("Please fill fields!"),
-        INCORRECT_VALUES("Please enter correct values!"),
-        SUCCESS("");
+    public enum PercentAccretionStatus {
+        FIELD_IS_EMPTY("Empty fields!"),
+        INCORRECT_VALUES("Wrong values!"),
+        CLICK_BUTTON("Please click\"Calculate\"!"),
+        SUCCESS("Success");
 
-        private String errorMessage;
+        private String statusMessage;
 
-        PercentAccretionErrors(final String errorMessage) {
-            this.errorMessage = errorMessage;
+        PercentAccretionStatus(final String StatusMessage) {
+            this.statusMessage = StatusMessage;
         }
 
         public String getMessage() {
-            return errorMessage;
+            return statusMessage;
+        }
+    }
+
+    public enum LogMessages {
+        PARAMETERS_WERE_UPDATED("Parameters were updated to: "),
+        PERCENT_TYPE_WAS_CHANGED("Percent type was changed: "),
+        CALCULATE_WAS_PRESSED("Calculate: ");
+
+        private String message;
+
+        LogMessages(final String message) {
+            this.message = message;
+        }
+
+        @Override
+        public String toString() {
+            return message;
         }
     }
     private boolean calculateButtonEnabled;
     private boolean initialSumIsCorrect;
     private boolean percentRateIsCorrect;
     private boolean countOfYearsIsCorrect;
+    private boolean areParametersChanged;
     private PercentAccretionFactory.AccretionType operation;
     private final PercentData data;
-    private String errorMessage;
+    private String StatusMessage;
     private String resultSum;
     private static final String EMPTY_STRING = "";
+    private IPercentAccretionLogger logger;
 
     public String getResultSum() {
         return resultSum;
@@ -37,7 +60,12 @@ public class PercentAccretionViewModel {
     public boolean isCalculateButtonEnabled() {
         if (checkFieldsHaveRightValues()) {
             calculateButtonEnabled = true;
-            errorMessage = PercentAccretionErrors.SUCCESS.getMessage();
+            if (EMPTY_STRING.equals(resultSum)) {
+                StatusMessage = PercentAccretionStatus.CLICK_BUTTON.getMessage();
+            }
+            else {
+                StatusMessage = PercentAccretionStatus.SUCCESS.getMessage();
+            }
         } else {
             calculateButtonEnabled = false;
         }
@@ -49,19 +77,55 @@ public class PercentAccretionViewModel {
     }
 
     public void setPercentType(final String value) {
-        if (PercentAccretionFactory.AccretionType.
-                SIMPLE_PERCENT_SUM.toString().equals(value)) {
-            operation = PercentAccretionFactory.AccretionType.SIMPLE_PERCENT_SUM;
+        if (this.operation.toString() != value) {
+            if (PercentAccretionFactory.AccretionType.
+                    SIMPLE_PERCENT_SUM.toString().equals(value)) {
+                operation = PercentAccretionFactory.AccretionType.SIMPLE_PERCENT_SUM;
+            }
+            if (PercentAccretionFactory.AccretionType.
+                    COMPLEX_PERCENT_SUM.toString().equals(value)) {
+                operation = PercentAccretionFactory.AccretionType.COMPLEX_PERCENT_SUM;
+            }
+            logger.log(LogMessages.PERCENT_TYPE_WAS_CHANGED.toString() + operation.toString());
+            resultSum = EMPTY_STRING;
         }
-        if (PercentAccretionFactory.AccretionType.
-                COMPLEX_PERCENT_SUM.toString().equals(value)) {
-            operation = PercentAccretionFactory.AccretionType.COMPLEX_PERCENT_SUM;
-        }
-        resultSum = EMPTY_STRING;
     }
 
-    public String getErrorMessage() {
-        return errorMessage;
+    public String getStatusMessage() {
+        return StatusMessage;
+    }
+
+    private void logParameters() {
+        if (!areParametersChanged) {
+            return;
+        }
+
+        logger.log(editingFinishedLogMessage());
+        areParametersChanged = false;
+    }
+
+    private String editingFinishedLogMessage() {
+        String message = LogMessages.PARAMETERS_WERE_UPDATED.toString()
+                + ": ["
+                + data.getInitialSum() + "; "
+                + data.getPercentRate() + "; "
+                + data.getCountOfYears() + "]";
+
+        return message;
+    }
+
+    private String calculatingMessage() {
+        String message = LogMessages.CALCULATE_WAS_PRESSED.toString()
+                + "Initial Sum: " + data.getInitialSum() + "; \n"
+                + "Percent Rate: " + data.getPercentRate() + "; \n"
+                + "Count of years: " + data.getCountOfYears() + "; \n"
+                + "Operation: " + operation.toString();
+
+        return message;
+    }
+
+    public void focusLost() {
+        logParameters();
     }
 
     public void setInitialSum(final String value) {
@@ -70,9 +134,12 @@ public class PercentAccretionViewModel {
             initialSumIsCorrect = false;
             return;
         }
-        data.setInitialSum(Double.valueOf(value));
-        initialSumIsCorrect = true;
-        clearErrorMessage();
+        if (this.data.getInitialSum() != Double.valueOf(value)) {
+            data.setInitialSum(Double.valueOf(value));
+            initialSumIsCorrect = true;
+            clearStatusMessage();
+            areParametersChanged = true;
+        }
     }
 
     public void setPercentRate(final String value) {
@@ -81,9 +148,12 @@ public class PercentAccretionViewModel {
             percentRateIsCorrect = false;
             return;
         }
-        data.setPercentRate(Double.valueOf(value));
-        percentRateIsCorrect = true;
-        clearErrorMessage();
+        if (this.data.getPercentRate() != Double.valueOf(value)) {
+            data.setPercentRate(Double.valueOf(value));
+            percentRateIsCorrect = true;
+            clearStatusMessage();
+            areParametersChanged = true;
+        }
     }
 
     public void setCountOfYears(final String value) {
@@ -92,15 +162,19 @@ public class PercentAccretionViewModel {
             countOfYearsIsCorrect = false;
             return;
         }
-        data.setCountOfYears(Integer.valueOf(value));
-        countOfYearsIsCorrect = true;
-        clearErrorMessage();
+        if (this.data.getCountOfYears() != Integer.valueOf(value)) {
+            data.setCountOfYears(Integer.valueOf(value));
+            countOfYearsIsCorrect = true;
+            clearStatusMessage();
+            areParametersChanged = true;
+        }
     }
 
     public void calculateResultSum() {
         PercentAccretionFactory percentAccretionFactory = new PercentAccretionFactory();
         PercentAccretion percentCounter = percentAccretionFactory.create(operation);
         resultSum = String.valueOf(percentCounter.calculate(data));
+        logger.log(calculatingMessage());
     }
 
     public PercentAccretionViewModel() {
@@ -109,17 +183,29 @@ public class PercentAccretionViewModel {
         initialSumIsCorrect = false;
         percentRateIsCorrect = false;
         countOfYearsIsCorrect = false;
-        operation = PercentAccretionFactory.AccretionType.COMPLEX_PERCENT_SUM;
-        errorMessage = PercentAccretionErrors.FIELD_IS_EMPTY.getMessage();
+        operation = PercentAccretionFactory.AccretionType.SIMPLE_PERCENT_SUM;
+        StatusMessage = PercentAccretionStatus.FIELD_IS_EMPTY.getMessage();
+    }
+
+    public PercentAccretionViewModel(final IPercentAccretionLogger logger) {
+        this();
+        if (logger == null) {
+            throw new IllegalArgumentException("Logger can't be null");
+        }
+        this.logger = logger;
+    }
+
+    public List<String> getLog() {
+        return logger.getLog();
     }
 
     private boolean checkValue(final String value) {
         if (EMPTY_STRING.equals(value)) {
-            errorMessage = PercentAccretionErrors.FIELD_IS_EMPTY.getMessage();
+            StatusMessage = PercentAccretionStatus.FIELD_IS_EMPTY.getMessage();
             return true;
         }
         if (!value.matches("\\d+")) {
-            errorMessage = PercentAccretionErrors.INCORRECT_VALUES.getMessage();
+            StatusMessage = PercentAccretionStatus.INCORRECT_VALUES.getMessage();
             return true;
         }
         return false;
@@ -129,9 +215,10 @@ public class PercentAccretionViewModel {
         return initialSumIsCorrect && percentRateIsCorrect && countOfYearsIsCorrect;
     }
 
-    private void clearErrorMessage() {
+    private void clearStatusMessage() {
         if (checkFieldsHaveRightValues()) {
-            errorMessage = PercentAccretionErrors.SUCCESS.getMessage();
+            StatusMessage = PercentAccretionStatus.SUCCESS.getMessage();
         }
     }
+
 }

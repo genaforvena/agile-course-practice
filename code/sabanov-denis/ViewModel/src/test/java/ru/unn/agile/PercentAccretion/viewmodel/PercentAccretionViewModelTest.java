@@ -8,9 +8,14 @@ import static org.junit.Assert.*;
 public class PercentAccretionViewModelTest {
     private PercentAccretionViewModel viewModel;
 
+    public void setViewModel(final PercentAccretionViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
+
     @Before
     public void initialize() {
-        viewModel = new PercentAccretionViewModel();
+        FakePercentAccretionLogger logger = new FakePercentAccretionLogger();
+        viewModel = new PercentAccretionViewModel(logger);
     }
 
     @Test
@@ -19,10 +24,10 @@ public class PercentAccretionViewModelTest {
     }
 
     @Test
-    public void whenFieldsAreEmptyShowErrorMessage() {
+    public void whenFieldsAreEmptyShowStatusMessage() {
         assertEquals(PercentAccretionViewModel.
-                        PercentAccretionErrors.FIELD_IS_EMPTY.getMessage(),
-                viewModel.getErrorMessage());
+                        PercentAccretionStatus.FIELD_IS_EMPTY.getMessage(),
+                viewModel.getStatusMessage());
     }
 
     @Test
@@ -35,49 +40,49 @@ public class PercentAccretionViewModelTest {
     }
 
     @Test
-    public void whenFillAllFieldsClearErrorMessage() {
+    public void whenFillAllFieldsClearStatusMessage() {
         viewModel.setPercentRate("1");
         viewModel.setCountOfYears("1");
         viewModel.setInitialSum("1");
 
         assertEquals(PercentAccretionViewModel.
-                        PercentAccretionErrors.SUCCESS.getMessage(),
-                viewModel.getErrorMessage());
+                        PercentAccretionStatus.SUCCESS.getMessage(),
+                viewModel.getStatusMessage());
     }
 
     @Test
-    public void whenOneOfFieldsIsFilledIncorrectShowErrorMessage() {
+    public void whenOneOfFieldsIsFilledIncorrectShowStatusMessage() {
         viewModel.setInitialSum("1");
         viewModel.setPercentRate("1");
         viewModel.setCountOfYears("a");
 
         assertEquals(PercentAccretionViewModel.
-                        PercentAccretionErrors.INCORRECT_VALUES.getMessage(),
-                viewModel.getErrorMessage());
+                        PercentAccretionStatus.INCORRECT_VALUES.getMessage(),
+                viewModel.getStatusMessage());
     }
 
     @Test
-    public void whenCorrectWrongValueOfFieldClearErrorMessage() {
+    public void whenCorrectWrongValueOfFieldClearStatusMessage() {
         viewModel.setInitialSum("1");
         viewModel.setPercentRate("1");
         viewModel.setCountOfYears("a");
         viewModel.setCountOfYears("1");
 
         assertEquals(PercentAccretionViewModel.
-                        PercentAccretionErrors.SUCCESS.getMessage(),
-                viewModel.getErrorMessage());
+                        PercentAccretionStatus.SUCCESS.getMessage(),
+                viewModel.getStatusMessage());
     }
 
     @Test
-    public void whenOneOfFieldsIsClearedShowErrorMessage() {
+    public void whenOneOfFieldsIsClearedShowStatusMessage() {
         viewModel.setInitialSum("1");
         viewModel.setPercentRate("1");
         viewModel.setCountOfYears("1");
         viewModel.setCountOfYears("");
 
         assertEquals(PercentAccretionViewModel.
-                        PercentAccretionErrors.FIELD_IS_EMPTY.getMessage(),
-                viewModel.getErrorMessage());
+                        PercentAccretionStatus.FIELD_IS_EMPTY.getMessage(),
+                viewModel.getStatusMessage());
     }
 
     @Test

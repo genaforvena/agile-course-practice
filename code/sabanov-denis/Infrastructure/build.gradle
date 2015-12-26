@@ -1,0 +1,16 @@
+dependencies {
+    
+    compile project(':sabanov-denis-ViewModel')
+    
+    testCompile project(':sabanov-denis-ViewModel').sourceSets.test.output
+
+}
+
+
+sourceSets {
+    
+    main.java.srcDir 'src/main/java'
+    
+    test.java.srcDir 'src/test/java'
+
+}
