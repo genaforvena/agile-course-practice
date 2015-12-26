@@ -38,7 +38,7 @@ public final class PomodoroTimerView implements ActionListener {
 
     private PomodoroTimerView(final PomodoroTimerViewModel viewModel) {
         this.viewModel = viewModel;
-        this.viewModel.addPomodoroTimerViewModelChangeListener(this);
+        this.viewModel.addActionListener(this);
 
         startTimerButton.addActionListener(new ActionListener() {
             @Override
