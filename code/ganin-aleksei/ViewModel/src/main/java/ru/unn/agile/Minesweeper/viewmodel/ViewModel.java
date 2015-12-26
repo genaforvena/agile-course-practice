@@ -80,8 +80,9 @@ public class ViewModel {
     }
 
     public void openCell(final int x, final int y) {
-        minesweeperModel.openCell(x, y);
-        logger.log(LogMessages.openCell(x, y));
+        if (minesweeperModel.openCell(x, y)) {
+            logger.log(LogMessages.openCell(x, y));
+        }
         updateLogs();
     }
 

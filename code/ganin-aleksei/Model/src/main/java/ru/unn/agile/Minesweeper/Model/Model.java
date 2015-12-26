@@ -20,8 +20,8 @@ public class Model {
         return  board.getMineCounter();
     }
 
-    public void openCell(final int x, final int y) {
-        board.openCell(y, x);
+    public boolean openCell(final int x, final int y) {
+        return board.openCell(y, x);
     }
 
     public void markCell(final int x, final int y) {

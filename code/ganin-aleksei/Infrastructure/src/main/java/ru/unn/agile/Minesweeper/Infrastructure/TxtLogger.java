@@ -12,33 +12,32 @@ import java.util.Locale;
 import java.util.List;
 
 public class TxtLogger implements ILogger {
-    private static final String DATE_FORMAT_NOW = "yyyy-MM-dd HH:mm:ss";
-    private final BufferedWriter writer;
-    private final String filename;
+    private static final String DATE_FORMAT_NOW = "dd.HH.yyyy HH:mm:ss";
+    private final BufferedWriter bufferedWriter;
+    private final String nameOfFile;
 
     private static String now() {
-        Calendar cal = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW, Locale.ENGLISH);
-        return sdf.format(cal.getTime());
+        Calendar calendar = Calendar.getInstance();
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_FORMAT_NOW, Locale.ENGLISH);
+        return simpleDateFormat.format(calendar.getTime());
     }
 
-    public TxtLogger(final String filename) {
-        this.filename = filename;
+    public TxtLogger(final String nameOfFile) {
+        this.nameOfFile = nameOfFile;
         BufferedWriter logWriter = null;
         try {
-            logWriter = new BufferedWriter(new FileWriter(filename));
+            logWriter = new BufferedWriter(new FileWriter(nameOfFile));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        writer = logWriter;
+        bufferedWriter = logWriter;
     }
 
     @Override
     public void log(final String s) {
         try {
-            writer.write(now() + " > " + s);
-            writer.newLine();
-            writer.flush();
+            bufferedWriter.write(now() + ": " + s + "\n");
+            bufferedWriter.flush();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -46,15 +45,15 @@ public class TxtLogger implements ILogger {
 
     @Override
     public List<String> getLog() {
-        BufferedReader reader;
+        BufferedReader bufferedReader;
         ArrayList<String> log = new ArrayList<String>();
         try {
-            reader = new BufferedReader(new FileReader(filename));
-            String line = reader.readLine();
+            bufferedReader = new BufferedReader(new FileReader(nameOfFile));
+            String logString = bufferedReader.readLine();
 
-            while (line != null) {
-                log.add(line);
-                line = reader.readLine();
+            while (logString != null) {
+                log.add(logString);
+                logString = bufferedReader.readLine();
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
