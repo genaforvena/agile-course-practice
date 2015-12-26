@@ -132,7 +132,38 @@ public class PomodoroTimerViewModelShould {
 
         assertEquals(defaultBreakMinutes, pomodoroTimerViewModel.getMinutes());
     }
+    @Test
+    public void correctTakeCurrentStatus() {
+        String statusForViewModel = Status.POMODORO.toString();
 
+        pomodoroTimerViewModel.setCurrentStatus(statusForViewModel);
+
+        assertEquals(statusForViewModel, pomodoroTimerViewModel.getCurrentStatus());
+    }
+    @Test
+    public void correctTakeSecondsCount() {
+        String secondsCountForViewModel = "01";
+
+        pomodoroTimerViewModel.setSeconds(secondsCountForViewModel);
+
+        assertEquals(secondsCountForViewModel, pomodoroTimerViewModel.getSeconds());
+    }
+    @Test
+    public void correctTakeMinutesCount() {
+        String minutesCountForViewModel = "02";
+
+        pomodoroTimerViewModel.setMinutes(minutesCountForViewModel);
+
+        assertEquals(minutesCountForViewModel, pomodoroTimerViewModel.getMinutes());
+    }
+    @Test
+    public void correctTakePomodoroCount() {
+        String pomodoroCountForViewModel = "3";
+
+        pomodoroTimerViewModel.setPomodoroCount(pomodoroCountForViewModel);
+
+        assertEquals(pomodoroCountForViewModel, pomodoroTimerViewModel.getPomodoroCount());
+    }
     private boolean isDefaultValuesOnViewModel(final PomodoroTimerViewModel
                                                        pomodoroTimerViewModel) {
         return  pomodoroTimerViewModel.getCanStartTimer()
