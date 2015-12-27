@@ -12,7 +12,7 @@ public class PercentAccretionLoggerTest {
     private PercentAccretionLogger logger;
 
     @Before
-    public void initializeLogger() {
+    public void initialize() {
         logger = new PercentAccretionLogger(PATH_TO_FILE);
     }
 
@@ -22,26 +22,26 @@ public class PercentAccretionLoggerTest {
     }
 
     @Test
-    public void byDefaultLogIsEmpty() {
+    public void checkByDefaultLogIsEmpty() {
         assertTrue(logger.getLog().isEmpty());
     }
 
     @Test
-    public void didLoggerCreateTxtFileOnDisk() {
+    public void checkLoggerCreateTxtFileOnDisk() {
         assertTrue(new File(PATH_TO_FILE).isFile());
     }
 
     @Test
-    public void doesLogMethodAddSomethingInLog() {
-        logger.log("test");
+    public void checkLogMethodAddSomethingInLog() {
+        logger.log("something");
 
         assertFalse(logger.getLog().isEmpty());
     }
 
     @Test
-    public void canAddSeveralMessagesInLog() {
-        logger.log("test");
-        logger.log("test2");
+    public void checkCanAddSeveralMessagesInLog() {
+        logger.log("bla bla");
+        logger.log("bla bla bla");
 
         assertEquals(2, logger.getLog().size());
     }

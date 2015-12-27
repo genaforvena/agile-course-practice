@@ -10,24 +10,24 @@ import java.util.Date;
 import java.util.List;
 
 public class PercentAccretionLogger implements IPercentAccretionLogger {
-    private FileWriter writer;
-    private final String pathToFile;
+    private FileWriter fileWriter;
+    private final String filePath;
 
-    public PercentAccretionLogger(final String pathToFile) {
-        this.pathToFile = pathToFile;
+    public PercentAccretionLogger(final String filePath) {
+        this.filePath = filePath;
 
         try {
-            writer = new FileWriter(pathToFile);
+            fileWriter = new FileWriter(filePath);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Override
-    public void log(final String message) {
+    public void log(final String logMessage) {
         try {
-            writer.write(new Date() + " > " + message + "\n");
-            writer.flush();
+            fileWriter.write(new Date() + " > " + logMessage + "\n");
+            fileWriter.flush();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -35,15 +35,15 @@ public class PercentAccretionLogger implements IPercentAccretionLogger {
 
     @Override
     public List<String> getLog() {
-        BufferedReader reader;
+        BufferedReader bufferedReader;
         ArrayList<String> log = new ArrayList<>();
         try {
-            reader = new BufferedReader(new FileReader(pathToFile));
-            String message = reader.readLine();
+            bufferedReader = new BufferedReader(new FileReader(filePath));
+            String bufMessage = bufferedReader.readLine();
 
-            while (message != null) {
-                log.add(message);
-                message = reader.readLine();
+            while (bufMessage != null) {
+                log.add(bufMessage);
+                bufMessage = bufferedReader.readLine();
             }
         } catch (Exception e) {
             System.out.println(e.getMessage());
