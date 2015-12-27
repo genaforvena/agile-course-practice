@@ -75,7 +75,7 @@ public class PercentAccretionViewModel {
     }
 
     public void setPercentType(final String value) {
-        if (this.operation.toString() != value) {
+        if (!this.operation.toString().equals(value)) {
             if (PercentAccretionFactory.AccretionType.
                     SIMPLE_PERCENT_SUM.toString().equals(value)) {
                 operation = PercentAccretionFactory.AccretionType.SIMPLE_PERCENT_SUM;
@@ -94,12 +94,10 @@ public class PercentAccretionViewModel {
     }
 
     private void logParameters() {
-        if (!areParametersChanged) {
-            return;
+        if (areParametersChanged) {
+            logger.log(editingFinishedLogMessage());
+            areParametersChanged = false;
         }
-
-        logger.log(editingFinishedLogMessage());
-        areParametersChanged = false;
     }
 
     private String editingFinishedLogMessage() {
@@ -132,7 +130,7 @@ public class PercentAccretionViewModel {
             initialSumIsCorrect = false;
             return;
         }
-        if (this.data.getInitialSum() != Double.valueOf(value)) {
+        if (!Double.valueOf(value).equals(this.data.getInitialSum())) {
             data.setInitialSum(Double.valueOf(value));
             initialSumIsCorrect = true;
             clearStatusMessage();
