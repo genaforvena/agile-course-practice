@@ -104,7 +104,7 @@ public class PercentAccretionViewModel {
             initialSumIsCorrect = false;
             return;
         }
-        if (!Double.valueOf(value).equals(this.data.getInitialSum())) {
+        if (!String.valueOf(this.data.getInitialSum()).equals(value)) {
             data.setInitialSum(Double.valueOf(value));
             initialSumIsCorrect = true;
             clearStatusMessage();
@@ -118,7 +118,7 @@ public class PercentAccretionViewModel {
             percentRateIsCorrect = false;
             return;
         }
-        if (this.data.getPercentRate() != Double.valueOf(value)) {
+        if (!String.valueOf(this.data.getPercentRate()).equals(value)) {
             data.setPercentRate(Double.valueOf(value));
             percentRateIsCorrect = true;
             clearStatusMessage();
@@ -132,7 +132,7 @@ public class PercentAccretionViewModel {
             countOfYearsIsCorrect = false;
             return;
         }
-        if (this.data.getCountOfYears() != Integer.valueOf(value)) {
+        if (!String.valueOf(this.data.getCountOfYears()).equals(value)) {
             data.setCountOfYears(Integer.valueOf(value));
             countOfYearsIsCorrect = true;
             clearStatusMessage();
@@ -174,7 +174,7 @@ public class PercentAccretionViewModel {
             statusMessage = PercentAccretionStatus.FIELD_IS_EMPTY.getMessage();
             return true;
         }
-        if (!value.matches("\\d+")) {
+        if (!value.matches("\\d+" + '.' + "\\d+") && !value.matches("\\d+")) {
             statusMessage = PercentAccretionStatus.INCORRECT_VALUES.getMessage();
             return true;
         }
