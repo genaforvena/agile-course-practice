@@ -22,11 +22,11 @@ public class ViewModelTest extends ViewModel {
     public void viewModelConstructorThrowsExceptionWithNullLogger() {
         try {
             new ViewModel(null);
-            fail("Exception wasn't thrown");
-        } catch (IllegalArgumentException ex) {
-            assertEquals("Logger parameter can't be null", ex.getMessage());
+            fail("Exception was not thrown");
+        } catch (IllegalArgumentException exc) {
+            assertEquals("Logger parameter can't be null", exc.getMessage());
         } catch (Exception ex) {
-            fail("Invalid exception type");
+            fail("Invalid type of exception");
         }
     }
 

@@ -1,18 +1,17 @@
 package ru.unn.agile.Minesweeper.View;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import ru.unn.agile.Minesweeper.Infrastructure.CSVLogger;
 import ru.unn.agile.Minesweeper.viewmodel.ViewModel;
-import ru.unn.agile.Minesweeper.Infrastructure.TxtLogger;
 
 public class View {
 
 
     private final ViewModel minesweeperViewModel = new ViewModel(
-            new TxtLogger("TxtLogger-lab3.log")
+            new CSVLogger("CSVLogger-lab3.log")
     );
     public static final int CELL_SIZE = 20;
     private static final int SMILE_POSITION_Y = 0;
