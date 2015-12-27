@@ -60,6 +60,8 @@ include "code/filicheva-svetlana/View"
 project(":code/filicheva-svetlana/View").name = "filicheva-svetlana-View"
 include "code/filicheva-svetlana/ViewModel"
 project(":code/filicheva-svetlana/ViewModel").name = "filicheva-svetlana-ViewModel"
+include "code/filicheva-svetlana/Infrastructure"
+project(":code/filicheva-svetlana/Infrastructure").name = "filicheva-svetlana-Infrastructure"
 
 // Francuzova Natalya
 
@@ -78,6 +80,8 @@ include "code/garina-anastasia/View"
 project(":code/garina-anastasia/View").name = "garina-anastasia-View"
 include "code/garina-anastasia/ViewModel"
 project(":code/garina-anastasia/ViewModel").name = "garina-anastasia-ViewModel"
+include "code/garina-anastasia/Infrastructure"
+project(":code/garina-anastasia/Infrastructure").name = "garina-anastasia-Infrastructure"
 
 // Gatchenko Viktor
 include "code/gatchenko-viktor"
@@ -123,6 +127,8 @@ include "code/kazanbaev-dmitry/View"
 project(":code/kazanbaev-dmitry/View").name = "kazanbaev-dmitry-View"
 include "code/kazanbaev-dmitry/ViewModel"
 project(":code/kazanbaev-dmitry/ViewModel").name = "kazanbaev-dmitry-ViewModel"
+include "code/kazanbaev-dmitry/Infrastructure"
+project(":code/kazanbaev-dmitry/Infrastructure").name = "kazanbaev-dmitry-Infrastructure"
 
 // Khanova Tatyana
 // Kochanova Kseniya
@@ -132,6 +138,8 @@ include "code/kochanova-ksenya/View"
 project(":code/kochanova-ksenya/View").name = "kochanova-ksenya-View"
 include "code/kochanova-ksenya/ViewModel"
 project(":code/kochanova-ksenya/ViewModel").name = "kochanova-ksenya-ViewModel"
+include "code/kochanova-ksenya/Infrastructure"
+project(":code/kochanova-ksenya/Infrastructure").name = "kochanova-ksenya-Infrastructure"
 // Korotaev Aleksej
 // Korotaev Pavel
 include "code/korotaev-pavel/Model"
@@ -140,6 +148,8 @@ include "code/korotaev-pavel/View"
 project(":code/korotaev-pavel/View").name = "korotaev-pavel-View"
 include "code/korotaev-pavel/ViewModel"
 project(":code/korotaev-pavel/ViewModel").name = "korotaev-pavel-ViewModel"
+include "code/korotaev-pavel/Infrastructure"
+project(":code/korotaev-pavel/Infrastructure").name = "korotaev-pavel-Infrastructure"
 
 // Kostrov Aleksey
 include "code/kostrov-aleksey/Model"
@@ -156,6 +166,8 @@ include "code/kumaev-vasily/View"
 project(":code/kumaev-vasily/View").name = "kumaev-vasily-View"
 include "code/kumaev-vasily/ViewModel"
 project(":code/kumaev-vasily/ViewModel").name = "kumaev-vasily-ViewModel"
+include "code/kumaev-vasily/Infrastructure"
+project(":code/kumaev-vasily/Infrastructure").name = "kumaev-vasily-Infrastructure"
 
 // Kuznecov Aleksandr
 // Larin Sergej
@@ -168,6 +180,8 @@ include "code/molotkov-andrei/ViewModel"
 project(":code/molotkov-andrei/ViewModel").name = "molotkov-andrei-ViewModel"
 include "code/molotkov-andrei/View"
 project(":code/molotkov-andrei/View").name = "molotkov-andrei-View"
+include "code/molotkov-andrei/Infrastructure"
+project(":code/molotkov-andrei/Infrastructure").name = "molotkov-andrei-Infrastructure"
 
 // Moshkov Yurij
 include "code/moshkov-yuriy/Model"
@@ -176,6 +190,8 @@ include "code/moshkov-yuriy/View"
 project(":code/moshkov-yuriy/View").name = "moshkov-yuriy-View"
 include "code/moshkov-yuriy/ViewModel"
 project(":code/moshkov-yuriy/ViewModel").name = "moshkov-yuriy-ViewModel"
+include "code/moshkov-yuriy/Infrastructure"
+project(":code/moshkov-yuriy/Infrastructure").name = "moshkov-yuriy-Infrastructure"
 // Mozerov Ilya
 // Nesmelov Aleksej
 include "code/nesmelov-aleksey/Model"
@@ -184,6 +200,8 @@ include "code/nesmelov-aleksey/View"
 project(":code/nesmelov-aleksey/View").name = "nesmelov-aleksey-View"
 include "code/nesmelov-aleksey/ViewModel"
 project(":code/nesmelov-aleksey/ViewModel").name = "nesmelov-aleksey-ViewModel"
+include "code/nesmelov-aleksey/Infrastructure"
+project(":code/nesmelov-aleksey/Infrastructure").name = "nesmelov-aleksey-Infrastructure"
 // Nikolaev Kirill
 include "code/nikolaev-kirill/Model"
 project(":code/nikolaev-kirill/Model").name = "nikolaev-kirill-Model"
@@ -241,6 +259,8 @@ include "code/shulgina-yana/View"
 project(":code/shulgina-yana/View").name = "shulgina-yana-View"
 include "code/shulgina-yana/ViewModel"
 project(":code/shulgina-yana/ViewModel").name = "shulgina-yana-ViewModel"
+include "code/shulgina-yana/Infrastructure"
+project(":code/shulgina-yana/Infrastructure").name = "shulgina-yana-Infrastructure"
 
 
 // Smirnov Alexandr
@@ -258,6 +278,8 @@ include "code/smirnov-michael/ViewModel"
 project(":code/smirnov-michael/ViewModel").name = "smirnov-michael-ViewModel"
 include "code/smirnov-michael/View"
 project(":code/smirnov-michael/View").name = "smirnov-michael-View"
+include "code/smirnov-michael/Infrastructure"
+project(":code/smirnov-michael/Infrastructure").name = "smirnov-michael-Infrastructure"
 
 // Smirnov Vyacheslav
 include "code/smirnov-vyacheslav/Model"
@@ -283,6 +305,8 @@ include "code/vodopyanov-dmitry/ViewModel"
 project(":code/vodopyanov-dmitry/ViewModel").name = "vodopyanov-dmitry-ViewModel"
 include "code/vodopyanov-dmitry/View"
 project(":code/vodopyanov-dmitry/View").name = "vodopyanov-dmitry-View"
+include "code/vodopyanov-dmitry/Infrastructure"
+project(":code/vodopyanov-dmitry/Infrastructure").name = "vodopyanov-dmitry-Infrastructure"
 
 // Volosenkov Evgenij
 
