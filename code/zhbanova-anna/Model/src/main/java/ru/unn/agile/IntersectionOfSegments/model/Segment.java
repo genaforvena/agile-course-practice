@@ -130,7 +130,7 @@ public class Segment {
     }
 
     private  boolean isEndOfThisSegmentIsBeginningOfSecondWhenSlopeSame(final Segment segment) {
-        return this.getFinishX() > segment.getStartX() && this.getFinishX() < segment.getFinishX();
+        return this.getFinishX() >= segment.getStartX() && this.getFinishX() < segment.getFinishX();
     }
 
     private boolean isIntersection(final Segment segment) {
