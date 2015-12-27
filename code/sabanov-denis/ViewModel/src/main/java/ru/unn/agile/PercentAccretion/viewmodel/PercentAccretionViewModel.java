@@ -1,6 +1,5 @@
 package ru.unn.agile.PercentAccretion.viewmodel;
 
-import com.sun.xml.internal.ws.commons.xmlutil.Converter;
 import ru.unn.agile.PercentAccretion.Model.PercentAccretionFactory;
 import ru.unn.agile.PercentAccretion.Model.PercentAccretion;
 import ru.unn.agile.PercentAccretion.Model.PercentData;
@@ -16,8 +15,8 @@ public class PercentAccretionViewModel {
 
         private String statusMessage;
 
-        PercentAccretionStatus(final String StatusMessage) {
-            this.statusMessage = StatusMessage;
+        PercentAccretionStatus(final String newStatusMessage) {
+            this.statusMessage = newStatusMessage;
         }
 
         public String getMessage() {
@@ -48,7 +47,7 @@ public class PercentAccretionViewModel {
     private boolean areParametersChanged;
     private PercentAccretionFactory.AccretionType operation;
     private final PercentData data;
-    private String StatusMessage;
+    private String statusMessage;
     private String resultSum;
     private static final String EMPTY_STRING = "";
     private IPercentAccretionLogger logger;
@@ -61,10 +60,9 @@ public class PercentAccretionViewModel {
         if (checkFieldsHaveRightValues()) {
             calculateButtonEnabled = true;
             if (EMPTY_STRING.equals(resultSum)) {
-                StatusMessage = PercentAccretionStatus.CLICK_BUTTON.getMessage();
-            }
-            else {
-                StatusMessage = PercentAccretionStatus.SUCCESS.getMessage();
+                statusMessage = PercentAccretionStatus.CLICK_BUTTON.getMessage();
+            } else {
+                statusMessage = PercentAccretionStatus.SUCCESS.getMessage();
             }
         } else {
             calculateButtonEnabled = false;
@@ -92,7 +90,7 @@ public class PercentAccretionViewModel {
     }
 
     public String getStatusMessage() {
-        return StatusMessage;
+        return statusMessage;
     }
 
     private void logParameters() {
@@ -116,9 +114,9 @@ public class PercentAccretionViewModel {
 
     private String calculatingMessage() {
         String message = LogMessages.CALCULATE_WAS_PRESSED.toString()
-                + "Initial Sum: " + data.getInitialSum() + "; \n"
-                + "Percent Rate: " + data.getPercentRate() + "; \n"
-                + "Count of years: " + data.getCountOfYears() + "; \n"
+                + "Initial Sum: " + data.getInitialSum() + ";"
+                + "Percent Rate: " + data.getPercentRate() + ";"
+                + "Count of years: " + data.getCountOfYears() + ";"
                 + "Operation: " + operation.toString();
 
         return message;
@@ -184,7 +182,7 @@ public class PercentAccretionViewModel {
         percentRateIsCorrect = false;
         countOfYearsIsCorrect = false;
         operation = PercentAccretionFactory.AccretionType.SIMPLE_PERCENT_SUM;
-        StatusMessage = PercentAccretionStatus.FIELD_IS_EMPTY.getMessage();
+        statusMessage = PercentAccretionStatus.FIELD_IS_EMPTY.getMessage();
     }
 
     public PercentAccretionViewModel(final IPercentAccretionLogger logger) {
@@ -201,11 +199,11 @@ public class PercentAccretionViewModel {
 
     private boolean checkValue(final String value) {
         if (EMPTY_STRING.equals(value)) {
-            StatusMessage = PercentAccretionStatus.FIELD_IS_EMPTY.getMessage();
+            statusMessage = PercentAccretionStatus.FIELD_IS_EMPTY.getMessage();
             return true;
         }
         if (!value.matches("\\d+")) {
-            StatusMessage = PercentAccretionStatus.INCORRECT_VALUES.getMessage();
+            statusMessage = PercentAccretionStatus.INCORRECT_VALUES.getMessage();
             return true;
         }
         return false;
@@ -217,8 +215,7 @@ public class PercentAccretionViewModel {
 
     private void clearStatusMessage() {
         if (checkFieldsHaveRightValues()) {
-            StatusMessage = PercentAccretionStatus.SUCCESS.getMessage();
+            statusMessage = PercentAccretionStatus.SUCCESS.getMessage();
         }
     }
-
 }

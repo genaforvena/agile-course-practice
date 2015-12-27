@@ -1,5 +1,6 @@
 dependencies {
     compile project(':sabanov-denis-ViewModel')
+    compile project(':sabanov-denis-Infrastructure')
 }
 
 sourceSets {

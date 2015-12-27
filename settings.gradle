@@ -228,6 +228,7 @@ include "code/sabanov-denis/View"
 project(":code/sabanov-denis/View").name = "sabanov-denis-View"
 include "code/sabanov-denis/Infrastructure"
 project(":code/sabanov-denis/Infrastructure").name = "sabanov-denis-Infrastructure"
+
 // Sevrikov Ilya
 include "code/sevrikov-ilya/Model"
 project(":code/sevrikov-ilya/Model").name = "sevrikov-ilya-Model"

@@ -1,11 +1,7 @@
 package ru.unn.agile.PercentAccretion.view;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.text.StringContent;
 
-import ru.unn.agile.PercentAccretion.Model.PercentAccretion;
 import ru.unn.agile.PercentAccretion.Model.PercentAccretionFactory;
 import ru.unn.agile.PercentAccretion.infrastructure.PercentAccretionLogger;
 import ru.unn.agile.PercentAccretion.viewmodel.PercentAccretionViewModel;
@@ -48,7 +44,8 @@ public final class PercentAccretionView {
     }
 
     private PercentAccretionView() {
-        viewModel = new PercentAccretionViewModel(new PercentAccretionLogger("./PercentAccretion.log"));
+        viewModel = new PercentAccretionViewModel(new PercentAccretionLogger(
+                "./PercentAccretion.log"));
 
         radioButtonGroup = new ButtonGroup();
         radioButtonGroup.add(simplePercentRadioButton);
