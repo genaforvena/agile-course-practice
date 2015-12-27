@@ -40,6 +40,7 @@ public class PercentAccretionViewModel {
             return message;
         }
     }
+
     private boolean calculateButtonEnabled;
     private boolean initialSumIsCorrect;
     private boolean percentRateIsCorrect;
@@ -91,33 +92,6 @@ public class PercentAccretionViewModel {
 
     public String getStatusMessage() {
         return statusMessage;
-    }
-
-    private void logParameters() {
-        if (areParametersChanged) {
-            logger.log(editingFinishedLogMessage());
-            areParametersChanged = false;
-        }
-    }
-
-    private String editingFinishedLogMessage() {
-        String message = LogMessages.PARAMETERS_WERE_UPDATED.toString()
-                + ": ["
-                + data.getInitialSum() + "; "
-                + data.getPercentRate() + "; "
-                + data.getCountOfYears() + "]";
-
-        return message;
-    }
-
-    private String calculatingMessage() {
-        String message = LogMessages.CALCULATE_WAS_PRESSED.toString()
-                + "Initial Sum: " + data.getInitialSum() + ";"
-                + "Percent Rate: " + data.getPercentRate() + ";"
-                + "Count of years: " + data.getCountOfYears() + ";"
-                + "Operation: " + operation.toString();
-
-        return message;
     }
 
     public void focusLost() {
@@ -205,6 +179,33 @@ public class PercentAccretionViewModel {
             return true;
         }
         return false;
+    }
+
+    private void logParameters() {
+        if (areParametersChanged) {
+            logger.log(editingFinishedLogMessage());
+            areParametersChanged = false;
+        }
+    }
+
+    private String editingFinishedLogMessage() {
+        String message = LogMessages.PARAMETERS_WERE_UPDATED.toString()
+                + ": ["
+                + data.getInitialSum() + "; "
+                + data.getPercentRate() + "; "
+                + data.getCountOfYears() + "]";
+
+        return message;
+    }
+
+    private String calculatingMessage() {
+        String message = LogMessages.CALCULATE_WAS_PRESSED.toString()
+                + "Initial Sum: " + data.getInitialSum() + ";"
+                + "Percent Rate: " + data.getPercentRate() + ";"
+                + "Count of years: " + data.getCountOfYears() + ";"
+                + "Operation: " + operation.toString();
+
+        return message;
     }
 
     private boolean checkFieldsHaveRightValues() {
