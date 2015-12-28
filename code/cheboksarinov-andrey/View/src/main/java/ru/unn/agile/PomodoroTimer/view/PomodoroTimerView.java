@@ -9,7 +9,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public final class PomodoroTimerView implements ActionListener {
+public final class PomodoroTimerView {
     private JButton startTimerButton;
     private JPanel mainPanel;
     private JLabel minutesLabel;
@@ -30,15 +30,15 @@ public final class PomodoroTimerView implements ActionListener {
         frame.setVisible(true);
     }
 
-    @Override
-    public void actionPerformed(final ActionEvent e) {
-        backBind();
-        bind();
-    }
-
     private PomodoroTimerView(final PomodoroTimerViewModel viewModel) {
         this.viewModel = viewModel;
-        this.viewModel.addActionListener(this);
+        this.viewModel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                backBind();
+                bind();
+            }
+        });
 
         startTimerButton.addActionListener(new ActionListener() {
             @Override

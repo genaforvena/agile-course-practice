@@ -174,7 +174,7 @@ public class PomodoroTimerViewModelShould {
                 && pomodoroTimerViewModel.getSeconds().equals("00");
     }
     private void completeFourPomodoros() {
-        for (int pomodoroCounter = 0;pomodoroCounter < 3; pomodoroCounter++) {
+        for (int pomodoroCounter = 0; pomodoroCounter < 3; pomodoroCounter++) {
             completePomodoro();
             completeBreak();
             sessionManager.startNewPomodoro();

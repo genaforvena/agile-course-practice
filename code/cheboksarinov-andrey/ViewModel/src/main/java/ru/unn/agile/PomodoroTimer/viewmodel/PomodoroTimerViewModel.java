@@ -6,7 +6,7 @@ import ru.unn.agile.pomodoro.SessionManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class PomodoroTimerViewModel extends EventGenerator implements ActionListener {
+public class PomodoroTimerViewModel extends EventGenerator {
     private String seconds;
     private String minutes;
     private String currentStatus;
@@ -21,7 +21,20 @@ public class PomodoroTimerViewModel extends EventGenerator implements ActionList
         pomodoroCount = "0";
         canStartTimer = true;
         this.sessionManager = sessionManager;
-        this.sessionManager.addActionListener(this);
+        this.sessionManager.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(final ActionEvent e) {
+                currentStatus = sessionManager.getStatus();
+                pomodoroCount = String.valueOf(sessionManager.getPomodoroCount());
+                seconds = String.valueOf(sessionManager.getPomodoroTime().getSecondCount());
+                minutes = String.valueOf(sessionManager.getPomodoroTime().getMinuteCount());
+                canStartTimer = true;
+                if (canStartTimer != isCurrentStatusWaiting()) {
+                    canStartTimer = false;
+                }
+                fireActionPerformed(new ActionEvent(this, 0, "View model is changed"));
+            }
+        });
     }
 
     public void setPomodoroCount(final String pomodoroCount) {
@@ -70,19 +83,6 @@ public class PomodoroTimerViewModel extends EventGenerator implements ActionList
         return minutes;
     }
 
-    @Override
-    public void actionPerformed(final ActionEvent e) {
-        currentStatus = sessionManager.getStatus();
-        pomodoroCount = String.valueOf(sessionManager.getPomodoroCount());
-        seconds = String.valueOf(sessionManager.getPomodoroTime().getSecondCount());
-        minutes = String.valueOf(sessionManager.getPomodoroTime().getMinuteCount());
-        canStartTimer = true;
-        if (canStartTimer != isCurrentStatusWaiting()) {
-            canStartTimer = false;
-        }
-        fireActionPerformed(new ActionEvent(this, 0, "View model is changed"));
-    }
-
     public void startSession() {
         sessionManager.startNewPomodoro();
     }
@@ -102,7 +102,7 @@ public class PomodoroTimerViewModel extends EventGenerator implements ActionList
         Status(final String name) {
             this.name = name;
         }
-
+        @Override
         public String toString() {
             return name;
         }
