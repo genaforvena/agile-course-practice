@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.*?>
 <?import ru.unn.agile.Metrics.viewmodel.*?>
 
-<AnchorPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="280.0" prefWidth="470.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.unn.agile.Metrics.view.DistanceCalculator">
+<AnchorPane nodeOrientation="LEFT_TO_RIGHT" prefHeight="440.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.unn.agile.Metrics.view.DistanceCalculator">
     <fx:define>
         <DistanceCalculatorViewModel fx:id="viewModel"/>
     </fx:define>
@@ -16,17 +16,18 @@
       <Label layoutX="28.0" layoutY="85.0" prefHeight="17.0" prefWidth="62.0" text="2nd vector:" />
       <TextField fx:id="txtField1stVector" layoutX="95.0" layoutY="50.0" prefHeight="25.0" prefWidth="190.0" />
       <TextField fx:id="txtField2ndVector" layoutX="95.0" layoutY="81.0" prefHeight="25.0" prefWidth="190.0" />
-      <RadioButton fx:id="radioBtnRhoInf" layoutX="310.0" layoutY="42.0" mnemonicParsing="false" selected="true" text="RHO INF">
+      <RadioButton fx:id="radioBtnRhoInf" layoutX="489.0" layoutY="23.0" mnemonicParsing="false" selected="true" text="RHO INF">
          <toggleGroup>
             <ToggleGroup fx:id="toggleGroupMetrics" />
          </toggleGroup></RadioButton>
-      <RadioButton layoutX="310.0" layoutY="67.0" mnemonicParsing="false" text="RHO ONE" toggleGroup="$toggleGroupMetrics" />
-      <RadioButton layoutX="310.0" layoutY="92.0" mnemonicParsing="false" text="RHO TWO" toggleGroup="$toggleGroupMetrics" />
-      <RadioButton layoutX="310.0" layoutY="117.0" mnemonicParsing="false" text="RHO THREE" toggleGroup="$toggleGroupMetrics" />
-      <RadioButton layoutX="310.0" layoutY="142.0" mnemonicParsing="false" text="RHO FOUR" toggleGroup="$toggleGroupMetrics" />
-      <TextField fx:id="txtDistance" editable="false" layoutX="95.0" layoutY="213.0" prefHeight="25.0" prefWidth="190.0" text="${viewModel.result}" />
-      <Label layoutX="28.0" layoutY="217.0" text="Distance:" />
-      <Button fx:id="btnCalculate" disable="${viewModel.calculateButtonDisabled}" layoutX="369.0" layoutY="213.0" mnemonicParsing="false" text="Calculate" />
-      <Label fx:id="lbStatusMessage" alignment="CENTER" layoutX="15.0" layoutY="179.0" prefHeight="17.0" prefWidth="440.0" text="${viewModel.statusMessage}" />
+      <RadioButton layoutX="489.0" layoutY="48.0" mnemonicParsing="false" text="RHO ONE" toggleGroup="$toggleGroupMetrics" />
+      <RadioButton layoutX="489.0" layoutY="73.0" mnemonicParsing="false" text="RHO TWO" toggleGroup="$toggleGroupMetrics" />
+      <RadioButton layoutX="489.0" layoutY="98.0" mnemonicParsing="false" text="RHO THREE" toggleGroup="$toggleGroupMetrics" />
+      <RadioButton layoutX="489.0" layoutY="123.0" mnemonicParsing="false" text="RHO FOUR" toggleGroup="$toggleGroupMetrics" />
+      <TextField fx:id="txtDistance" editable="false" layoutX="95.0" layoutY="132.0" prefHeight="25.0" prefWidth="190.0" text="${viewModel.result}"/>
+      <Label layoutX="32.0" layoutY="136.0" text="Distance:" />
+      <Button fx:id="btnCalculate" layoutX="499.0" layoutY="166.0" mnemonicParsing="false" text="Calculate" disable="${viewModel.calculateButtonDisabled}"/>
+      <Label fx:id="lbStatusMessage" alignment="CENTER" layoutX="35.0" layoutY="170.0" prefHeight="17.0" prefWidth="440.0" text="${viewModel.statusMessage}"/>
+      <TextArea fx:id="txtAreaLog" editable="false" layoutX="35.0" layoutY="210.0" prefHeight="200.0" prefWidth="500.0" text="${viewModel.logText}"/>
    </children>
 </AnchorPane>

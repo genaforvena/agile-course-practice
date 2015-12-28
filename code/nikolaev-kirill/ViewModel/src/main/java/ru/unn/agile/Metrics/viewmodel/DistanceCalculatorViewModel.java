@@ -15,35 +15,27 @@ import java.util.List;
 public class DistanceCalculatorViewModel {
     public static final String HELP_MESSAGE = "Provide input vectors: decimal or integer numbers "
             + "separated by single whitespaces";
+    public static final String CALCULATE_PRESSED = "Calculate button has been pressed.";
+    public static final String METRIC_CHANGED = "Metric has been changed to: ";
+    public static final String INPUT_UPDATED = "Input vector has been updated.";
     private final StringProperty result = new SimpleStringProperty();
     private final StringProperty firstVector = new SimpleStringProperty();
     private final StringProperty secondVector = new SimpleStringProperty();
     private final StringProperty statusMessage = new SimpleStringProperty();
+    private final StringProperty logText = new SimpleStringProperty();
     private final BooleanProperty calculateButtonDisabled = new SimpleBooleanProperty();
     private final StringProperty metricName = new SimpleStringProperty();
     private final List<ValueChangeListener> valueChangeListeners = new ArrayList<>();
     private final DistanceCalculator calculator = new DistanceCalculator();
+    private ILogger logger;
 
     public DistanceCalculatorViewModel() {
-        result.set("");
-        firstVector.set("");
-        secondVector.set("");
-        statusMessage.set(HELP_MESSAGE);
-        calculateButtonDisabled.set(true);
-        metricName.set("RHO INF");
+        initialize();
+    }
 
-        final List<StringProperty> fields = new ArrayList<StringProperty>() {
-            {
-                add(firstVector);
-                add(secondVector);
-            }
-        };
-
-        for (StringProperty field: fields) {
-            final ValueChangeListener listener = new ValueChangeListener();
-            field.addListener(listener);
-            valueChangeListeners.add(listener);
-        }
+    public DistanceCalculatorViewModel(final ILogger logger) {
+        this.logger = logger;
+        initialize();
     }
 
     public StringProperty firstVectorProperty() {
@@ -63,6 +55,9 @@ public class DistanceCalculatorViewModel {
     public void setMetric(final String metricString) {
         metricName.set(metricString);
     }
+    public String getMetricName() {
+        return metricName.get();
+    }
 
     public StringProperty statusMessageProperty() {
         return statusMessage;
@@ -78,11 +73,31 @@ public class DistanceCalculatorViewModel {
         return result.get();
     }
 
+    public StringProperty logTextProperty() {
+        return logText;
+    }
+    public String getLogText() {
+        return logText.get();
+    }
+
     public BooleanProperty calculateButtonDisabledProperty() {
         return calculateButtonDisabled;
     }
     public boolean isCalculateButtonDisabled() {
         return calculateButtonDisabled.get();
+    }
+
+    public void setLogger(final ILogger logger) {
+        this.logger = logger;
+    }
+
+    public List<String> getLog() {
+        return logger.get();
+    }
+
+    public String getLastLogMessage() {
+        List<String> log = getLog();
+        return log.get(log.size() - 1);
     }
 
     public String getInputStatus() {
@@ -119,6 +134,64 @@ public class DistanceCalculatorViewModel {
         Metric metric = parseMetric(metricName.get());
         result.set(Float.toString(calculator.calculateDistance(firstVector, secondVector,
                 metric)));
+        logger.add(CALCULATE_PRESSED + " Arguments: [" + firstVectorProperty().get() + "]; ["
+                + secondVectorProperty().get() + "] Metric: " + metricName.get());
+        updateLogText();
+    }
+
+    public void onMetricChange(final String oldValue, final String newValue) {
+        if (oldValue.equals(newValue)) {
+            return;
+        }
+        logger.add(METRIC_CHANGED + newValue);
+        updateLogText();
+    }
+
+    public void onFocusChange(final Boolean oldValue, final Boolean newValue) {
+        if (!oldValue && newValue) {
+            return;
+        }
+        for (ValueChangeListener listener: valueChangeListeners) {
+            if (listener.valueIsChanged()) {
+                logger.add(INPUT_UPDATED + " Arguments: ["
+                        + firstVectorProperty().get() + "]; ["
+                        + secondVectorProperty().get() + "]");
+                listener.savePrevValue();
+                updateLogText();
+            }
+        }
+    }
+
+    private void initialize() {
+        result.set("");
+        firstVector.set("");
+        secondVector.set("");
+        logText.set("");
+        statusMessage.set(HELP_MESSAGE);
+        calculateButtonDisabled.set(true);
+        metricName.set("RHO INF");
+
+        final List<StringProperty> fields = new ArrayList<StringProperty>() {
+            {
+                add(firstVector);
+                add(secondVector);
+            }
+        };
+
+        for (StringProperty field: fields) {
+            final ValueChangeListener listener = new ValueChangeListener();
+            field.addListener(listener);
+            valueChangeListeners.add(listener);
+        }
+    }
+
+    private void updateLogText() {
+        List<String> fullLog = logger.get();
+        String text = "";
+        for (String message: fullLog) {
+            text += message + '\n';
+        }
+        logText.set(text);
     }
 
     private float[] parseVector(final String rawVector) {
@@ -155,10 +228,22 @@ public class DistanceCalculatorViewModel {
     }
 
     private class ValueChangeListener implements ChangeListener<String> {
+        private String prevValue = "";
+        private String currValue = "";
+
         @Override
         public void changed(final ObservableValue<? extends String> observable,
                             final String oldValue, final String newValue) {
             statusMessage.set(getInputStatus());
+            currValue = newValue;
+        }
+
+        public boolean valueIsChanged() {
+            return !prevValue.equals(currValue);
+        }
+
+        public void savePrevValue() {
+            prevValue = currValue;
         }
     }
 }

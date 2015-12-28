@@ -209,6 +209,8 @@ include "code/nikolaev-kirill/ViewModel"
 project(":code/nikolaev-kirill/ViewModel").name = "nikolaev-kirill-ViewModel"
 include "code/nikolaev-kirill/View"
 project(":code/nikolaev-kirill/View").name = "nikolaev-kirill-View"
+include "code/nikolaev-kirill/Infrastructure"
+project(":code/nikolaev-kirill/Infrastructure").name = "nikolaev-kirill-Infrastructure"
 
 // Nistratov Andrej
 // Nistratov Artyom

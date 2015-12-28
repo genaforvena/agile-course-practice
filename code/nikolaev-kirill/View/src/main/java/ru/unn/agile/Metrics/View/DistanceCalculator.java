@@ -7,7 +7,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import ru.unn.agile.Metrics.viewmodel.DistanceCalculatorViewModel;
-
+import ru.unn.agile.Metrics.infrastructure.CsvLogger;
 
 public class DistanceCalculator {
 
@@ -27,10 +27,23 @@ public class DistanceCalculator {
 
     @FXML
     public void initialize() {
-        radioBtnSelected = radioBtnRhoInf;
+        viewModel.setLogger(new CsvLogger("./Log.csv"));
+
+        ChangeListener<Boolean> focusChangeListener = new ChangeListener<Boolean>() {
+            @Override
+            public void changed(final ObservableValue<? extends Boolean> observable,
+                                final Boolean oldValue, final Boolean newValue) {
+                viewModel.onFocusChange(oldValue, newValue);
+            }
+        };
 
         txtField1stVector.textProperty().bindBidirectional(viewModel.firstVectorProperty());
+        txtField1stVector.focusedProperty().addListener(focusChangeListener);
+
         txtField2ndVector.textProperty().bindBidirectional(viewModel.secondVectorProperty());
+        txtField2ndVector.focusedProperty().addListener(focusChangeListener);
+
+        radioBtnSelected = radioBtnRhoInf;
 
         btnCalculate.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -43,8 +56,10 @@ public class DistanceCalculator {
             @Override
             public void changed(final ObservableValue<? extends Toggle> observable,
                                 final Toggle oldValue, final Toggle newValue) {
+                String oldMetricName = radioBtnSelected.getText();
                 radioBtnSelected = (RadioButton) newValue.getToggleGroup().getSelectedToggle();
                 viewModel.setMetric(radioBtnSelected.getText());
+                viewModel.onMetricChange(oldMetricName, radioBtnSelected.getText());
             }
         });
     }
