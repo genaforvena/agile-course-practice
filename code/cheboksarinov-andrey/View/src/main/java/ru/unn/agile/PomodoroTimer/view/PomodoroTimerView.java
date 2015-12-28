@@ -1,6 +1,5 @@
 package ru.unn.agile.PomodoroTimer.view;
 
-
 import ru.unn.agile.PomodoroTimer.viewmodel.PomodoroTimerViewModel;
 import ru.unn.agile.pomodoro.ObservableTimer;
 import ru.unn.agile.pomodoro.SessionManager;

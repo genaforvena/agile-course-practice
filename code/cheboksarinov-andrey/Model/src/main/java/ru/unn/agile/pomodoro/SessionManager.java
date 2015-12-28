@@ -10,7 +10,6 @@ public class SessionManager  extends EventGenerator implements ActionListener {
     private int pomodoroCount;
     private String status;
 
-
     private final IObservableTimer internalTimer;
     private final SessionTimeManager sessionTimeManager;
 
@@ -31,7 +30,7 @@ public class SessionManager  extends EventGenerator implements ActionListener {
     }
 
     @Override
-    public void actionPerformed(final ActionEvent e) {
+    public void actionPerformed(final ActionEvent event) {
         updateSessionTime();
         fireActionPerformed(new ActionEvent(this, 0, "Time changed"));
     }

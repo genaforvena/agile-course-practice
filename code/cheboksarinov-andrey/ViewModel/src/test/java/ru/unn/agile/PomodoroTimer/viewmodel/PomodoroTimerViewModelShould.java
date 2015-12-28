@@ -1,6 +1,5 @@
 package ru.unn.agile.PomodoroTimer.viewmodel;
 
-
 import org.junit.Before;
 import org.junit.Test;
 import ru.unn.agile.pomodoro.MockObservableTimer;
@@ -57,7 +56,7 @@ public class PomodoroTimerViewModelShould {
         sessionManager.startNewPomodoro();
         mockObservableTimer.throwTicks(1);
 
-        assertEquals(false, pomodoroTimerViewModel.getCanStartTimer());
+        assertFalse(pomodoroTimerViewModel.getCanStartTimer());
     }
     @Test
     public void changeCurrentStatusOnBreakWhenPomodoroIsOver() {
@@ -85,7 +84,7 @@ public class PomodoroTimerViewModelShould {
         assertEquals(defaultBreakMinutes, pomodoroTimerViewModel.getMinutes());
     }
     @Test
-    public void changePomodoroToOneWhenOnePomodoroLeft() {
+    public void changePomodoroToOneWhenOnePomodoroOver() {
         sessionManager.startNewPomodoro();
         completePomodoro();
 
@@ -174,17 +173,12 @@ public class PomodoroTimerViewModelShould {
                 && pomodoroTimerViewModel.getPomodoroCount().equals("0")
                 && pomodoroTimerViewModel.getSeconds().equals("00");
     }
-
     private void completeFourPomodoros() {
-        completePomodoro();
-        completeBreak();
-        sessionManager.startNewPomodoro();
-        completePomodoro();
-        completeBreak();
-        sessionManager.startNewPomodoro();
-        completePomodoro();
-        completeBreak();
-        sessionManager.startNewPomodoro();
+        for (int pomodoroCounter = 0;pomodoroCounter < 3; pomodoroCounter++) {
+            completePomodoro();
+            completeBreak();
+            sessionManager.startNewPomodoro();
+        }
         completePomodoro();
     }
     private void completePomodoro() {

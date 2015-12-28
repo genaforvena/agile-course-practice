@@ -7,11 +7,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class PomodoroTimerViewModel extends EventGenerator implements ActionListener {
-    private  String seconds;
-    private  String minutes;
-    private  String currentStatus;
-    private  String pomodoroCount;
-    private  Boolean canStartTimer;
+    private String seconds;
+    private String minutes;
+    private String currentStatus;
+    private String pomodoroCount;
+    private Boolean canStartTimer;
     private final SessionManager sessionManager;
 
     public PomodoroTimerViewModel(final SessionManager sessionManager) {
