@@ -8,11 +8,12 @@ import ru.unn.agile.pomodoro.SessionManager;
 import ru.unn.agile.pomodoro.SessionTimeManager;
 
 import static org.junit.Assert.*;
+import static ru.unn.agile.PomodoroTimer.viewmodel.PomodoroTimerViewModel.*;
 
 public class PomodoroTimerViewModelShould {
     private PomodoroTimerViewModel pomodoroTimerViewModel;
     private SessionTimeManager sessionTimeManager;
-    private  SessionManager sessionManager;
+    private SessionManager sessionManager;
     private MockObservableTimer mockObservableTimer;
 
     @Before
@@ -134,40 +135,41 @@ public class PomodoroTimerViewModelShould {
     }
     @Test
     public void correctTakeCurrentStatus() {
-        String statusForViewModel = Status.POMODORO.toString();
+        String status = Status.POMODORO.toString();
 
-        pomodoroTimerViewModel.setCurrentStatus(statusForViewModel);
+        pomodoroTimerViewModel.setCurrentStatus(status);
 
-        assertEquals(statusForViewModel, pomodoroTimerViewModel.getCurrentStatus());
+        assertEquals(status, pomodoroTimerViewModel.getCurrentStatus());
     }
     @Test
     public void correctTakeSecondsCount() {
-        String secondsCountForViewModel = "01";
+        String secondsCount = "01";
 
-        pomodoroTimerViewModel.setSeconds(secondsCountForViewModel);
+        pomodoroTimerViewModel.setSeconds(secondsCount);
 
-        assertEquals(secondsCountForViewModel, pomodoroTimerViewModel.getSeconds());
+        assertEquals(secondsCount, pomodoroTimerViewModel.getSeconds());
     }
     @Test
     public void correctTakeMinutesCount() {
-        String minutesCountForViewModel = "02";
+        String minutesCount = "02";
 
-        pomodoroTimerViewModel.setMinutes(minutesCountForViewModel);
+        pomodoroTimerViewModel.setMinutes(minutesCount);
 
-        assertEquals(minutesCountForViewModel, pomodoroTimerViewModel.getMinutes());
+        assertEquals(minutesCount, pomodoroTimerViewModel.getMinutes());
     }
     @Test
     public void correctTakePomodoroCount() {
-        String pomodoroCountForViewModel = "3";
+        String pomodoroCount = "3";
 
-        pomodoroTimerViewModel.setPomodoroCount(pomodoroCountForViewModel);
+        pomodoroTimerViewModel.setPomodoroCount(pomodoroCount);
 
-        assertEquals(pomodoroCountForViewModel, pomodoroTimerViewModel.getPomodoroCount());
+        assertEquals(pomodoroCount, pomodoroTimerViewModel.getPomodoroCount());
     }
     private boolean isDefaultValuesOnViewModel(final PomodoroTimerViewModel
                                                        pomodoroTimerViewModel) {
         return  pomodoroTimerViewModel.getCanStartTimer()
-                && pomodoroTimerViewModel.getCurrentStatus().equals(Status.WAITING.toString())
+                && pomodoroTimerViewModel.getCurrentStatus().equals(
+                Status.WAITING.toString())
                 && pomodoroTimerViewModel.getMinutes().equals("00")
                 && pomodoroTimerViewModel.getPomodoroCount().equals("0")
                 && pomodoroTimerViewModel.getSeconds().equals("00");

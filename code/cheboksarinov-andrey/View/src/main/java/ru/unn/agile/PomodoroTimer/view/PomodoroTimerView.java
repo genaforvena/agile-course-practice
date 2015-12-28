@@ -30,6 +30,7 @@ public final class PomodoroTimerView implements ActionListener {
         frame.pack();
         frame.setVisible(true);
     }
+
     @Override
     public void actionPerformed(final ActionEvent e) {
         backBind();
@@ -48,8 +49,8 @@ public final class PomodoroTimerView implements ActionListener {
                 backBind();
             }
         });
-
     }
+
     private void bind() {
         viewModel.setPomodoroCount(pomodoroCountLabel.getText());
         viewModel.setCurrentStatus(currentStatusLabel.getText());

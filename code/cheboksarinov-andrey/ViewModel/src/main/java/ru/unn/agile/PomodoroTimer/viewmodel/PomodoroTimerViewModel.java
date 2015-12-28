@@ -53,14 +53,18 @@ public class PomodoroTimerViewModel extends EventGenerator implements ActionList
     }
 
     public String getSeconds() {
-        if (seconds.length() < 2 && !"00".equals(seconds)) {
+        if (isStringContainOneCharNumber(seconds)) {
             return String.format("0%1$d", Integer.parseInt(seconds));
         }
         return seconds;
     }
 
+    private boolean isStringContainOneCharNumber(final String stringWithNumber) {
+        return stringWithNumber.length() < 2 && !"00".equals(stringWithNumber);
+    }
+
     public String getMinutes() {
-        if (minutes.length() < 2 && !"00".equals(minutes)) {
+        if (isStringContainOneCharNumber(minutes)) {
             return String.format("0%1$d", Integer.parseInt(minutes));
         }
         return minutes;
@@ -73,11 +77,12 @@ public class PomodoroTimerViewModel extends EventGenerator implements ActionList
         seconds = String.valueOf(sessionManager.getPomodoroTime().getSecondCount());
         minutes = String.valueOf(sessionManager.getPomodoroTime().getMinuteCount());
         canStartTimer = true;
-        if (!isCurrentStatusWaiting()) {
+        if (canStartTimer != isCurrentStatusWaiting()) {
             canStartTimer = false;
         }
         fireActionPerformed(new ActionEvent(this, 0, "View model is changed"));
     }
+
     public void startSession() {
         sessionManager.startNewPomodoro();
     }
@@ -86,21 +91,20 @@ public class PomodoroTimerViewModel extends EventGenerator implements ActionList
         return currentStatus.equals(Status.WAITING.toString());
     }
 
-}
+    public enum Status {
+        WAITING("Waiting"),
+        POMODORO("Pomodoro"),
+        BREAK("Break"),
+        BIG_BREAK("Big break");
 
-enum Status {
-    WAITING("Waiting"),
-    POMODORO("Pomodoro"),
-    BREAK("Break"),
-    BIG_BREAK("Big break");
+        private final String name;
 
-    private final String name;
+        Status(final String name) {
+            this.name = name;
+        }
 
-    Status(final String name) {
-        this.name = name;
-    }
-
-    public String toString() {
-        return name;
+        public String toString() {
+            return name;
+        }
     }
 }

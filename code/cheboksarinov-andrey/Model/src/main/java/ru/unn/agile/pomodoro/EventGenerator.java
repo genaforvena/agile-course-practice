@@ -4,7 +4,6 @@ import javax.swing.event.EventListenerList;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-
 public class EventGenerator {
     private final EventListenerList listeners = new EventListenerList();
 
