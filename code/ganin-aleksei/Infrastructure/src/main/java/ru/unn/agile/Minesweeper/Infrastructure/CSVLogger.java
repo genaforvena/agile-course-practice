@@ -11,34 +11,25 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class CSVLogger implements ILogger {
     private static final String DATE_FORMAT_NOW = "dd.HH.yyyy HH:mm:ss";
     private static final String CSV_ROWS = "timestamp, message";
-    private static final int TIMESTAMP_INDEX = 0;
-    private static final int MESSAGE_INDEX = 1;
+    private static final String CSV_DELIMITER = ", ";
+    private static final String CONSOLE_LOG_DELIMITER = ": ";
     private final BufferedWriter bufferedWriter;
     private final String nameOfFile;
-
-    public class LogRecord {
-        private final String time;
-        private final String message;
-        public String getTime() {
-            return time;
-        }
-        public String getMessage() {
-            return message;
-        }
-        public LogRecord(final String time, final String message) {
-            this.time = time;
-            this.message = message;
-        }
-    }
 
     private static String now() {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_FORMAT_NOW, Locale.ENGLISH);
         return simpleDateFormat.format(calendar.getTime());
+    }
+
+    private static String createLogCsvString(final String message) {
+        return now() + CSV_DELIMITER + message;
     }
 
     public CSVLogger(final String nameOfFile) {
@@ -53,24 +44,19 @@ public class CSVLogger implements ILogger {
         try {
             bufferedWriter.write(CSV_ROWS + "\n");
             bufferedWriter.flush();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        } catch (Exception exception) {
+            System.out.println(exception.getMessage());
         }
     }
 
     @Override
-    public void log(final String s) {
+    public void log(final String message) {
         try {
-            bufferedWriter.write(now() + ", " + s + "\n");
+            bufferedWriter.write(createLogCsvString(message) + "\n");
             bufferedWriter.flush();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        } catch (Exception exception) {
+            System.out.println(exception.getMessage());
         }
-    }
-
-    private LogRecord getLogRecord(final String logString) {
-        String [] logRecordFields = logString.split(", ");
-        return new LogRecord(logRecordFields[TIMESTAMP_INDEX], logRecordFields[MESSAGE_INDEX]);
     }
 
     @Override
@@ -82,15 +68,26 @@ public class CSVLogger implements ILogger {
             bufferedReader.readLine();
             String logString = bufferedReader.readLine();
 
+            Pattern pattern = Pattern.compile("^(?<time>.*)" + CSV_DELIMITER + "(?<message>.*)$");
             while (logString != null) {
-                LogRecord logRecord = getLogRecord(logString);
-                log.add(logRecord.getTime() + ": " + logRecord.getMessage());
+
+                Matcher matcher = pattern.matcher(logString);
+                if (matcher.matches()) {
+                    String consoleLogString = matcher.group("time")
+                                              + CONSOLE_LOG_DELIMITER
+                                              + matcher.group("message");
+                    log.add(consoleLogString);
+                }
                 logString = bufferedReader.readLine();
             }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        } catch (Exception exception) {
+            System.out.println(exception.getMessage());
         }
 
         return log;
     }
 }
+
+
+
+
