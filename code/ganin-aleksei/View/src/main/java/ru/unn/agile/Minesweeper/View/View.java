@@ -4,14 +4,14 @@ import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import ru.unn.agile.Minesweeper.Infrastructure.CSVLogger;
+import ru.unn.agile.Minesweeper.Infrastructure.CsvLogger;
 import ru.unn.agile.Minesweeper.viewmodel.ViewModel;
 
 public class View {
 
 
     private final ViewModel minesweeperViewModel = new ViewModel(
-            new CSVLogger("CSVLogger-lab3.log")
+            new CsvLogger("CsvLogger-lab3.log")
     );
     public static final int CELL_SIZE = 20;
     private static final int SMILE_POSITION_Y = 0;

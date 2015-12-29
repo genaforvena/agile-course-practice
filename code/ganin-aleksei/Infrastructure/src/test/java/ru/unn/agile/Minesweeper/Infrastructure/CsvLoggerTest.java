@@ -10,15 +10,15 @@ import java.util.List;
 
 import static org.junit.Assert.*;
 
-public class CSVLoggerTest {
-    private static final String NAME_OF_FILE = "./TxtLogger_test_out-lab3.log";
+public class CsvLoggerTest {
+    private static final String NAME_OF_FILE = "./CsvLogger_test_out-lab3.log";
     private static final String NO_VALID_FILE_NAME = "/:*:/";
     private static final String DATE_TIME_PATTERN = "\\d{2}.\\d{2}.\\d{4} \\d{2}:\\d{2}:\\d{2}";
-    private CSVLogger csvLogger;
+    private CsvLogger csvLogger;
 
     @Before
     public void setUp() {
-        csvLogger = new CSVLogger(NAME_OF_FILE);
+        csvLogger = new CsvLogger(NAME_OF_FILE);
     }
 
     @Test
@@ -71,6 +71,6 @@ public class CSVLoggerTest {
 
     @Test
     public void openNoValidLogFile() {
-        new CSVLogger(NO_VALID_FILE_NAME);
+        new CsvLogger(NO_VALID_FILE_NAME);
     }
 }

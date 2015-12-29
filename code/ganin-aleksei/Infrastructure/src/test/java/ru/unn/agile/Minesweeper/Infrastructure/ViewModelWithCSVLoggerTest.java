@@ -7,7 +7,7 @@ public class ViewModelWithCSVLoggerTest extends ViewModelTest {
 
     @Override
     public void setUp() {
-        CSVLogger realLogger = new CSVLogger("./ViewModelWithCSVLoggerOfTest.log");
+        CsvLogger realLogger = new CsvLogger("./ViewModelWithCsvLoggerOfTest.log");
         super.setExternalViewModel(new ViewModel(realLogger));
     }
 }

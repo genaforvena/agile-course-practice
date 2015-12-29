@@ -182,10 +182,10 @@ public class ViewModel {
 final class LogMessages {
     public static final String NEW_GAME_WAS_PRESSED = "New game";
     public static String openCell(final int x, final int y) {
-        return "Open cell(x:" + x + ", y:" + y + ")";
+        return "Open cell(x:" + x + "; y:" + y + ")";
     }
     public static String markCell(final int x, final int y) {
-        return "Mark cell(x:" + x + ", y:" + y + ")";
+        return "Mark cell(x:" + x + "; y:" + y + ")";
     }
 
     private LogMessages() { }

@@ -14,7 +14,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class CSVLogger implements ILogger {
+public class CsvLogger implements ILogger {
     private static final String DATE_FORMAT_NOW = "dd.HH.yyyy HH:mm:ss";
     private static final String CSV_ROWS = "timestamp, message";
     private static final String CSV_DELIMITER = ", ";
@@ -32,7 +32,7 @@ public class CSVLogger implements ILogger {
         return now() + CSV_DELIMITER + message;
     }
 
-    public CSVLogger(final String nameOfFile) {
+    public CsvLogger(final String nameOfFile) {
         this.nameOfFile = nameOfFile;
         BufferedWriter logWriter = null;
         try {
@@ -76,6 +76,7 @@ public class CSVLogger implements ILogger {
                     String consoleLogString = matcher.group("time")
                                               + CONSOLE_LOG_DELIMITER
                                               + matcher.group("message");
+                    System.out.println(consoleLogString);
                     log.add(consoleLogString);
                 }
                 logString = bufferedReader.readLine();
@@ -87,7 +88,3 @@ public class CSVLogger implements ILogger {
         return log;
     }
 }
-
-
-
-
