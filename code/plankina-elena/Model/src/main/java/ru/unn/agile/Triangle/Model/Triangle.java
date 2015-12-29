@@ -134,7 +134,7 @@ public class Triangle {
     }
 
     private double getInterimAltitudesValues(final double length) throws TriangleExceptions {
-        return Math.round(2 * getPerimeter() / length);
+        return Math.round(2 * getSquare() / length);
     }
 
     public List<Double> getBisectrices() throws TriangleExceptions {
