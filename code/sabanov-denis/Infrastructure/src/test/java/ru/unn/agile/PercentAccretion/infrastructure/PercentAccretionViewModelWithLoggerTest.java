@@ -7,7 +7,7 @@ public class PercentAccretionViewModelWithLoggerTest extends PercentAccretionVie
     @Override
     public void initialize() {
         PercentAccretionLogger realLogger = new PercentAccretionLogger(
-                "./PercentAccretionViewModelWithLoggerTest.log");
+                "./PercentAccretionViewModelWithLoggerTest.xml");
         setViewModel(new PercentAccretionViewModel(realLogger));
     }
 }

@@ -8,6 +8,8 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PercentAccretionLogger implements IPercentAccretionLogger {
     private FileWriter fileWriter;
@@ -18,6 +20,8 @@ public class PercentAccretionLogger implements IPercentAccretionLogger {
 
         try {
             fileWriter = new FileWriter(filePath);
+            fileWriter.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
+            fileWriter.write("<logger>\n");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -26,7 +30,8 @@ public class PercentAccretionLogger implements IPercentAccretionLogger {
     @Override
     public void log(final String logMessage) {
         try {
-            fileWriter.write(new Date() + " > " + logMessage + "\n");
+            fileWriter.write("  <data=\"" + "[" + new Date() + "]"
+                    + "\" logMessage=\"" + logMessage + "\" />" + "\n");
             fileWriter.flush();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -37,12 +42,17 @@ public class PercentAccretionLogger implements IPercentAccretionLogger {
     public List<String> getLog() {
         BufferedReader bufferedReader;
         ArrayList<String> log = new ArrayList<>();
+        Pattern pattern = Pattern.compile("^  <data=\"(?<date>.*)"
+                + "\" logMessage=\"(?<logMessage>.*)\" />$");
         try {
             bufferedReader = new BufferedReader(new FileReader(filePath));
             String bufMessage = bufferedReader.readLine();
 
             while (bufMessage != null) {
-                log.add(bufMessage);
+                Matcher matcher = pattern.matcher(bufMessage);
+                if (matcher.matches()) {
+                    log.add(matcher.group("date") + " " + matcher.group("logMessage"));
+                }
                 bufMessage = bufferedReader.readLine();
             }
         } catch (Exception e) {

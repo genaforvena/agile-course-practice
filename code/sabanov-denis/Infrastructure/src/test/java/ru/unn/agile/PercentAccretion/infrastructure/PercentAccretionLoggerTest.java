@@ -8,7 +8,7 @@ import java.io.File;
 import static org.junit.Assert.*;
 
 public class PercentAccretionLoggerTest {
-    private static final String PATH_TO_FILE = "./PercentAccretionLoggerTest.log";
+    private static final String PATH_TO_FILE = "./PercentAccretionLoggerTest.xml";
     private PercentAccretionLogger logger;
 
     @Before
@@ -40,9 +40,14 @@ public class PercentAccretionLoggerTest {
 
     @Test
     public void checkCanAddSeveralMessagesInLog() {
+        int expectedValue = 3;
+        int actualValue = 0;
+
         logger.log("bla bla");
         logger.log("bla bla bla");
+        logger.log("bla");
+        actualValue = logger.getLog().size();
 
-        assertEquals(2, logger.getLog().size());
+        assertEquals(expectedValue, actualValue);
     }
 }
