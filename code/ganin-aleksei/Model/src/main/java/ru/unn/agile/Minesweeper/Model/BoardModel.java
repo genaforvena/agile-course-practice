@@ -97,9 +97,9 @@ class BoardModel {
         }
     }
 
-    public void openCell(final int y, final int x) {
+    public boolean openCell(final int y, final int x) {
         if (end) {
-            return;
+            return false;
         }
         CellModel cell = cells[y][x];
         if (!lost && !cell.isIssue() && !cell.isFlag() && !cell.isOpen()) {
@@ -116,6 +116,7 @@ class BoardModel {
                 openNeighboringCells(y, x);
             }
         }
+        return  true;
     }
 
     public void clear() {

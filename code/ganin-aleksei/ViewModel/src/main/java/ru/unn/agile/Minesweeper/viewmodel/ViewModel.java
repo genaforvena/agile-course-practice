@@ -2,9 +2,14 @@ package ru.unn.agile.Minesweeper.viewmodel;
 
 import ru.unn.agile.Minesweeper.Model.Model;
 
+import java.util.List;
+
 public class ViewModel {
 
     private final Model minesweeperModel = new Model();
+
+    private ILogger logger;
+    private String[] fullLog = new String[0];
 
     private enum CellText {
         flag("!"),
@@ -41,20 +46,50 @@ public class ViewModel {
         }
     }
 
+    public String[] getFullLog() {
+        return fullLog;
+    }
+
+    public void setLogger(final ILogger logger) {
+        if (logger == null) {
+            throw new IllegalArgumentException("Logger parameter can't be null");
+        }
+        this.logger = logger;
+    }
+    private void updateLogs() {
+        List<String> logList = logger.getLog();
+        fullLog = new String[logList.size()];
+        for (int i = 0; i < logList.size(); i++) {
+            fullLog[i] = logList.get(i);
+        }
+    }
+
     public ViewModel() {
+        /* empty */
+    }
+
+    public ViewModel(final ILogger logger) {
+        setLogger(logger);
         /* empty */
     }
 
     public void newGame() {
         minesweeperModel.newGame();
+        logger.log(LogMessages.NEW_GAME_WAS_PRESSED);
+        updateLogs();
     }
 
     public void openCell(final int x, final int y) {
-        minesweeperModel.openCell(x, y);
+        if (minesweeperModel.openCell(x, y)) {
+            logger.log(LogMessages.openCell(x, y));
+        }
+        updateLogs();
     }
 
     public void markCell(final int x, final int y) {
         minesweeperModel.markCell(x, y);
+        logger.log(LogMessages.markCell(x, y));
+        updateLogs();
     }
 
     public String getCellText(final int x, final int y) {
@@ -81,11 +116,17 @@ public class ViewModel {
     public String getTextSmile() {
         if (minesweeperModel.isGameEnd()) {
             if (minesweeperModel.isLost()) {
+                logger.log(SmilesText.dead.toString());
+                updateLogs();
                 return SmilesText.dead.toString();
             } else {
+                logger.log(SmilesText.winner.toString());
+                updateLogs();
                 return SmilesText.winner.toString();
             }
         }
+        logger.log(SmilesText.smile.toString());
+        updateLogs();
         return SmilesText.smile.toString();
     }
 
@@ -136,4 +177,16 @@ public class ViewModel {
     public String getWinnerText() {
         return SmilesText.winner.toString();
     }
+}
+
+final class LogMessages {
+    public static final String NEW_GAME_WAS_PRESSED = "New game";
+    public static String openCell(final int x, final int y) {
+        return "Open cell(x:" + x + "; y:" + y + ")";
+    }
+    public static String markCell(final int x, final int y) {
+        return "Mark cell(x:" + x + "; y:" + y + ")";
+    }
+
+    private LogMessages() { }
 }

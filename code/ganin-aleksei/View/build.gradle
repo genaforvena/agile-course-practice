@@ -2,6 +2,7 @@ apply from:   rootDir.getAbsolutePath() + '/code/config/scripts/javafx.plugin'
 
 dependencies {
     compile project(':ganin-aleksei-ViewModel')
+    compile project(':ganin-aleksei-Infrastructure')
 }
 
 sourceSets {

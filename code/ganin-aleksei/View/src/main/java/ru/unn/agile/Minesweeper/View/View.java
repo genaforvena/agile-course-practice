@@ -4,23 +4,32 @@ import javax.swing.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import ru.unn.agile.Minesweeper.Infrastructure.CsvLogger;
 import ru.unn.agile.Minesweeper.viewmodel.ViewModel;
 
 public class View {
 
-    private final ViewModel minesweeperViewModel = new ViewModel();
+
+    private final ViewModel minesweeperViewModel = new ViewModel(
+            new CsvLogger("CsvLogger-lab3.log")
+    );
     public static final int CELL_SIZE = 20;
     private static final int SMILE_POSITION_Y = 0;
     private static final int MINE_COUNTER_POSITION_Y = 70;
     private static final int SMILE_SIZE = 100;
     private static final int MINE_COUNTER_HEIGHT = 20;
     private static final int MINE_COUNTER_WIDTH = 50;
+
+    private static final int LOG_LIST_HEIGHT = 200;
+
     private final  BoardView board = new BoardView(
             minesweeperViewModel.getBoardWidth(),
             minesweeperViewModel.getBoardHeight()
     );
     private final  JLabel smile;
     private final  JLabel mineCounter;
+
+    private final  JList<String> lstLog;
 
     public class BoardView extends JLabel {
 
@@ -87,10 +96,26 @@ public class View {
                 minesweeperViewModel.getBoardWidth() * (CELL_SIZE + 1)
                         +  MINE_COUNTER_WIDTH,
                 minesweeperViewModel.getBoardHeight() * (CELL_SIZE + 1)
+                        + LOG_LIST_HEIGHT
         );
+
+
+
+        JScrollPane scrollPane = new JScrollPane();
+        lstLog = new JList<String>();
+        scrollPane.setViewportView(lstLog);
+        scrollPane.setBounds(
+                0,
+                minesweeperViewModel.getBoardWidth() * (CELL_SIZE),
+                minesweeperViewModel.getBoardWidth() * (CELL_SIZE + 1) +  MINE_COUNTER_WIDTH,
+                LOG_LIST_HEIGHT
+        );
+        frame.add(scrollPane);
+
         frame.add(smile);
         frame.add(mineCounter);
         frame.add(board);
+
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
         binding();
@@ -104,6 +129,7 @@ public class View {
         }
         mineCounter.setText(minesweeperViewModel.getMineCounter());
         smile.setText(minesweeperViewModel.getTextSmile());
+        lstLog.setListData(minesweeperViewModel.getFullLog());
     }
 
     public int getCellSize() {

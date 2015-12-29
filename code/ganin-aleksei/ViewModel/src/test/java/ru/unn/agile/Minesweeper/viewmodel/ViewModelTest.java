@@ -8,9 +8,26 @@ import static org.junit.Assert.*;
 public class ViewModelTest extends ViewModel {
 
     private ViewModel minesweeper;
+
+    public void setExternalViewModel(final ViewModel viewModel) {
+        this.minesweeper = viewModel;
+    }
+
     @Before
-    public void before() {
-        minesweeper = new ViewModel();
+    public void setUp() {
+        minesweeper = new ViewModel(new FakeLogger());
+    }
+
+    @Test
+    public void viewModelConstructorThrowsExceptionWithNullLogger() {
+        try {
+            new ViewModel(null);
+            fail("Exception was not thrown");
+        } catch (IllegalArgumentException exc) {
+            assertEquals("Logger parameter can't be null", exc.getMessage());
+        } catch (Exception ex) {
+            fail("Invalid type of exception");
+        }
     }
 
     @Test
@@ -142,5 +159,11 @@ public class ViewModelTest extends ViewModel {
     @Test
     public void boardWidthMastBeGreaterZero() {
         assertTrue(minesweeper.getBoardWidth() > 0);
+    }
+
+    @Test
+    public void addToLogOfOpenCellAction() {
+        minesweeper.openCell(0, 0);
+        assertTrue(minesweeper.getFullLog().length > 0);
     }
 }

@@ -72,6 +72,8 @@ include "code/ganin-aleksei/ViewModel"
 project(":code/ganin-aleksei/ViewModel").name = "ganin-aleksei-ViewModel"
 include "code/ganin-aleksei/View"
 project(":code/ganin-aleksei/View").name = "ganin-aleksei-View"
+include "code/ganin-aleksei/Infrastructure"
+project(":code/ganin-aleksei/Infrastructure").name = "ganin-aleksei-Infrastructure"
 
 // Garina Anastasia
 include "code/garina-anastasia/Model"
