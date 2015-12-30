@@ -7,6 +7,7 @@ import ru.unn.agile.TriangleViewModel.Status;
 import ru.unn.agile.TriangleViewModel.TriangleViewModel;
 import ru.unn.agile.TriangleViewModel.ValuesToCalculate;
 
+import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -148,119 +149,140 @@ public class TriangleViewModelTests {
     }
 
     @Test
-    public void canViewModelWorkWithLogger() {
+    public void viewModelWithLoggerCanBeCreated() {
         FakeLogger fakeLogger = new FakeLogger();
         TriangleViewModel viewModelWithFakeLogger = new TriangleViewModel(fakeLogger);
         assertNotNull(viewModelWithFakeLogger);
     }
 
     @Test(expected = IllegalArgumentException.class)
-    public void canViewModelThrowExceptionWhenLoggerIsNull() {
+    public void viewModelThrowsExceptionWhenLoggerIsNull() {
         new TriangleViewModel(null);
     }
 
     @Test
-    public void isLoggerEmptyByDefault() {
+    public void byDefaultLoggerIsEmpty() {
         List<String> log = viewModel.getLog();
         assertEquals(true, log.isEmpty());
     }
 
     @Test
-    public void doLoggerIncludeCoordinate1X() throws Exception {
+    public void loggerIncludesCoordinate1X() throws Exception {
         setExampleValues();
-        viewModel.compute();
-        String log = viewModel.getLog().get(0);
-        boolean doesContainTemplate = log.contains(viewModel.getCoordinate1X().toString());
-        assertTrue(doesContainTemplate);
+        List<String> log = viewModel.getLog();
+        String logString = log.toString();
+        boolean doesContainTemplateValue =
+                logString.contains(viewModel.getCoordinate1X().toString());
+        boolean doesContainTemplateField = logString.contains("coordinate X of point 1");
+        assertTrue(doesContainTemplateField && doesContainTemplateValue);
     }
 
     @Test
-    public void doLoggerIncludeCoordinate1Y() throws Exception {
+    public void loggerIncludesCoordinate1Y() throws Exception {
         setExampleValues();
-        viewModel.compute();
-        String log = viewModel.getLog().get(1);
-        boolean doesContainTemplate = log.contains(viewModel.getCoordinate1Y().toString());
-        assertTrue(doesContainTemplate);
+        List<String> log = viewModel.getLog();
+        String logString = log.toString();
+        boolean doesContainTemplateValue =
+                logString.contains(viewModel.getCoordinate1Y().toString());
+        boolean doesContainTemplateField = logString.contains("coordinate Y of point 1");
+        assertTrue(doesContainTemplateField && doesContainTemplateValue);
     }
 
     @Test
-    public void doLoggerIncludeCoordinate1Z() throws Exception {
+    public void loggerIncludesCoordinate1Z() throws Exception {
         setExampleValues();
-        viewModel.compute();
-        String log = viewModel.getLog().get(2);
-        boolean doesContainTemplate = log.contains(viewModel.getCoordinate1Z().toString());
-        assertTrue(doesContainTemplate);
+        List<String> log = viewModel.getLog();
+        String logString = log.toString();
+        boolean doesContainTemplateValue =
+                logString.contains(viewModel.getCoordinate1Z().toString());
+        boolean doesContainTemplateField = logString.contains("coordinate Z of point 1");
+        assertTrue(doesContainTemplateField && doesContainTemplateValue);
     }
 
     @Test
-    public void doLoggerIncludeCoordinate2X() throws Exception {
+    public void loggerIncludesCoordinate2X() throws Exception {
         setExampleValues();
-        viewModel.compute();
-        String log = viewModel.getLog().get(3);
-        boolean doesContainTemplate = log.contains(viewModel.getCoordinate2X().toString());
-        assertTrue(doesContainTemplate);
+        List<String> log = viewModel.getLog();
+        String logString = log.toString();
+        boolean doesContainTemplateValue =
+                logString.contains(viewModel.getCoordinate2X().toString());
+        boolean doesContainTemplateField = logString.contains("coordinate X of point 2");
+        assertTrue(doesContainTemplateField && doesContainTemplateValue);
     }
 
     @Test
-    public void doLoggerIncludeCoordinate2Y() throws Exception {
+    public void loggerIncludesCoordinate2Y() throws Exception {
         setExampleValues();
-        viewModel.compute();
-        String log = viewModel.getLog().get(4);
-        boolean doesContainTemplate = log.contains(viewModel.getCoordinate2Y().toString());
-        assertTrue(doesContainTemplate);
+        List<String> log = viewModel.getLog();
+        String logString = log.toString();
+        boolean doesContainTemplateValue =
+                logString.contains(viewModel.getCoordinate2Y().toString());
+        boolean doesContainTemplateField = logString.contains("coordinate Y of point 2");
+        assertTrue(doesContainTemplateField && doesContainTemplateValue);
     }
 
     @Test
-    public void doLoggerIncludeCoordinate2Z() throws Exception {
+    public void loggerIncludesCoordinate2Z() throws Exception {
         setExampleValues();
-        viewModel.compute();
-        String log = viewModel.getLog().get(5);
-        boolean doesContainTemplate = log.contains(viewModel.getCoordinate2Z().toString());
-        assertTrue(doesContainTemplate);
+        List<String> log = viewModel.getLog();
+        String logString = log.toString();
+        boolean doesContainTemplateValue =
+                logString.contains(viewModel.getCoordinate2Z().toString());
+        boolean doesContainTemplateField = logString.contains("coordinate Z of point 2");
+        assertTrue(doesContainTemplateField && doesContainTemplateValue);
     }
 
     @Test
-    public void doLoggerIncludeCoordinate3X() throws Exception {
+    public void loggerIncludesCoordinate3X() throws Exception {
         setExampleValues();
-        viewModel.compute();
-        String log = viewModel.getLog().get(6);
-        boolean doesContainTemplate = log.contains(viewModel.getCoordinate3X().toString());
-        assertTrue(doesContainTemplate);
+        List<String> log = viewModel.getLog();
+        String logString = log.toString();
+        boolean doesContainTemplateValue =
+                logString.contains(viewModel.getCoordinate3X().toString());
+        boolean doesContainTemplateField = logString.contains("coordinate X of point 3");
+        assertTrue(doesContainTemplateField && doesContainTemplateValue);
     }
 
     @Test
-    public void doLoggerIncludeCoordinate3Y() throws Exception {
+    public void loggerIncludesCoordinate3Y() throws Exception {
         setExampleValues();
-        viewModel.compute();
-        String log = viewModel.getLog().get(7);
-        boolean doesContainTemplate = log.contains(viewModel.getCoordinate3Y().toString());
-        assertTrue(doesContainTemplate);
+        List<String> log = viewModel.getLog();
+        String logString = log.toString();
+        boolean doesContainTemplateValue =
+                logString.contains(viewModel.getCoordinate3Y().toString());
+        boolean doesContainTemplateField = logString.contains("coordinate Y of point 3");
+        assertTrue(doesContainTemplateField && doesContainTemplateValue);
     }
 
     @Test
-    public void doLoggerIncludeCoordinate3Z() throws Exception {
+    public void loggerIncludesCoordinate3Z() throws Exception {
         setExampleValues();
-        viewModel.compute();
-        String log = viewModel.getLog().get(8);
-        boolean doesContainTemplate = log.contains(viewModel.getCoordinate3Z().toString());
-        assertTrue(doesContainTemplate);
+        List<String> log = viewModel.getLog();
+        String logString = log.toString();
+        boolean doesContainTemplateValue =
+                logString.contains(viewModel.getCoordinate3Z().toString());
+        boolean doesContainTemplateField = logString.contains("coordinate Z of point 3");
+        assertTrue(doesContainTemplateField && doesContainTemplateValue);
     }
 
     @Test
-    public void doLoggerIncludeValueToCalculate() throws Exception {
+    public void loggerIncludesValueToCalculate() throws Exception {
         setExampleValues();
-        String log = viewModel.getLog().get(9);
-        boolean doesContainTemplate = log.contains(viewModel.getValueToCalculate().toString());
-        assertTrue(doesContainTemplate);
+        List<String> log = viewModel.getLog();
+        String logString = log.toString();
+        boolean doesContainTemplateValue =
+                logString.contains(viewModel.getValueToCalculate().toString());
+        boolean doesContainTemplateField = logString.contains("value to calculate");
+        assertTrue(doesContainTemplateField && doesContainTemplateValue);
     }
 
     @Test
-    public void isRecordCorrectWhenCoordinate1XChanged() {
+    public void recordIsCorrectWhenCoordinate1XChanged() {
         setExampleValues();
         viewModel.setCoordinate1X("1.25");
         String rightRecord = "New value was chosen for "
                 + "coordinate X of point 1 : " + viewModel.getCoordinate1X();
-        String record = viewModel.getLog().get(10);
+        String record = viewModel.getLog().toString();
         assertThat(record, containsString(rightRecord));
     }
 
@@ -272,11 +294,11 @@ public class TriangleViewModelTests {
     }
 
     @Test
-    public void isRecordCorrectWhenCoordinate1YChanged() {
+    public void recordIsCorrectWhenCoordinate1YChanged() {
         setExampleValues();
         String rightRecord = "New value was chosen for "
                 + "coordinate Y of point 1 : " + viewModel.getCoordinate1Y();
-        String record = viewModel.getLog().get(1);
+        String record = viewModel.getLog().toString();
         assertThat(record, containsString(rightRecord));
     }
 
@@ -288,11 +310,11 @@ public class TriangleViewModelTests {
     }
 
     @Test
-    public void isRecordCorrectWhenCoordinate1ZChanged() {
+    public void recordIsCorrectWhenCoordinate1ZChanged() {
         setExampleValues();
         String rightRecord = "New value was chosen for "
                 + "coordinate Z of point 1 : " + viewModel.getCoordinate1Z();
-        String record = viewModel.getLog().get(2);
+        String record = viewModel.getLog().toString();
         assertThat(record, containsString(rightRecord));
     }
 
@@ -304,11 +326,11 @@ public class TriangleViewModelTests {
     }
 
     @Test
-    public void isRecordCorrectWhenCoordinate2XChanged() {
+    public void recordIsCorrectWhenCoordinate2XChanged() {
         setExampleValues();
         String rightRecord = "New value was chosen for "
                 + "coordinate X of point 2 : " + viewModel.getCoordinate2X();
-        String record = viewModel.getLog().get(3);
+        String record = viewModel.getLog().toString();
         assertThat(record, containsString(rightRecord));
     }
 
@@ -320,11 +342,11 @@ public class TriangleViewModelTests {
     }
 
     @Test
-    public void isRecordCorrectWhenCoordinate2YChanged() {
+    public void recordIsCorrectWhenCoordinate2YChanged() {
         setExampleValues();
         String rightRecord = "New value was chosen for "
                 + "coordinate Y of point 2 : " + viewModel.getCoordinate2Y();
-        String record = viewModel.getLog().get(4);
+        String record = viewModel.getLog().toString();
         assertThat(record, containsString(rightRecord));
     }
 
@@ -336,11 +358,11 @@ public class TriangleViewModelTests {
     }
 
     @Test
-    public void isRecordCorrectWhenCoordinate2ZChanged() {
+    public void recordIsCorrectWhenCoordinate2ZChanged() {
         setExampleValues();
         String rightRecord = "New value was chosen for "
                 + "coordinate Z of point 2 : " + viewModel.getCoordinate2Z();
-        String record = viewModel.getLog().get(5);
+        String record = viewModel.getLog().toString();
         assertThat(record, containsString(rightRecord));
     }
 
@@ -352,11 +374,11 @@ public class TriangleViewModelTests {
     }
 
     @Test
-         public void isRecordCorrectWhenCoordinate3XChanged() {
+         public void recordIsCorrectWhenCoordinate3XChanged() {
         setExampleValues();
         String rightRecord = "New value was chosen for "
                 + "coordinate X of point 3 : " + viewModel.getCoordinate3X();
-        String record = viewModel.getLog().get(6);
+        String record = viewModel.getLog().toString();
         assertThat(record, containsString(rightRecord));
     }
 
@@ -368,11 +390,11 @@ public class TriangleViewModelTests {
     }
 
     @Test
-    public void isRecordCorrectWhenCoordinate3YChanged() {
+    public void recordIsCorrectWhenCoordinate3YChanged() {
         setExampleValues();
         String rightRecord = "New value was chosen for "
                 + "coordinate Y of point 3 : " + viewModel.getCoordinate3Y();
-        String record = viewModel.getLog().get(7);
+        String record = viewModel.getLog().toString();
         assertThat(record, containsString(rightRecord));
     }
 
@@ -384,11 +406,11 @@ public class TriangleViewModelTests {
     }
 
     @Test
-    public void isRecordCorrectWhenCoordinate3ZChanged() {
+    public void recordIsCorrectWhenCoordinate3ZChanged() {
         setExampleValues();
         String rightRecord = "New value was chosen for "
                 + "coordinate Z of point 3 : " + viewModel.getCoordinate3Z();
-        String record = viewModel.getLog().get(8);
+        String record = viewModel.getLog().toString();
         assertThat(record, containsString(rightRecord));
     }
 
@@ -400,11 +422,11 @@ public class TriangleViewModelTests {
     }
 
     @Test
-    public void isRecordCorrectWhenValueToCalculateChanged() {
+    public void recordIsCorrectWhenValueToCalculateChanged() {
         setExampleValues();
         String rightRecord = "New value was chosen for "
                 + "value to calculate : " + viewModel.getValueToCalculate();
-        String record = viewModel.getLog().get(9);
+        String record = viewModel.getLog().toString();
         assertThat(record, containsString(rightRecord));
     }
 
@@ -416,11 +438,11 @@ public class TriangleViewModelTests {
     }
 
     @Test
-    public void isRecordCorrectWhenCalculate() throws Exception {
+    public void recordIsCorrectWhenCalculate() throws Exception {
         setExampleValues();
         viewModel.compute();
         List<String> log = viewModel.getLog();
-        assertTrue(log.size() > 10);
+        assertTrue(log.size() == 11);
     }
 
     public void setViewModel(final TriangleViewModel viewModel) {

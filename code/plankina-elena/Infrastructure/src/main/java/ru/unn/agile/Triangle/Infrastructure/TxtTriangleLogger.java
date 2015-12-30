@@ -26,7 +26,7 @@ public class TxtTriangleLogger implements ILogger {
     @Override
     public void addMessageToLog(final String message) {
         try {
-            bufferedWriter.write("[" + dateAndTime() + "] " + message);
+            bufferedWriter.write("[" + getDateAndTime() + "] " + message);
             bufferedWriter.newLine();
             bufferedWriter.flush();
         } catch (Exception ex) {
@@ -53,7 +53,7 @@ public class TxtTriangleLogger implements ILogger {
         return log;
     }
 
-    private String dateAndTime() {
+    private String getDateAndTime() {
         Calendar calendar = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy HH:mm:ss", Locale.ENGLISH);
         return dateFormat.format(calendar.getTime());
