@@ -97,9 +97,7 @@ public final class TriangleView {
         viewModel.setCoordinate3Y(point3Y.getText());
         viewModel.setCoordinate3Z(point3Z.getText());
         viewModel.setValueToCalculate((ValuesToCalculate) valueToCalculate.getSelectedItem());
-        System.out.println("val from backBind = "+viewModel.getValueToCalculate());
         ValuesToCalculate value = (ValuesToCalculate) valueToCalculate.getSelectedItem();
-        System.out.println("selectedItem from backBind = " + value);
     }
 
     private void bind() {
