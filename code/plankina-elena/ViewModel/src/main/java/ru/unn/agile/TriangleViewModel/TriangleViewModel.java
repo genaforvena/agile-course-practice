@@ -137,8 +137,11 @@ public class TriangleViewModel {
     }
 
     public void setValueToCalculate(final ValuesToCalculate valueToCalculate) {
+//        System.out.println("this.valueToCalculate = "+this.valueToCalculate);
+//        System.out.println("valueToCalculate = "+valueToCalculate);
         if (valueToCalculate != this.valueToCalculate) {
             logValueChange("value to calculate : " + valueToCalculate);
+//            System.out.println("val from setValueToCalculate if = "+valueToCalculate);
         }
         this.valueToCalculate = valueToCalculate;
     }

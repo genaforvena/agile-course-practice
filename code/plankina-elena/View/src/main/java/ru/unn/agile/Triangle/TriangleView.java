@@ -26,7 +26,7 @@ public final class TriangleView {
     private JButton calculate;
     private JTextField result;
     private JTextField status;
-    private JList listForLogger;
+    private JList<String> listForLogger;
 
     private final TxtTriangleLogger logger = new TxtTriangleLogger("./Triangle-plankina.log");
     private final TriangleViewModel viewModel = new TriangleViewModel(logger);
@@ -97,12 +97,14 @@ public final class TriangleView {
         viewModel.setCoordinate3Y(point3Y.getText());
         viewModel.setCoordinate3Z(point3Z.getText());
         viewModel.setValueToCalculate((ValuesToCalculate) valueToCalculate.getSelectedItem());
+        System.out.println("val from backBind = " + viewModel.getValueToCalculate());
         ValuesToCalculate value = (ValuesToCalculate) valueToCalculate.getSelectedItem();
+        System.out.println("selectedItem from backBind = " + value);
     }
 
     private void bind() {
         status.setText(viewModel.getStatus());
-        point1X.setText(viewModel.getCoordinate1X());
+        //point1X.setText(viewModel.getCoordinate1X());
         point1Y.setText(viewModel.getCoordinate1Y());
         point1Z.setText(viewModel.getCoordinate1Z());
         point2X.setText(viewModel.getCoordinate2X());

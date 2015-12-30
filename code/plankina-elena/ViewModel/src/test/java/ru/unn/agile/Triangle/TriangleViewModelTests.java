@@ -423,7 +423,7 @@ public class TriangleViewModelTests {
         assertTrue(log.size() > 10);
     }
 
-    public void setViewModel(TriangleViewModel viewModel) {
+    public void setViewModel(final TriangleViewModel viewModel) {
         this.viewModel = viewModel;
     }
 }
