@@ -64,7 +64,7 @@ public class TxtTriangleLoggerTests {
 
         String recordFromLogFile = txtLogger.getLog().get(0);
 
-        assertTrue(Pattern.matches("^.\\d{2}-\\D{3}-\\d{4} \\d{2}:\\d{2}:\\d{2}.*",
+        assertTrue(Pattern.matches("^.\\d{2}-[A-Za-z]{3}-\\d{4} \\d{2}:\\d{2}:\\d{2}.*",
                 recordFromLogFile));
     }
 }
