@@ -7,7 +7,6 @@ import ru.unn.agile.TriangleViewModel.Status;
 import ru.unn.agile.TriangleViewModel.TriangleViewModel;
 import ru.unn.agile.TriangleViewModel.ValuesToCalculate;
 
-import java.util.Arrays;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -442,7 +441,14 @@ public class TriangleViewModelTests {
         setExampleValues();
         viewModel.compute();
         List<String> log = viewModel.getLog();
-        assertTrue(log.size() == 11);
+        assertTrue(log.size() > 10);
+    }
+
+    @Test
+    public void numberOfRecordsIsCorrect() throws Exception {
+        setExampleValues();
+        List<String> log = viewModel.getLog();
+        assertTrue(log.size() == 10);
     }
 
     public void setViewModel(final TriangleViewModel viewModel) {
