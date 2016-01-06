@@ -32,7 +32,7 @@ public final class TriangleView {
     private final TriangleViewModel viewModel = new TriangleViewModel(logger);
 
     private TriangleView() {
-        backBind();
+        bind();
         loadListOfValues();
         calculate.addActionListener(new ActionListener() {
             @Override
@@ -112,6 +112,7 @@ public final class TriangleView {
         point3Z.setText(viewModel.getCoordinate3Z());
         calculate.setEnabled(viewModel.isCalculateButtonEnabled());
         result.setText(viewModel.getResult());
+        valueToCalculate.setSelectedItem(viewModel.getValueToCalculate());
 
         List<String> logs = viewModel.getLog();
         String[] messages = logs.toArray(new String[logs.size()]);

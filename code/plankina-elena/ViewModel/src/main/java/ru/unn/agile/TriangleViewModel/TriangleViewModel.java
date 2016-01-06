@@ -55,15 +55,9 @@ public class TriangleViewModel {
 
     private void logComputationResult() {
         String message = LogMessage.COMPUTED
-                + "Coordinate X of point 1: " + point1X + "\n"
-                + "Coordinate Y of point 1: " + point1Y + "\n"
-                + "Coordinate Z of point 1: " + point1Z + "\n"
-                + "Coordinate X of point 2: " + point2X + "\n"
-                + "Coordinate Y of point 2: " + point2Y + "\n"
-                + "Coordinate Z of point 2: " + point2Z + "\n"
-                + "Coordinate X of point 3: " + point3X + "\n"
-                + "Coordinate Y of point 3: " + point3Y + "\n"
-                + "Coordinate Z of point 3: " + point3Z + "\n"
+                + "Point 1 (" + point1X + ", " + point1Y + ", " + point1Z + ")" + "\n"
+                + "Point 2 (" + point2X + ", " + point2Y + ", " + point2Z + ")" + "\n"
+                + "Point 3 (" + point3X + ", " + point3Y + ", " + point3Z + ")" + "\n"
                 + "Value to calculate: " + valueToCalculate + "\n"
                 + "The result is: " + result;
         logger.addMessageToLog(message);
