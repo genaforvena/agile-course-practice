@@ -92,9 +92,9 @@ public class MainFormViewModelTests {
         ComboBoxModel<String> trueComboBoxModel = new JComboBox<String>(actions).getModel();
 
         TableOfMarks tableOfMarks = new TableOfMarks();
-        tableOfMarks.addGroup(new Group("1"));
-        tableOfMarks.addStudent(new Group("1"), new Student("Sidorov"));
-        tableOfMarks.addAcademicSubject(new Group("1"), "History");
+        tableOfMarks.addGroup(new Group("2"));
+        tableOfMarks.addStudent(new Group("2"), new Student("Sidorov"));
+        tableOfMarks.addAcademicSubject(new Group("2"), "History");
         mainFormViewModel.setTableOfMarks(tableOfMarks);
 
         assertTrue(ComboBoxModelsEqualer.comboBoxModelsEqualing(trueComboBoxModel,
