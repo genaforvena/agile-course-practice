@@ -11,23 +11,22 @@ public enum DialogType {
     DELETE_MARK("Delete mark"),
     DEFAULT_DIALOG("Default dialog window");
 
-    private String typeValue;
+    private String typeDescription;
 
     private DialogType(final String type) {
-        typeValue = type;
+        typeDescription = type;
     }
 
-    public String getTypeValue() {
-        return typeValue;
+    public String getTypeDescription() {
+        return typeDescription;
     }
 
     public static DialogType getType(final String pType) {
         for (DialogType type: DialogType.values()) {
-            if (type.getTypeValue().equals(pType)) {
+            if (type.getTypeDescription().equals(pType)) {
                 return type;
             }
         }
         throw new RuntimeException("Unknown type");
     }
-
 }
