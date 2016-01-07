@@ -2,6 +2,8 @@ package ru.unn.agile.MarksAccounting.viewmodel;
 
 import ru.unn.agile.MarksAccounting.model.*;
 
+import javax.swing.*;
+
 public class TestDataInitializer {
 
     private TestDataInitializer() { }
@@ -24,5 +26,10 @@ public class TestDataInitializer {
             return tableOfMarks;
         }
         return tableOfMarks;
+    }
+
+    public static ComboBoxModel<String> getAllGroupsInComboBoxModel() {
+        String[] groupNumbers = {"1", "2", "3"};
+        return new JComboBox<String>(groupNumbers).getModel();
     }
 }

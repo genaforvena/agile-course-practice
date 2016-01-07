@@ -25,18 +25,12 @@ public class AddMarkDialogViewModel extends AddingDialogViewModel {
 
     @Override
     public ComboBoxModel<String> getDialogStudentsComboBoxModel() {
-        String[] studentNames = getTableOfMarks().getStudentsAsArrayOfStrings(
-                new Group(getDialogGroup()));
-        setDialogStudent(studentNames[0]);
-        return new JComboBox<String>(studentNames).getModel();
+        return getComboBoxModelOfAllStudents();
     }
 
     @Override
     public ComboBoxModel<String> getDialogSubjectsComboBoxModel() {
-        String[] subjects = getTableOfMarks().getAcademicSubjectsAsArray(
-                new Group(getDialogGroup()));
-        setDialogStudent(subjects[0]);
-        return new JComboBox<String>(subjects).getModel();
+        return getComboBoxModelOfAllSubjects();
     }
 
     @Override

@@ -24,14 +24,6 @@ public abstract class DialogViewModel {
         tableOfMarks = new TableOfMarks();
     }
 
-    protected void setDialogFieldsByDefault() {
-        dialogGroup = "";
-        dialogStudent = "";
-        dialogSubject = "";
-        dialogDate = "";
-        dialogInputTextBox = "";
-    }
-
     private void setAllInvisible() {
         dialogDateTextBoxVisible = false;
         dialogGroupBoxVisible = false;
@@ -161,4 +153,32 @@ public abstract class DialogViewModel {
     }
 
     public abstract void changeTableOfMarks() throws ParseException;
+
+    protected void setDialogFieldsByDefault() {
+        dialogGroup = "";
+        dialogStudent = "";
+        dialogSubject = "";
+        dialogDate = "";
+        dialogInputTextBox = "";
+    }
+
+    protected ComboBoxModel<String> getComboBoxModelOfAllGroups() {
+        String[] groupNumbers = getTableOfMarks().getGroupsAsArrayOfStrings();
+        setDialogGroup(groupNumbers[0]);
+        return new JComboBox<String>(groupNumbers).getModel();
+    }
+
+    protected ComboBoxModel<String> getComboBoxModelOfAllStudents() {
+        String[] studentNames =
+                getTableOfMarks().getStudentsAsArrayOfStrings(new Group(getDialogGroup()));
+        setDialogStudent(studentNames[0]);
+        return new JComboBox<String>(studentNames).getModel();
+    }
+
+    protected ComboBoxModel<String> getComboBoxModelOfAllSubjects() {
+        String[] subjects = getTableOfMarks().getAcademicSubjectsAsArray(
+                new Group(getDialogGroup()));
+        setDialogSubject(subjects[0]);
+        return new JComboBox<String>(subjects).getModel();
+    }
 }

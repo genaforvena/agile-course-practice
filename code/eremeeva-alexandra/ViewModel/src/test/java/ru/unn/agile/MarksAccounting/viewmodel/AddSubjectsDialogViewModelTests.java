@@ -50,11 +50,8 @@ public class AddSubjectsDialogViewModelTests {
 
     @Test
     public void canGetGroupsComboBoxModel() {
-        String[] groupNumbers = {"1", "2", "3"};
-        ComboBoxModel<String> expectedComboBoxModel = new JComboBox<String>(
-                groupNumbers).getModel();
-
-        assertTrue(ComboBoxModelsEqualer.comboBoxModelsEqualing(expectedComboBoxModel,
+        assertTrue(ComboBoxModelsEqualer.comboBoxModelsEqualing(
+                TestDataInitializer.getAllGroupsInComboBoxModel(),
                 addSubjectViewModel.getDialogGroupsComboBoxModel()));
     }
 
@@ -80,11 +77,8 @@ public class AddSubjectsDialogViewModelTests {
             addSubjectViewModel.setDialogInputTextBox("Geography");
             addSubjectViewModel.changeTableOfMarks();
         } catch (Exception e) {
-            if (e.getClass().equals(GroupDoesNotExistException.class)) {
-                throw new GroupDoesNotExistException("Required group does not exist!");
-            } else {
-                fail();
-            }
+            ExceptionsChecker.checkException(e,
+                    new GroupDoesNotExistException("Required group does not exist!"));
         }
     }
 
@@ -95,11 +89,8 @@ public class AddSubjectsDialogViewModelTests {
             addSubjectViewModel.setDialogInputTextBox("Maths");
             addSubjectViewModel.changeTableOfMarks();
         } catch (Exception e) {
-            if (e.getClass().equals(SubjectAlreadyExistsException.class)) {
-                throw new SubjectAlreadyExistsException("Subject already exists!");
-            } else {
-                fail();
-            }
+            ExceptionsChecker.checkException(e,
+                    new SubjectAlreadyExistsException("Subject already exists!"));
         }
     }
 
@@ -110,11 +101,8 @@ public class AddSubjectsDialogViewModelTests {
             addSubjectViewModel.setDialogInputTextBox(" History    ");
             addSubjectViewModel.changeTableOfMarks();
         } catch (Exception e) {
-            if (e.getClass().equals(SubjectAlreadyExistsException.class)) {
-                throw new SubjectAlreadyExistsException("Subject already exists!");
-            } else {
-                fail();
-            }
+            ExceptionsChecker.checkException(e,
+                    new SubjectAlreadyExistsException("Subject already exists!"));
         }
     }
 
@@ -125,11 +113,8 @@ public class AddSubjectsDialogViewModelTests {
             addSubjectViewModel.setDialogInputTextBox("   ");
             addSubjectViewModel.changeTableOfMarks();
         } catch (Exception e) {
-            if (e.getClass().equals(InputIsEmptyException.class)) {
-                throw new InputIsEmptyException("Input is empty!");
-            } else {
-                fail();
-            }
+            ExceptionsChecker.checkException(e,
+                    new InputIsEmptyException("Input is empty!"));
         }
     }
 }

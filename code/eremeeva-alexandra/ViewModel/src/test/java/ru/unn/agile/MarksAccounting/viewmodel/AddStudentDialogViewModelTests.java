@@ -49,11 +49,8 @@ public class AddStudentDialogViewModelTests {
 
     @Test
     public void canGetGroupsComboBoxModel() {
-        String[] groupNumbers = {"1", "2", "3"};
-        ComboBoxModel<String> expectedComboBoxModel = new JComboBox<String>(
-                groupNumbers).getModel();
-
-        assertTrue(ComboBoxModelsEqualer.comboBoxModelsEqualing(expectedComboBoxModel,
+        assertTrue(ComboBoxModelsEqualer.comboBoxModelsEqualing(
+                TestDataInitializer.getAllGroupsInComboBoxModel(),
                 addStudentViewModel.getDialogGroupsComboBoxModel()));
     }
 
@@ -79,11 +76,8 @@ public class AddStudentDialogViewModelTests {
             addStudentViewModel.setDialogInputTextBox("Smirnov");
             addStudentViewModel.changeTableOfMarks();
         } catch (Exception e) {
-            if (e.getClass().equals(GroupDoesNotExistException.class)) {
-                throw new GroupDoesNotExistException("Required group does not exist!");
-            } else {
-                fail();
-            }
+            ExceptionsChecker.checkException(e,
+                    new GroupDoesNotExistException("Required group does not exist!"));
         }
     }
 
@@ -94,11 +88,8 @@ public class AddStudentDialogViewModelTests {
             addStudentViewModel.setDialogInputTextBox("Sidorov");
             addStudentViewModel.changeTableOfMarks();
         } catch (Exception e) {
-            if (e.getClass().equals(StudentAlreadyExistsException.class)) {
-                throw new StudentAlreadyExistsException("Student already exists!");
-            } else {
-                fail();
-            }
+            ExceptionsChecker.checkException(e,
+                    new StudentAlreadyExistsException("Student already exists!"));
         }
     }
 
@@ -109,11 +100,8 @@ public class AddStudentDialogViewModelTests {
             addStudentViewModel.setDialogInputTextBox(" Petrov    ");
             addStudentViewModel.changeTableOfMarks();
         } catch (Exception e) {
-            if (e.getClass().equals(StudentAlreadyExistsException.class)) {
-                throw new StudentAlreadyExistsException("Student already exists!");
-            } else {
-                fail();
-            }
+            ExceptionsChecker.checkException(e,
+                    new StudentAlreadyExistsException("Student already exists!"));
         }
     }
 
@@ -124,11 +112,8 @@ public class AddStudentDialogViewModelTests {
             addStudentViewModel.setDialogInputTextBox("   ");
             addStudentViewModel.changeTableOfMarks();
         } catch (Exception e) {
-            if (e.getClass().equals(InputIsEmptyException.class)) {
-                throw new InputIsEmptyException("Input is empty!");
-            } else {
-                fail();
-            }
+            ExceptionsChecker.checkException(e,
+                    new InputIsEmptyException("Input is empty!"));
         }
     }
 }

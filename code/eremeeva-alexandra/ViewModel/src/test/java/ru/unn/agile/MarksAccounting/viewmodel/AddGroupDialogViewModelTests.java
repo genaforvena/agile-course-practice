@@ -70,11 +70,8 @@ public class AddGroupDialogViewModelTests {
             addGroupViewModel.setDialogInputTextBox("1");
             addGroupViewModel.changeTableOfMarks();
         } catch (Exception e) {
-            if (e.getClass().equals(GroupAlreadyExistsException.class)) {
-                throw new GroupAlreadyExistsException("Group already exists!");
-            } else {
-                fail();
-            }
+            ExceptionsChecker.checkException(e,
+                    new GroupAlreadyExistsException("Group already exists!"));
         }
     }
 
@@ -84,11 +81,8 @@ public class AddGroupDialogViewModelTests {
             addGroupViewModel.setDialogInputTextBox("   1 ");
             addGroupViewModel.changeTableOfMarks();
         } catch (Exception e) {
-            if (e.getClass().equals(GroupAlreadyExistsException.class)) {
-                throw new GroupAlreadyExistsException("Group already exists!");
-            } else {
-                fail();
-            }
+            ExceptionsChecker.checkException(e,
+                    new GroupAlreadyExistsException("Group already exists!"));
         }
     }
 
@@ -98,11 +92,8 @@ public class AddGroupDialogViewModelTests {
             addGroupViewModel.setDialogInputTextBox("   ");
             addGroupViewModel.changeTableOfMarks();
         } catch (Exception e) {
-            if (e.getClass().equals(InputIsEmptyException.class)) {
-                throw new InputIsEmptyException("Input is empty!");
-            } else {
-                fail();
-            }
+            ExceptionsChecker.checkException(e,
+                    new InputIsEmptyException("Input is empty!"));
         }
     }
 }

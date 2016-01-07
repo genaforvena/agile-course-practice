@@ -108,11 +108,8 @@ public class DeleteMarkDialogViewModelTests {
             deleteMarkViewModel.setDialogGroup("116");
             deleteMarkViewModel.changeTableOfMarks();
         } catch (Exception e) {
-            if (e.getClass().equals(GroupDoesNotExistException.class)) {
-                throw new GroupDoesNotExistException("Required group does not exist!");
-            } else {
-                fail();
-            }
+            ExceptionsChecker.checkException(e,
+                    new GroupDoesNotExistException("Required group does not exist!"));
         }
     }
 
@@ -123,11 +120,8 @@ public class DeleteMarkDialogViewModelTests {
             deleteMarkViewModel.setDialogStudent("Smirnov");
             deleteMarkViewModel.changeTableOfMarks();
         } catch (Exception e) {
-            if (e.getClass().equals(StudentDoesNotExistException.class)) {
-                throw new StudentDoesNotExistException("Required student does not exist!");
-            } else {
-                fail();
-            }
+            ExceptionsChecker.checkException(e,
+                    new StudentDoesNotExistException("Required student does not exist!"));
         }
     }
 
@@ -138,12 +132,8 @@ public class DeleteMarkDialogViewModelTests {
             deleteMarkViewModel.setDialogSubject("Geography");
             deleteMarkViewModel.changeTableOfMarks();
         } catch (Exception e) {
-            if (e.getClass().equals(AcademicSubjectDoesNotExistException.class)) {
-                throw new AcademicSubjectDoesNotExistException(
-                        "Required academic subject does not exist!");
-            } else {
-                fail();
-            }
+            ExceptionsChecker.checkException(e, new AcademicSubjectDoesNotExistException(
+                    "Required academic subject does not exist!"));
         }
     }
 
@@ -156,11 +146,8 @@ public class DeleteMarkDialogViewModelTests {
             deleteMarkViewModel.setDialogDate("02-2-2015");
             deleteMarkViewModel.changeTableOfMarks();
         } catch (Exception e) {
-            if (e.getClass().equals(MarkDoesNotExistException.class)) {
-                throw new MarkDoesNotExistException("Required mark does not exist!");
-            } else {
-                fail();
-            }
+            ExceptionsChecker.checkException(e,
+                    new MarkDoesNotExistException("Required mark does not exist!"));
         }
     }
 

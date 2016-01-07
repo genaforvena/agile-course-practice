@@ -26,10 +26,7 @@ public class DeleteSubjectDialogViewModel extends DeletingDialogViewModel {
 
     @Override
     public ComboBoxModel<String> getDialogSubjectsComboBoxModel() {
-        String[] subjects = getTableOfMarks().getAcademicSubjectsAsArray(
-                new Group(getDialogGroup()));
-        setDialogStudent(subjects[0]);
-        return new JComboBox<String>(subjects).getModel();
+        return getComboBoxModelOfAllSubjects();
     }
 
     @Override

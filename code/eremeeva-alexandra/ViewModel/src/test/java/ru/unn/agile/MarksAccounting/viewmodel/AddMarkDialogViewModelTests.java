@@ -113,11 +113,8 @@ public class AddMarkDialogViewModelTests {
             addMarkViewModel.setDialogInputTextBox("4");
             addMarkViewModel.changeTableOfMarks();
         } catch (Exception e) {
-            if (e.getClass().equals(GroupDoesNotExistException.class)) {
-                throw new GroupDoesNotExistException("Required group does not exist!");
-            } else {
-                fail();
-            }
+            ExceptionsChecker.checkException(e,
+                    new GroupDoesNotExistException("Required group does not exist!"));
         }
     }
 
@@ -131,11 +128,8 @@ public class AddMarkDialogViewModelTests {
             addMarkViewModel.setDialogInputTextBox("10");
             addMarkViewModel.changeTableOfMarks();
         } catch (Exception e) {
-            if (e.getClass().equals(StudentDoesNotExistException.class)) {
-                throw new StudentDoesNotExistException("Required student does not exist!");
-            } else {
-                fail();
-            }
+            ExceptionsChecker.checkException(e,
+                    new StudentDoesNotExistException("Required student does not exist!"));
         }
     }
 
@@ -149,12 +143,8 @@ public class AddMarkDialogViewModelTests {
             addMarkViewModel.setDialogInputTextBox("4");
             addMarkViewModel.changeTableOfMarks();
         } catch (Exception e) {
-            if (e.getClass().equals(AcademicSubjectDoesNotExistException.class)) {
-                throw new AcademicSubjectDoesNotExistException(
-                        "Required academic subject does not exist!");
-            } else {
-                fail();
-            }
+            ExceptionsChecker.checkException(e, new AcademicSubjectDoesNotExistException(
+                    "Required academic subject does not exist!"));
         }
     }
 
@@ -185,11 +175,8 @@ public class AddMarkDialogViewModelTests {
             addMarkViewModel.setDialogInputTextBox("-1");
             addMarkViewModel.changeTableOfMarks();
         } catch (Exception e) {
-            if (e.getClass().equals(MarkIsNotPositiveException.class)) {
-                throw new MarkIsNotPositiveException("Mark must be positive!");
-            } else {
-                fail();
-            }
+            ExceptionsChecker.checkException(e,
+                    new MarkIsNotPositiveException("Mark must be positive!"));
         }
     }
 
@@ -220,11 +207,8 @@ public class AddMarkDialogViewModelTests {
             addMarkViewModel.setDialogInputTextBox("   ");
             addMarkViewModel.changeTableOfMarks();
         } catch (Exception e) {
-            if (e.getClass().equals(InputIsEmptyException.class)) {
-                throw new InputIsEmptyException("Input is empty!");
-            } else {
-                fail();
-            }
+            ExceptionsChecker.checkException(e,
+                    new InputIsEmptyException("Input is empty!"));
         }
     }
 }

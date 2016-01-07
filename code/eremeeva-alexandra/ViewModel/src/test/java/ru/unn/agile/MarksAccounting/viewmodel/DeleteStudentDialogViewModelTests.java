@@ -92,11 +92,8 @@ public class DeleteStudentDialogViewModelTests {
             deleteStudentViewModel.setDialogStudent("Sidorov");
             deleteStudentViewModel.changeTableOfMarks();
         } catch (Exception e) {
-            if (e.getClass().equals(GroupDoesNotExistException.class)) {
-                throw new GroupDoesNotExistException("Required group does not exist!");
-            } else {
-                fail();
-            }
+            ExceptionsChecker.checkException(e,
+                    new GroupDoesNotExistException("Required group does not exist!"));
         }
     }
 
@@ -107,11 +104,8 @@ public class DeleteStudentDialogViewModelTests {
             deleteStudentViewModel.setDialogStudent("Sidorov");
             deleteStudentViewModel.changeTableOfMarks();
         } catch (Exception e) {
-            if (e.getClass().equals(StudentDoesNotExistException.class)) {
-                throw new StudentDoesNotExistException("Required student does not exist!");
-            } else {
-                fail();
-            }
+            ExceptionsChecker.checkException(e,
+                    new StudentDoesNotExistException("Required student does not exist!"));
         }
     }
 }

@@ -27,10 +27,7 @@ public class DeleteStudentDialogViewModel extends DeletingDialogViewModel {
 
     @Override
     public ComboBoxModel<String> getDialogStudentsComboBoxModel() {
-        String[] studentNames = getTableOfMarks().getStudentsAsArrayOfStrings(
-                new Group(getDialogGroup()));
-        setDialogStudent(studentNames[0]);
-        return new JComboBox<String>(studentNames).getModel();
+        return getComboBoxModelOfAllStudents();
     }
 
     @Override

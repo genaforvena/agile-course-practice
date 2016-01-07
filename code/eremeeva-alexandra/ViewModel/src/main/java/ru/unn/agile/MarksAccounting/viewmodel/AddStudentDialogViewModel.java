@@ -18,9 +18,7 @@ public class AddStudentDialogViewModel extends AddingDialogViewModel {
 
     @Override
     public ComboBoxModel<String> getDialogGroupsComboBoxModel() {
-        String[] groupNumbers = getTableOfMarks().getGroupsAsArrayOfStrings();
-        setDialogGroup(groupNumbers[0]);
-        return new JComboBox<String>(groupNumbers).getModel();
+        return getComboBoxModelOfAllGroups();
     }
 
     @Override

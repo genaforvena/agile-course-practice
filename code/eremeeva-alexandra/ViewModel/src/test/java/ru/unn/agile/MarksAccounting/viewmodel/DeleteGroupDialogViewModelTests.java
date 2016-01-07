@@ -52,11 +52,8 @@ public class DeleteGroupDialogViewModelTests {
 
     @Test
     public void canGetGroupsComboBoxModel() {
-        String[] groupNumbers = {"1", "2", "3"};
-        ComboBoxModel<String> expectedComboBoxModel = new JComboBox<String>(
-                groupNumbers).getModel();
-
-        assertTrue(ComboBoxModelsEqualer.comboBoxModelsEqualing(expectedComboBoxModel,
+        assertTrue(ComboBoxModelsEqualer.comboBoxModelsEqualing(
+                TestDataInitializer.getAllGroupsInComboBoxModel(),
                 deleteGroupViewModel.getDialogGroupsComboBoxModel()));
     }
 
@@ -80,11 +77,8 @@ public class DeleteGroupDialogViewModelTests {
             deleteGroupViewModel.setDialogGroup("116");
             deleteGroupViewModel.changeTableOfMarks();
         } catch (Exception e) {
-            if (e.getClass().equals(GroupDoesNotExistException.class)) {
-                throw new GroupDoesNotExistException("Required group does not exist!");
-            } else {
-                fail();
-            }
+            ExceptionsChecker.checkException(e,
+                    new GroupDoesNotExistException("Required group does not exist!"));
         }
     }
 }

@@ -92,11 +92,8 @@ public class DeleteSubjectDialogViewModelTests {
             deleteSubjectViewModel.setDialogSubject("History");
             deleteSubjectViewModel.changeTableOfMarks();
         } catch (Exception e) {
-            if (e.getClass().equals(GroupDoesNotExistException.class)) {
-                throw new GroupDoesNotExistException("Required group does not exist!");
-            } else {
-                fail();
-            }
+            ExceptionsChecker.checkException(e,
+                    new GroupDoesNotExistException("Required group does not exist!"));
         }
     }
 
@@ -107,12 +104,8 @@ public class DeleteSubjectDialogViewModelTests {
             deleteSubjectViewModel.setDialogSubject("Geography");
             deleteSubjectViewModel.changeTableOfMarks();
         } catch (Exception e) {
-            if (e.getClass().equals(AcademicSubjectDoesNotExistException.class)) {
-                throw new AcademicSubjectDoesNotExistException(
-                        "Required academic subject does not exist!");
-            } else {
-                fail();
-            }
+            ExceptionsChecker.checkException(e, new AcademicSubjectDoesNotExistException(
+                    "Required academic subject does not exist!"));
         }
     }
 }

@@ -19,7 +19,7 @@ public class DeleteGroupDialogViewModel extends DeletingDialogViewModel {
 
     @Override
     public ComboBoxModel<String> getDialogGroupsComboBoxModel() {
-        return new JComboBox<String>(getTableOfMarks().getGroupsAsArrayOfStrings()).getModel();
+        return getComboBoxModelOfAllGroups();
     }
 
     @Override
