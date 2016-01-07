@@ -4,20 +4,8 @@ import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
 public class Student {
-
     private final String name;
     private final ArrayList<Mark> marks;
-
-    private int findMark(final String requiredAcademicSubject,
-                         final GregorianCalendar requiredDate) {
-        for (int i = 0; i < getMarks().size(); i++) {
-            if (getMarks().get(i).getDate().equals(requiredDate)
-                    && getMarks().get(i).getAcademicSubject().equals(requiredAcademicSubject)) {
-                return i;
-            }
-        }
-        throw new MarkDoesNotExistException("Required mark doesn't exist");
-    }
 
     public Student(final String currentName) {
         this.name = currentName;
@@ -28,8 +16,34 @@ public class Student {
         return marks;
     }
 
+    public ArrayList<GregorianCalendar> getDates(final String requiredSubject) {
+        ArrayList<GregorianCalendar> result = new ArrayList<GregorianCalendar>();
+        ArrayList<Mark> marks = getMarks();
+        for (int i = 0; i < marks.size(); i++) {
+            if (marks.get(i).getAcademicSubject().equals(requiredSubject)) {
+                result.add(marks.get(i).getDate());
+            }
+        }
+        return result;
+    }
+
     public String getName() {
         return name;
+    }
+
+    public boolean doMarksExist() {
+        return !marks.isEmpty();
+    }
+
+    public boolean doMarksInSubjectExist(final String subject) {
+        if (doMarksExist()) {
+            for (int i = 0; i < marks.size(); i++) {
+                if (subject.equals(marks.get(i).getAcademicSubject())) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     @Override
@@ -64,6 +78,17 @@ public class Student {
     public Mark getMark(final String requiredAcademicSubject,
                         final GregorianCalendar requiredDate) {
         return getMarks().get(findMark(requiredAcademicSubject, requiredDate));
+    }
+
+    private int findMark(final String requiredAcademicSubject,
+                         final GregorianCalendar requiredDate) {
+        for (int i = 0; i < getMarks().size(); i++) {
+            if (getMarks().get(i).getDate().equals(requiredDate)
+                    && getMarks().get(i).getAcademicSubject().equals(requiredAcademicSubject)) {
+                return i;
+            }
+        }
+        throw new MarkDoesNotExistException("Required mark doesn't exist");
     }
 
     public void deleteMark(final String requiredAcademicSubject,

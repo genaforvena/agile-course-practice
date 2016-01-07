@@ -7,6 +7,83 @@ public class TableOfMarks {
 
     private final ArrayList<Group> groups;
 
+    public TableOfMarks() {
+        groups = new ArrayList<Group>();
+    }
+
+    public ArrayList<Group> getGroups() {
+        return groups;
+    }
+
+    public String[] getGroupsAsArrayOfStrings() {
+        String[] result = new String[getGroups().size()];
+        for (int i = 0; i < getGroups().size(); i++) {
+            result[i] = getGroups().get(i).getNumber();
+        }
+        return result;
+    }
+
+    public String[] getGroupsWhereStudentsExistAsArrayOfStrings() {
+        if (doStudentsExist()) {
+            ArrayList<String> groupsWithStudents = new ArrayList<String>();
+            for (int i = 0; i < groups.size(); i++) {
+                if (groups.get(i).doStudentsExist()) {
+                    groupsWithStudents.add(groups.get(i).getNumber());
+                }
+            }
+            return groupsWithStudents.toArray(new String[groupsWithStudents.size()]);
+        }
+        return new String[0];
+    }
+
+    public String[] getGroupsWhereSubjectsExistAsArrayOfStrings() {
+        if (doAcademicSubjectsExist()) {
+            ArrayList<String> groupsWithSubjects = new ArrayList<String>();
+            for (int i = 0; i < groups.size(); i++) {
+                if (groups.get(i).doAcademicSubjectsExist()) {
+                    groupsWithSubjects.add(groups.get(i).getNumber());
+                }
+            }
+            return groupsWithSubjects.toArray(new String[groupsWithSubjects.size()]);
+        }
+        return new String[0];
+    }
+
+    public String[] getGroupsWhereCanAddMarksAsArrayOfStrings() {
+        if (doAcademicSubjectsExist() && doStudentsExist()) {
+            ArrayList<String> groupsWhereCanAddMarks = new ArrayList<String>();
+            for (int i = 0; i < groups.size(); i++) {
+                if (groups.get(i).doAcademicSubjectsExist()
+                        && groups.get(i).doStudentsExist()) {
+                    groupsWhereCanAddMarks.add(groups.get(i).getNumber());
+                }
+            }
+            return groupsWhereCanAddMarks.toArray(new String[groupsWhereCanAddMarks.size()]);
+        }
+        return new String[0];
+    }
+
+    public String[] getGroupsWhereMarksExistAsArrayOfStrings() {
+        if (doMarksExist()) {
+            ArrayList<String> groupsWhereMarksExist = new ArrayList<String>();
+            for (int i = 0; i < groups.size(); i++) {
+                if (groups.get(i).doMarksExist()) {
+                    groupsWhereMarksExist.add(groups.get(i).getNumber());
+                }
+            }
+            return groupsWhereMarksExist.toArray(new String[groupsWhereMarksExist.size()]);
+        }
+        return new String[0];
+    }
+
+    public boolean doGroupsExist() {
+        return !groups.isEmpty();
+    }
+
+    public ArrayList<Student> getStudents(final Group requiredGroup) {
+        return groups.get(findGroup(requiredGroup)).getStudents();
+    }
+
     private int findGroup(final Group requiredGroup) {
         for (int i = 0; i < getGroups().size(); i++) {
             if (getGroups().get(i).getNumber().equals(requiredGroup.getNumber())) {
@@ -16,20 +93,94 @@ public class TableOfMarks {
         throw new GroupDoesNotExistException("Required group doesn't exist");
     }
 
-    public TableOfMarks() {
-        groups = new ArrayList<Group>();
+    public Student[] getStudentsAsArray(final Group requiredGroup) {
+        return groups.get(findGroup(requiredGroup)).getStudentsAsArray();
     }
 
-    public ArrayList<Group> getGroups() {
-        return groups;
+    public String[] getStudentsAsArrayOfStrings(final Group requiredGroup) {
+        return groups.get(findGroup(requiredGroup)).getStudentsAsArrayOfStrings();
     }
 
-    public ArrayList<Student> getStudents(final Group requiredGroup) {
-        return groups.get(findGroup(requiredGroup)).getStudents();
+    public boolean doStudentsExist() {
+        if (doGroupsExist()) {
+            for (int i = 0; i < groups.size(); i++) {
+                if (groups.get(i).doStudentsExist()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public String[] getStudentsWhereMarksExistAsArrayOfStrings(final Group requiredGroup) {
+        return groups.get(findGroup(requiredGroup)).getStudentsWhereMarksExistAsArrayOfStrings();
     }
 
     public ArrayList<String> getAcademicSubjects(final Group requiredGroup) {
         return groups.get(findGroup(requiredGroup)).getAcademicSubjects();
+    }
+
+    public String[] getAcademicSubjectsAsArray(final Group requiredGroup) {
+        return groups.get(findGroup(requiredGroup)).getAcademicSubjectsAsArray();
+    }
+
+    public String[] getAcademicSubjectsWhereMarksExistAsArray(final Group requiredGroup,
+                                                              final Student requiredStudent) {
+        Group group = groups.get(findGroup(requiredGroup));
+        if (doMarksExist()) {
+            return group.getAcademicSubjectsWhereMarksExistAsArray(requiredStudent);
+        }
+        return new String[0];
+    }
+
+    public boolean doAcademicSubjectsExist() {
+        if (doGroupsExist()) {
+            for (int i = 0; i < groups.size(); i++) {
+                if (groups.get(i).doAcademicSubjectsExist()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public ArrayList<GregorianCalendar> getDates(final Group requiredGroup,
+                                                 final String requiredAcademicSubject) {
+        return groups.get(findGroup(requiredGroup)).getDates(requiredAcademicSubject);
+    }
+
+    public GregorianCalendar[] getDatesAsArray(final Group requiredGroup,
+                                                 final String requiredAcademicSubject) {
+        return groups.get(findGroup(requiredGroup)).getDatesAsArray(requiredAcademicSubject);
+    }
+
+    public boolean canAddMark() {
+        if (doGroupsExist()) {
+            for (int i = 0; i < groups.size(); i++) {
+                if (groups.get(i).doStudentsExist() && groups.get(i).doAcademicSubjectsExist()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean doMarksExist() {
+        if (doStudentsExist() && doAcademicSubjectsExist()) {
+            for (int i = 0; i < groups.size(); i++) {
+                if (groups.get(i).doMarksExist()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean doMarksInSubjectExist(final Group group, final String subject) {
+        if (groups.get(findGroup(group)).doMarksInSubjectExist(subject)) {
+            return true;
+        }
+        return false;
     }
 
     public void addGroup(final Group newGroup) {

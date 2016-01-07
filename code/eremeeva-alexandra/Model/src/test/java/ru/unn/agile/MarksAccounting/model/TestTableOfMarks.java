@@ -7,18 +7,23 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class TestTableOfMarks {
-
     private TableOfMarks tableOfMarks;
     private TableOfMarks comparedTableOfMarks;
-    private ArrayList<Group> tempGroups;
+    private ArrayList<Group> groups;
 
-    private void initTemp() {
-        tempGroups = new ArrayList<Group>();
-        tempGroups.add(new Group("1"));
-        tempGroups.get(0).addStudent(new Student("Ivanov"));
-        tempGroups.get(0).addStudent(new Student("Sidorov"));
-        tempGroups.get(0).addAcademicSubject("History");
-        tempGroups.get(0).addAcademicSubject("Maths");
+    @Before
+    public void setUp() {
+        initArrayListGroups();
+        initGroups();
+    }
+
+    private void initArrayListGroups() {
+        groups = new ArrayList<Group>();
+        groups.add(new Group("1"));
+        groups.get(0).addStudent(new Student("Ivanov"));
+        groups.get(0).addStudent(new Student("Sidorov"));
+        groups.get(0).addAcademicSubject("History");
+        groups.get(0).addAcademicSubject("Maths");
     }
 
     private void initGroups() {
@@ -42,88 +47,307 @@ public class TestTableOfMarks {
                 new Student("Petrov"), new Group("2"));
     }
 
-    @Before
-    public void setUp() {
-        initTemp();
-        initGroups();
+    @Test
+    public void canGetGroups() {
+        assertEquals(groups, tableOfMarks.getGroups());
     }
 
     @Test
-    public void canGetGroups() {
-        assertEquals(tempGroups, tableOfMarks.getGroups());
+    public void canGetGroupsAsArrayOfStrings() {
+        String[] groupsArray = {"1", "2"};
+
+        assertArrayEquals(groupsArray, comparedTableOfMarks.getGroupsAsArrayOfStrings());
+    }
+
+    @Test
+    public void canGetGroupsWhereStudentsExistAsArrayOfStrings() {
+        String[] groupsWhereStudentsExistArray = {"1"};
+
+        tableOfMarks.addGroup(new Group("2"));
+
+        assertArrayEquals(groupsWhereStudentsExistArray,
+                tableOfMarks.getGroupsWhereStudentsExistAsArrayOfStrings());
+    }
+
+    @Test
+    public void canGetGroupsWhereSubjectsExistAsArrayOfStrings() {
+        String[] groupWhereSubjectsExistArray = {"1"};
+
+        tableOfMarks.addGroup(new Group("2"));
+
+        assertArrayEquals(groupWhereSubjectsExistArray,
+                tableOfMarks.getGroupsWhereSubjectsExistAsArrayOfStrings());
+    }
+
+    @Test
+    public void getGroupsWhereCanAddMarksAsArrayOfStrings() {
+        String[] groupsWhereCanAddMarksArray = {"1"};
+
+        tableOfMarks.addGroup(new Group("2"));
+
+        assertArrayEquals(groupsWhereCanAddMarksArray,
+                tableOfMarks.getGroupsWhereCanAddMarksAsArrayOfStrings());
+    }
+
+    @Test
+    public void canGetGroupsWhereMarksExistAsArrayOfStrings() {
+        String[] groupsWhereMarksExistArray = {"2"};
+
+        assertArrayEquals(groupsWhereMarksExistArray,
+                comparedTableOfMarks.getGroupsWhereMarksExistAsArrayOfStrings());
+    }
+
+    @Test
+    public void canIndicateWhenGroupsExist() {
+        assertTrue(tableOfMarks.doGroupsExist());
+    }
+
+    @Test
+    public void canIndicateWhenGroupsDoNotExist() {
+        TableOfMarks emptyTableOfMarks = new TableOfMarks();
+
+        assertFalse(emptyTableOfMarks.doGroupsExist());
     }
 
     @Test
     public void canGetStudents() {
-        assertEquals(tempGroups.get(0).getStudents(),
+        assertEquals(groups.get(0).getStudents(),
                 tableOfMarks.getStudents(new Group("1")));
     }
 
     @Test(expected = GroupDoesNotExistException.class)
-    public void whenGroupNumberIsWrongWhileGettingStudents() {
+    public void canNotGetStudentsWhenGroupDoesNotExist() {
         tableOfMarks.getStudents(new Group("116"));
     }
 
     @Test
+    public void canGetStudentsAsArray() {
+        Student[] studentsArray = {new Student("Ivanov"), new Student("Sidorov")};
+
+        assertArrayEquals(studentsArray, tableOfMarks.getStudentsAsArray(new Group("1")));
+    }
+
+    @Test(expected = GroupDoesNotExistException.class)
+    public void canNotGetStudentsAsArrayWhenGroupDoesNotExist() {
+        tableOfMarks.getStudentsAsArray(new Group("116"));
+    }
+
+    @Test
+    public void canGetStudentsAsArrayOfStrings() {
+        String[] studentsArray = {"Ivanov", "Sidorov"};
+
+        assertArrayEquals(studentsArray, tableOfMarks.getStudentsAsArrayOfStrings(new Group("1")));
+    }
+
+    @Test(expected = GroupDoesNotExistException.class)
+    public void canNotGetStudentsAsArrayOfStringsWhenGroupDoesNotExist() {
+        tableOfMarks.getStudentsAsArrayOfStrings(new Group("116"));
+    }
+
+    @Test
+    public void canGetStudentsWhereMarksExistAsArrayOfStrings() {
+        String[] studentsWhereMarksExistArray = {"Petrov"};
+
+        assertArrayEquals(studentsWhereMarksExistArray,
+                comparedTableOfMarks.getStudentsWhereMarksExistAsArrayOfStrings(new Group("2")));
+    }
+
+    @Test(expected = GroupDoesNotExistException.class)
+    public void canNotGetStudentsWhereMarksExistAsArrayOfStrings() {
+        tableOfMarks.getStudentsWhereMarksExistAsArrayOfStrings(new Group("116"));
+    }
+
+    @Test
+    public void canIndicateWhenStudentsExist() {
+        assertTrue(tableOfMarks.doStudentsExist());
+    }
+
+    @Test
+    public void canIndicateWhenStudentsDoNotExist() {
+        TableOfMarks tableOfMarksWithoutStudents = new TableOfMarks();
+        tableOfMarksWithoutStudents.addGroup(new Group("1"));
+        tableOfMarksWithoutStudents.addGroup(new Group("2"));
+        tableOfMarksWithoutStudents.addAcademicSubject(new Group("1"), "Maths");
+
+        assertFalse(tableOfMarksWithoutStudents.doStudentsExist());
+    }
+
+    @Test
     public void canGetAcademicSubjects() {
-        assertEquals(tempGroups.get(0).getAcademicSubjects(),
+        assertEquals(groups.get(0).getAcademicSubjects(),
                 tableOfMarks.getAcademicSubjects(new Group("1")));
     }
 
     @Test(expected = GroupDoesNotExistException.class)
-    public void whenGroupNumberIsWrongWhileGettingAcademicSubjects() {
+    public void canNotGetAcademicSubjectsWhenGroupDoesNotExist() {
         tableOfMarks.getAcademicSubjects(new Group("116"));
     }
 
     @Test
-    public void canAddGroup() {
-        tempGroups.add(new Group("2"));
+    public void canGetAcademicSubjectsAsArray() {
+        String[] subjectsArray = {"History", "Maths"};
+
+        assertArrayEquals(subjectsArray, tableOfMarks.getAcademicSubjectsAsArray(new Group("1")));
+    }
+
+    @Test(expected = GroupDoesNotExistException.class)
+    public void canNotGetAcademicSubjectsAsArrayWhenGroupDoesNotExist() {
+        tableOfMarks.getAcademicSubjectsAsArray(new Group("116"));
+    }
+
+    @Test
+    public void canGetAcademicSubjectsWhereMarksExistAsArray() {
+        String[] subjectsWhereMarksExistArray = {"Science"};
+
+        assertArrayEquals(subjectsWhereMarksExistArray,
+                comparedTableOfMarks.getAcademicSubjectsWhereMarksExistAsArray(new Group("2"),
+                        new Student("Petrov")));
+    }
+
+    @Test(expected = GroupDoesNotExistException.class)
+    public void canNotGetAcademicSubjectsWhereMarksExistAsArrayWhenGroupDoesNotExist() {
+        comparedTableOfMarks.getAcademicSubjectsWhereMarksExistAsArray(new Group("116"),
+                new Student("Petrov"));
+    }
+
+    @Test
+    public void canIndicateWhenAcademicSubjectsExist() {
+        assertTrue(tableOfMarks.doAcademicSubjectsExist());
+    }
+
+    @Test
+    public void canIndicateWhenAcademicSubjectsDoNotExist() {
+        TableOfMarks tableOfMarksWithoutSubjects = new TableOfMarks();
+        tableOfMarksWithoutSubjects.addGroup(new Group("1"));
+        tableOfMarksWithoutSubjects.addGroup(new Group("2"));
+        tableOfMarksWithoutSubjects.addStudent(new Group("1"), new Student("Petrov"));
+
+        assertFalse(tableOfMarksWithoutSubjects.doAcademicSubjectsExist());
+    }
+
+    @Test
+    public void canGetDates() {
+        ArrayList<GregorianCalendar> dates = new ArrayList<GregorianCalendar>();
+        dates.add(new GregorianCalendar(2015, GregorianCalendar.OCTOBER, 1));
+
+        assertEquals(dates, comparedTableOfMarks.getDates(new Group("2"), "Science"));
+    }
+
+    @Test(expected = GroupDoesNotExistException.class)
+    public void canNotGetDatesWhenGroupDoesNotExist() {
+        comparedTableOfMarks.getDates(new Group("116"), "Maths");
+    }
+
+    @Test
+    public void canIndicateWhenMarksExist() {
+        assertTrue(comparedTableOfMarks.doMarksExist());
+    }
+
+    @Test
+    public void canIndicateWhenMarksDoNotExist() {
+        assertFalse(tableOfMarks.doMarksExist());
+    }
+
+    @Test
+    public void canGetDatesAsArray() {
+        GregorianCalendar[] dates = {new GregorianCalendar(2015, GregorianCalendar.OCTOBER, 1)};
+
+        assertArrayEquals(dates, comparedTableOfMarks.getDatesAsArray(new Group("2"), "Science"));
+    }
+
+    @Test(expected = GroupDoesNotExistException.class)
+    public void canNotGetDatesAsArrayWhenGroupDoesNotExist() {
+        comparedTableOfMarks.getDatesAsArray(new Group("116"), "Maths");
+    }
+
+    @Test
+    public void canIndicateWhenCanAddMark() {
+        assertTrue(tableOfMarks.canAddMark());
+    }
+
+    @Test
+    public void canIndicateWhenCanNotAddMark() {
+        TableOfMarks tableOfMarks = new TableOfMarks();
+        tableOfMarks.addGroup(new Group("1"));
         tableOfMarks.addGroup(new Group("2"));
-        assertEquals(tempGroups, tableOfMarks.getGroups());
+        tableOfMarks.addStudent(new Group("1"), new Student("Petrov"));
+        tableOfMarks.addAcademicSubject(new Group("2"), "Maths");
+
+        assertFalse(tableOfMarks.canAddMark());
+    }
+
+    @Test
+    public void canIndicateWhenMarksInRequiredSubjectAndGroupExist() {
+        assertTrue(comparedTableOfMarks.doMarksInSubjectExist(new Group("2"), "Science"));
+    }
+
+    @Test
+    public void canIndicateWhenMarksInRequiresSubjectAndGroupDoNotExist() {
+        assertFalse(tableOfMarks.doMarksInSubjectExist(new Group("1"), "History"));
+    }
+
+    @Test(expected = GroupDoesNotExistException.class)
+    public void canNotIndicateWhetherMarksExistWhenRequiredGroupDoesNotExist() {
+        comparedTableOfMarks.doMarksInSubjectExist(new Group("116"), "Science");
+    }
+
+    @Test
+    public void canAddGroup() {
+        groups.add(new Group("2"));
+
+        tableOfMarks.addGroup(new Group("2"));
+
+        assertEquals(groups, tableOfMarks.getGroups());
     }
 
     @Test(expected = GroupAlreadyExistsException.class)
-    public void whenGroupAlreadyExists() {
+    public void canNotAddGroupWhenGroupAlreadyExists() {
         tableOfMarks.addGroup(new Group("1"));
     }
 
     @Test
     public void canAddStudent() {
-        tempGroups.get(0).addStudent(new Student("Kornyakov"));
+        groups.get(0).addStudent(new Student("Kornyakov"));
+
         tableOfMarks.addStudent(new Group("1"), new Student("Kornyakov"));
-        assertEquals(tempGroups, tableOfMarks.getGroups());
+
+        assertEquals(groups, tableOfMarks.getGroups());
     }
 
     @Test(expected = GroupDoesNotExistException.class)
-    public void whenRequiredGroupDoesNotExistWhileAddingStudent() {
+    public void canNotAddStudentWhenGroupDoesNotExist() {
         tableOfMarks.addStudent(new Group("2"), new Student("Kornyakov"));
     }
 
     @Test
     public void canAddSubject() {
-        tempGroups.get(0).addAcademicSubject("Science");
+        groups.get(0).addAcademicSubject("Science");
+
         tableOfMarks.addAcademicSubject(new Group("1"), "Science");
-        assertEquals(tempGroups, tableOfMarks.getGroups());
+
+        assertEquals(groups, tableOfMarks.getGroups());
     }
 
     @Test(expected = GroupDoesNotExistException.class)
-    public void  whenRequiredGroupDoesNotExistWhileAddingAcademicSubject() {
+    public void  canNotAddAcademicSubjectWhenGroupDoesNotExist() {
         tableOfMarks.addAcademicSubject(new Group("2"), "Maths");
     }
 
     @Test
     public void canAddNewMark() {
-        tempGroups.get(0).addNewMark(
+        groups.get(0).addNewMark(
                 new Mark(4, "History", new GregorianCalendar(2015, GregorianCalendar.OCTOBER, 1)),
                 new Student("Sidorov"));
+
         tableOfMarks.addNewMark(
                 new Mark(4, "History", new GregorianCalendar(2015, GregorianCalendar.OCTOBER, 1)),
                 new Student("Sidorov"), new Group("1"));
-        assertEquals(tempGroups, tableOfMarks.getGroups());
+
+        assertEquals(groups, tableOfMarks.getGroups());
     }
 
     @Test(expected = GroupDoesNotExistException.class)
-    public void whenRequiredGroupDoesNotExistWhileAddingNewMark() {
+    public void canNotAddMarkWhenGroupDoesNotExist() {
         tableOfMarks.addNewMark(
                 new Mark(4, "History", new GregorianCalendar(2015, GregorianCalendar.OCTOBER, 1)),
                 new Student("Sidorov"), new Group("2"));
@@ -138,6 +362,7 @@ public class TestTableOfMarks {
         equivalentTableOfMarks.addNewMark(
                 new Mark(4, "Science", new GregorianCalendar(2015, GregorianCalendar.OCTOBER, 1)),
                 new Student("Petrov"), new Group("2"));
+
         assertTrue(equivalentTableOfMarks.equals(comparedTableOfMarks));
     }
 
@@ -150,12 +375,13 @@ public class TestTableOfMarks {
     public void canGetMark() {
         Mark four = new Mark(4, "Science",
                 new GregorianCalendar(2015, GregorianCalendar.OCTOBER, 1));
+
         assertEquals(four, comparedTableOfMarks.getMark(new Group("2"), new Student("Petrov"),
                 "Science", new GregorianCalendar(2015, GregorianCalendar.OCTOBER, 1)));
     }
 
     @Test(expected = GroupDoesNotExistException.class)
-    public void whenRequiredGroupDoesNotExistWhileGettingMark() {
+    public void canNotGetMarkWhenGroupDoesNotExist() {
         tableOfMarks.getMark(new Group("2"), new Student("Sidorov"),  "History",
                 new GregorianCalendar(2015, GregorianCalendar.OCTOBER, 1));
     }
@@ -165,13 +391,15 @@ public class TestTableOfMarks {
         tableOfMarks.addGroup(new Group("2"));
         tableOfMarks.addStudent(new Group("2"), new Student("Petrov"));
         tableOfMarks.addAcademicSubject(new Group("2"), "Science");
+
         comparedTableOfMarks.deleteMark(new Group("2"), new Student("Petrov"),  "Science",
                 new GregorianCalendar(2015, GregorianCalendar.OCTOBER, 1));
+
         assertEquals(tableOfMarks, comparedTableOfMarks);
     }
 
     @Test(expected = GroupDoesNotExistException.class)
-    public void whenRequiredGroupDoesNotExistWhileDeletingMark() {
+    public void canNotDDeleteMarkWhenGroupDoesNotExist() {
         tableOfMarks.deleteMark(new Group("2"), new Student("Petrov"),  "Science",
                 new GregorianCalendar(2015, GregorianCalendar.OCTOBER, 1));
     }
@@ -179,35 +407,40 @@ public class TestTableOfMarks {
     @Test
     public void canDeleteGroup() {
         comparedTableOfMarks.deleteGroup(new Group("2"));
+
         assertEquals(tableOfMarks, comparedTableOfMarks);
     }
 
     @Test(expected = GroupDoesNotExistException.class)
-    public void whenRequiredGroupDoesNotExistWhileDeletingGroup() {
+    public void canNotDeleteGroupWhenGroupDoesNotExist() {
         tableOfMarks.deleteGroup(new Group("2"));
     }
 
     @Test
     public void canDeleteStudent() {
-        tempGroups.get(0).deleteStudent(new Student("Sidorov"));
+        groups.get(0).deleteStudent(new Student("Sidorov"));
+
         tableOfMarks.deleteStudent(new Group("1"), new Student("Sidorov"));
-        assertEquals(tempGroups, tableOfMarks.getGroups());
+
+        assertEquals(groups, tableOfMarks.getGroups());
     }
 
     @Test(expected = GroupDoesNotExistException.class)
-    public void whenRequiredGroupDoesNotExistWhileDeletingStudent() {
+    public void canNotDeleteStudentWhenGroupDoesNotExist() {
         tableOfMarks.deleteStudent(new Group("2"), new Student("Sidorov"));
     }
 
     @Test
     public void canDeleteAcademicSubject() {
-        tempGroups.get(0).deleteAcademicSubject("History");
+        groups.get(0).deleteAcademicSubject("History");
+
         tableOfMarks.deleteAcademicSubject(new Group("1"), "History");
-        assertEquals(tempGroups, tableOfMarks.getGroups());
+
+        assertEquals(groups, tableOfMarks.getGroups());
     }
 
     @Test(expected = GroupDoesNotExistException.class)
-    public void whenRequiredGroupDoesNotExistWhileDeletingAcademicSubject() {
+    public void canNotDeleteAcademicSubjectWhenGroupDoesNotExist() {
         tableOfMarks.deleteAcademicSubject(new Group("2"), "History");
     }
 

@@ -7,7 +7,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class TestMark {
-
     private Mark five;
 
     @Before
@@ -16,7 +15,7 @@ public class TestMark {
     }
 
     @Test(expected = MarkIsNotPositiveException.class)
-    public void cannotInitNonPositiveMark() {
+    public void canNotInitNonPositiveMark() {
         five = new Mark(-2, "Maths", new GregorianCalendar(2015, Calendar.OCTOBER, 31));
     }
 
@@ -39,12 +38,14 @@ public class TestMark {
     public void whenEquals() {
         Mark equivalentFive = new Mark(5, "Maths",
                 new GregorianCalendar(2015, Calendar.OCTOBER, 31));
+
         assertTrue(five.equals(equivalentFive));
     }
 
     @Test
     public void whenDoesNotEqual() {
         Mark four = new Mark(4, "Maths", new GregorianCalendar(2015, Calendar.OCTOBER, 31));
+
         assertFalse(five.equals(four));
     }
 

@@ -3,7 +3,6 @@ package ru.unn.agile.MarksAccounting.model;
 import java.util.GregorianCalendar;
 
 public class Mark {
-
     private int value;
     private final String academicSubject;
     private final GregorianCalendar date;
