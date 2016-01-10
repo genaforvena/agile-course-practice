@@ -8,6 +8,7 @@ import ru.unn.agile.QuadraticEquationSolver.Model.QuadraticEquationSolver;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ViewModel {
     private final StringProperty a = new SimpleStringProperty();
@@ -16,6 +17,10 @@ public class ViewModel {
     private final BooleanProperty solvingEquationDisabled = new SimpleBooleanProperty();
     private final StringProperty result = new SimpleStringProperty();
     private final StringProperty status = new SimpleStringProperty();
+
+    private IQuadraticEquationLogger qeLogger;
+    private List<ValueChangeObserver> valueChangedObservers;
+    private final StringProperty logs = new SimpleStringProperty();
 
     public StringProperty coeffAProperty() {
         return a;
@@ -53,7 +58,35 @@ public class ViewModel {
         return solvingEquationDisabled.get();
     }
 
+    public final List<String> getLog() {
+        return qeLogger.getLog();
+    }
+
+    public StringProperty logsProperty() {
+        return logs;
+    }
+
+    public final String getLogs() {
+        return logs.get();
+    }
+
     public ViewModel() {
+        initAllFields();
+    }
+
+    public ViewModel(final IQuadraticEquationLogger logger) {
+        createLogger(logger);
+        initAllFields();
+    }
+
+    public void createLogger(final IQuadraticEquationLogger logger) {
+        if (logger == null) {
+            throw new IllegalArgumentException("null pointer");
+        }
+        qeLogger = logger;
+    }
+
+    private void initAllFields() {
         a.set("");
         b.set("");
         c.set("");
@@ -77,8 +110,11 @@ public class ViewModel {
             add(c);
         } };
 
+        valueChangedObservers = new ArrayList<>();
         for (StringProperty textFieldCoefficient : textFieldsCoefficients) {
-            textFieldCoefficient.addListener(new ValueChangeObserver());
+            final ValueChangeObserver observer = new ValueChangeObserver();
+            textFieldCoefficient.addListener(observer);
+            valueChangedObservers.add(observer);
         }
     }
 
@@ -93,6 +129,11 @@ public class ViewModel {
             status.set(Status.SOLVED.toString());
         }
         result.set(createAnswerInStringFormat(roots));
+
+        String message = String.format("%s Coefficients: a = %s; b = %s; c = %s",
+                LogMessages.SOLVE_BUTTON_WAS_PRESSED, coeffA, coeffB, coeffC);
+        qeLogger.log(message);
+        changeLogs();
     }
 
     private String createAnswerInStringFormat(final float [] roots) {
@@ -112,6 +153,22 @@ public class ViewModel {
             return QuadraticEquationSolver.solve(a, b, c);
         } catch (Exception ex) {
             return null;
+        }
+    }
+
+    public void onFocusChanged(final Boolean oldState, final Boolean newState) {
+        if (newState && !oldState) {
+            return;
+        }
+        for (ValueChangeObserver observer : valueChangedObservers) {
+            if (observer.wasChanged()) {
+                String message = String.format("%s Input coefficients are: %s;%s;%s",
+                        LogMessages.EDITING_WAS_FINISHED, a.get(), b.get(), c.get());
+                qeLogger.log(message);
+                changeLogs();
+                observer.cache();
+                break;
+            }
         }
     }
 
@@ -138,11 +195,32 @@ public class ViewModel {
     }
 
     private class ValueChangeObserver implements ChangeListener<String> {
+        private String previousValue = "";
+        private String currentValue = "";
         @Override
         public void changed(final ObservableValue<? extends String> observable,
-                            final String oldValue, final String newValue) {
+                            final String oldState, final String newState) {
+            if (Objects.equals(newState, oldState)) {
+                return;
+            }
             status.set(getInputStatus().toString());
+            currentValue = newState;
         }
+        public boolean wasChanged() {
+            return !(Objects.equals(currentValue, previousValue));
+        }
+        public void cache() {
+            previousValue = currentValue;
+        }
+    }
+
+    private void changeLogs() {
+        String record = "";
+        List<String> log = qeLogger.getLog();
+        for (String logLine : log) {
+            record += String.format("%s\n", logLine);
+        }
+        logs.set(record);
     }
 }
 
@@ -157,8 +235,20 @@ enum Status {
     private Status(final String name) {
         this.name = name;
     }
-    @Override
     public String toString() {
         return name;
+    }
+}
+
+enum LogMessages {
+    SOLVE_BUTTON_WAS_PRESSED("Solving. "),
+    EDITING_WAS_FINISHED("Input data was updated. ");
+
+    private final String message;
+    private LogMessages(final String message) {
+        this.message = message;
+    }
+    public String toString() {
+        return message;
     }
 }

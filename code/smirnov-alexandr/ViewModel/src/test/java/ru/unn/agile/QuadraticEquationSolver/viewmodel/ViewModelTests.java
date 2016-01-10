@@ -4,14 +4,22 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
+
 import static org.junit.Assert.*;
 
 public class ViewModelTests {
     private ViewModel viewModel;
 
+    public void setExternalViewModel(final ViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
+
     @Before
     public void setUp() {
-        viewModel = new ViewModel();
+        if (viewModel == null) {
+            viewModel = new ViewModel(new FakeQuadraticEquationLogger());
+        }
     }
 
     @After
@@ -100,6 +108,70 @@ public class ViewModelTests {
         setCoefficients("1", "3", "5");
         viewModel.solveQuadraticEquation();
         assertEquals("", viewModel.resultProperty().get());
+    }
+
+    @Test
+    public void logIsEmptyByDefault() {
+        List<String> log = viewModel.getLog();
+        assertTrue(log.isEmpty());
+    }
+
+    @Test
+    public void whenViewModelCreatedWithNullLoggerGetException() {
+        String message = "";
+        try {
+            new ViewModel(null);
+        } catch (IllegalArgumentException ex) {
+            message = ex.getMessage();
+        }
+        assertEquals(message, "null pointer");
+    }
+
+    @Test
+    public void whenCoefficientsNotEnteredLogIsEmpty() {
+        setCoefficients("", "", "");
+        assertTrue(viewModel.getLog().isEmpty());
+    }
+
+    @Test
+    public void whenEquationWasSolvedLogContainsCorrectMessage() {
+        setCoefficients("2", "4", "-6");
+        viewModel.solveQuadraticEquation();
+        String message = viewModel.getLog().get(0);
+        assertTrue(message.contains(LogMessages.SOLVE_BUTTON_WAS_PRESSED.toString()));
+    }
+
+    @Test
+    public void whenEquationWasSolvedLogContainsInputCoefficients() {
+        setCoefficients("2", "-7", "5");
+        viewModel.solveQuadraticEquation();
+        String message = viewModel.getLog().get(0);
+        assertTrue(message.contains("2") && message.contains("-7") && message.contains("5"));
+    }
+
+    @Test
+    public void coefficientsInLogHaveCorrectFormat() {
+        setCoefficients("3", "-8", "5");
+        viewModel.solveQuadraticEquation();
+        String message = getLogFullMessage();
+        assertTrue(message.contains("Coefficients: a = 3.0; b = -8.0; c = 5.0"));
+    }
+
+    @Test
+    public void whenFocusChangedCoefficientsProperlyLogged() {
+        setCoefficients("1", "-6", "5");
+        viewModel.onFocusChanged(true, false);
+        String message = getLogFullMessage();
+        assertTrue(message.contains("Input data was updated.  Input coefficients are: 1;-6;5"));
+    }
+
+    private String getLogFullMessage() {
+        List<String> logLines = viewModel.getLog();
+        String message = "";
+        for (String logLine : logLines) {
+            message += logLine;
+        }
+        return message;
     }
 
     private void setCoefficients(final String a, final String b, final String c) {
