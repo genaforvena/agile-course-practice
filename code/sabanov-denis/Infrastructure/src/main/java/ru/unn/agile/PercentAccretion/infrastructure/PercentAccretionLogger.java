@@ -21,7 +21,6 @@ public class PercentAccretionLogger implements IPercentAccretionLogger {
         try {
             fileWriter = new FileWriter(filePath);
             fileWriter.write("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n");
-            fileWriter.write("<logger>\n");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -31,7 +30,7 @@ public class PercentAccretionLogger implements IPercentAccretionLogger {
     public void log(final String logMessage) {
         try {
             fileWriter.write("  <data=\"" + "[" + new Date() + "]"
-                    + "\" logMessage=\"" + logMessage + "\" />" + "\n");
+                    + "\"/> <logMessage=\"" + logMessage + "\" />" + "\n");
             fileWriter.flush();
         } catch (Exception e) {
             System.out.println(e.getMessage());
@@ -43,7 +42,7 @@ public class PercentAccretionLogger implements IPercentAccretionLogger {
         BufferedReader bufferedReader;
         ArrayList<String> log = new ArrayList<>();
         Pattern pattern = Pattern.compile("^  <data=\"(?<date>.*)"
-                + "\" logMessage=\"(?<logMessage>.*)\" />$");
+                + "\"/> <logMessage=\"(?<logMessage>.*)\" />$");
         try {
             bufferedReader = new BufferedReader(new FileReader(filePath));
             String bufMessage = bufferedReader.readLine();
@@ -58,7 +57,6 @@ public class PercentAccretionLogger implements IPercentAccretionLogger {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-
         return log;
     }
 }

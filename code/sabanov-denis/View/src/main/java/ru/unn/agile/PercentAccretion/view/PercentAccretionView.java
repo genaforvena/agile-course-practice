@@ -44,6 +44,7 @@ public final class PercentAccretionView {
     }
 
     private PercentAccretionView() {
+
         viewModel = new PercentAccretionViewModel(new PercentAccretionLogger(
                 "./PercentAccretion.xml"));
 

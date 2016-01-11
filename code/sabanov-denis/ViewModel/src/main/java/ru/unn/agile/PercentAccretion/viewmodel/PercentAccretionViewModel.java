@@ -11,7 +11,8 @@ public class PercentAccretionViewModel {
         FIELD_IS_EMPTY("Empty fields!"),
         INCORRECT_VALUES("Wrong values!"),
         CLICK_BUTTON("Please click\"Calculate\"!"),
-        SUCCESS("Success");
+        SUCCESS("Success"),
+        EXIT("Exit");
 
         private String statusMessage;
 
