@@ -1,0 +1,9 @@
+dependencies {
+    compile project(':paramuzov-vladimir-ViewModel')
+    compile project(':paramuzov-vladimir-Infrastructure')
+}
+
+sourceSets {
+    main.java.srcDir 'src/main/java'
+    test.java.srcDir 'src/test/java'
+}

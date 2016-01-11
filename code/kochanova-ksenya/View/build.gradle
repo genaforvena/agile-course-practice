@@ -1,0 +1,11 @@
+apply from:   rootDir.getAbsolutePath() + '/code/config/scripts/javafx.plugin'
+
+dependencies {
+    compile project(':kochanova-ksenya-ViewModel')
+    compile project(':kochanova-ksenya-Infrastructure')
+}
+
+sourceSets {
+    main.java.srcDir 'src/main/java'
+    test.java.srcDir 'src/test/java'
+}

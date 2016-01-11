@@ -147,7 +147,9 @@
         <module name="MagicNumber"/>
         <module name="MissingSwitchDefault"/>
         <module name="ModifiedControlVariable"/>
-        <module name="RedundantThrows"/>
+        <module name="RedundantThrows">
+            <property name="suppressLoadErrors" value="true"/>
+        </module>
         <module name="SimplifyBooleanExpression"/>
         <module name="SimplifyBooleanReturn"/>
 

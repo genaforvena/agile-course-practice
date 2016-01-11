@@ -1,0 +1,9 @@
+apply from:   rootDir.getAbsolutePath() + '/code/config/scripts/javafx.plugin'
+
+javafx {
+    mainClass 'ru.unn.agile.IntersectionOfSegments.viewmodel.ViewModel'
+}
+
+dependencies {
+    compile project(':zhbanova-anna-Model')
+}

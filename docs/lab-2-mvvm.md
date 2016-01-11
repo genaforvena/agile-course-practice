@@ -132,7 +132,10 @@ MVVM.
   1. Создать директорию `View` в своей подпапке.
   1. Создать набор вложенных директорий для исходников, подобно тому, как это
      сделано в вашей `Model` и проекте-примере:
-     `code/kornyakov-kirill-lab2/View/src/main/java/ru/unn/agile/ComplexNumber/view/`.
+	 
+        code/kornyakov-kirill-lab2/View/src/main/java/ru/unn/agile/ComplexNumber/view/
+        code/kornyakov-kirill-lab2/View/src/test/java/ru/unn/agile/ComplexNumber/view/
+		
   1. Положить в вашу папку `View` файл `build.gradle` следующего содержания:
 
         apply from:   rootDir.getAbsolutePath() + '/code/config/scripts/javafx.plugin'
@@ -179,6 +182,8 @@ MVVM.
   1. Таким образом, предстоит сверстать форму, которая позволяла бы
      пользоваться вашим классом. Саму привязку класса делать не нужно,
      следует лишь зарезервировать поля.
+  1. Для составления отчета о покрытии тестами и успешного прохождения проверки 
+     в Travis, необходимо добать фиктивный тест так, как это сделано в проекте-примере.
   1. Результаты своей работы следует зафиксировать очередным коммитом в Git.
      Также можно сделать `git push` в свой репозиторий на GitHub, чтобы Travis
      снова прогнал тесты.

@@ -1,0 +1,9 @@
+dependencies {
+    compile project(':moshkov-yuriy-ViewModel')
+    compile project(':moshkov-yuriy-Infrastructure')
+}
+
+sourceSets {
+    main.java.srcDir 'src/main/java'
+    test.java.srcDir 'src/test/java'
+}

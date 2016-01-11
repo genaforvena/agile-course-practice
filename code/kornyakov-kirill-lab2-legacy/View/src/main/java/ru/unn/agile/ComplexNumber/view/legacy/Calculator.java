@@ -22,7 +22,9 @@ public final class Calculator {
     private JTextField txtResult;
     private JLabel lbStatus;
 
-    private Calculator() { }
+    private Calculator() {
+
+    }
 
     private Calculator(final ViewModel viewModel) {
         this.viewModel = viewModel;
