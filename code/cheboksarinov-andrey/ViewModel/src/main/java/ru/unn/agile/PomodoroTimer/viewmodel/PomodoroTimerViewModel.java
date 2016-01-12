@@ -13,6 +13,7 @@ public class PomodoroTimerViewModel extends EventGenerator {
     private String pomodoroCount;
     private Boolean canStartTimer;
     private final SessionManager sessionManager;
+    private final ActionEvent viewModelChangedActionEvent;
 
     public PomodoroTimerViewModel(final SessionManager sessionManager) {
         seconds = "00";
@@ -20,6 +21,7 @@ public class PomodoroTimerViewModel extends EventGenerator {
         currentStatus = Status.WAITING.toString();
         pomodoroCount = "0";
         canStartTimer = true;
+        viewModelChangedActionEvent = new ActionEvent(this, 0, "View model is changed");
         this.sessionManager = sessionManager;
         this.sessionManager.addActionListener(new ActionListener() {
             @Override
@@ -32,25 +34,9 @@ public class PomodoroTimerViewModel extends EventGenerator {
                 if (canStartTimer != isCurrentStatusWaiting()) {
                     canStartTimer = false;
                 }
-                fireActionPerformed(new ActionEvent(this, 0, "View model is changed"));
+                fireActionPerformed(viewModelChangedActionEvent);
             }
         });
-    }
-
-    public void setPomodoroCount(final String pomodoroCount) {
-        this.pomodoroCount = pomodoroCount;
-    }
-
-    public void setCurrentStatus(final String currentStatus) {
-        this.currentStatus = currentStatus;
-    }
-
-    public void setSeconds(final String seconds) {
-        this.seconds = seconds;
-    }
-
-    public void setMinutes(final String minutes) {
-        this.minutes = minutes;
     }
 
     public boolean getCanStartTimer() {
@@ -73,7 +59,7 @@ public class PomodoroTimerViewModel extends EventGenerator {
     }
 
     private boolean isStringContainOneCharNumber(final String stringWithNumber) {
-        return stringWithNumber.length() < 2 && !"00".equals(stringWithNumber);
+        return stringWithNumber.length() < 2;
     }
 
     public String getMinutes() {

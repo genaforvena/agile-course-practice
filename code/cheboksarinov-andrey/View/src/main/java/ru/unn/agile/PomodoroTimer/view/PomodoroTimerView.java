@@ -36,25 +36,16 @@ public final class PomodoroTimerView {
             @Override
             public void actionPerformed(final ActionEvent e) {
                 backBind();
-                bind();
             }
         });
 
         startTimerButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent e) {
-                bind();
                 viewModel.startSession();
                 backBind();
             }
         });
-    }
-
-    private void bind() {
-        viewModel.setPomodoroCount(pomodoroCountLabel.getText());
-        viewModel.setCurrentStatus(currentStatusLabel.getText());
-        viewModel.setSeconds(secondsLabel.getText());
-        viewModel.setMinutes(minutesLabel.getText());
     }
 
     private void backBind() {
