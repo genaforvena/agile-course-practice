@@ -1,5 +1,6 @@
 package ru.unn.agile.QuadraticEquationSolver.view;
 
+import javafx.beans.property.StringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -14,11 +15,11 @@ public class EquationsSolver {
     @FXML
     private ViewModel viewModel;
     @FXML
-    private TextField textFieldCoeffA;
+    private TextField textFieldCoefficientA;
     @FXML
-    private TextField textFieldCoeffB;
+    private TextField textFieldCoefficientB;
     @FXML
-    private TextField textFieldCoeffC;
+    private TextField textFieldCoefficientC;
     @FXML
     private Button buttonSolveEquation;
 
@@ -34,14 +35,18 @@ public class EquationsSolver {
             }
         };
 
-        textFieldCoeffA.textProperty().bindBidirectional(viewModel.coeffAProperty());
-        textFieldCoeffA.focusedProperty().addListener(focusChangedObserver);
+        StringProperty textCoefficientA = textFieldCoefficientA.textProperty();
+        StringProperty textCoefficientB = textFieldCoefficientB.textProperty();
+        StringProperty textCoefficientC = textFieldCoefficientC.textProperty();
 
-        textFieldCoeffB.textProperty().bindBidirectional(viewModel.coeffBProperty());
-        textFieldCoeffB.focusedProperty().addListener(focusChangedObserver);
+        textCoefficientA.bindBidirectional(viewModel.coefficientAProperty());
+        textFieldCoefficientA.focusedProperty().addListener(focusChangedObserver);
 
-        textFieldCoeffC.textProperty().bindBidirectional(viewModel.coeffCProperty());
-        textFieldCoeffC.focusedProperty().addListener(focusChangedObserver);
+        textCoefficientB.bindBidirectional(viewModel.coefficientBProperty());
+        textFieldCoefficientB.focusedProperty().addListener(focusChangedObserver);
+
+        textCoefficientC.bindBidirectional(viewModel.coefficientCProperty());
+        textFieldCoefficientC.focusedProperty().addListener(focusChangedObserver);
 
         buttonSolveEquation.setOnAction(new EventHandler<ActionEvent>() {
             @Override

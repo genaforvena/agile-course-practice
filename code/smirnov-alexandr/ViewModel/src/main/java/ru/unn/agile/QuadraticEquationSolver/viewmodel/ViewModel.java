@@ -18,19 +18,19 @@ public class ViewModel {
     private final StringProperty result = new SimpleStringProperty();
     private final StringProperty status = new SimpleStringProperty();
 
-    private IQuadraticEquationLogger qeLogger;
+    private IQuadraticEquationLogger quadraticEquationLogger;
     private List<ValueChangeObserver> valueChangedObservers;
     private final StringProperty logs = new SimpleStringProperty();
 
-    public StringProperty coeffAProperty() {
+    public StringProperty coefficientAProperty() {
         return a;
     }
 
-    public StringProperty coeffBProperty() {
+    public StringProperty coefficientBProperty() {
         return b;
     }
 
-    public StringProperty coeffCProperty() {
+    public StringProperty coefficientCProperty() {
         return c;
     }
 
@@ -59,7 +59,7 @@ public class ViewModel {
     }
 
     public final List<String> getLog() {
-        return qeLogger.getLog();
+        return quadraticEquationLogger.getLog();
     }
 
     public StringProperty logsProperty() {
@@ -83,7 +83,7 @@ public class ViewModel {
         if (logger == null) {
             throw new IllegalArgumentException("null pointer");
         }
-        qeLogger = logger;
+        quadraticEquationLogger = logger;
     }
 
     private void initAllFields() {
@@ -91,7 +91,8 @@ public class ViewModel {
         b.set("");
         c.set("");
         result.set("");
-        status.set(Status.WAIT.toString());
+        Status currentStatus = Status.WAIT;
+        status.set(currentStatus.toString());
 
         BooleanBinding canSolveEquation = new BooleanBinding() {
             {
@@ -119,20 +120,22 @@ public class ViewModel {
     }
 
     public void solveQuadraticEquation() {
-        float coeffA = Float.parseFloat(a.get());
-        float coeffB = Float.parseFloat(b.get());
-        float coeffC = Float.parseFloat(c.get());
-        float [] roots = trySolveQuadraticEquation(coeffA, coeffB, coeffC);
+        float coefficientA = Float.parseFloat(a.get());
+        float coefficientB = Float.parseFloat(b.get());
+        float coefficientC = Float.parseFloat(c.get());
+        float [] roots = trySolveQuadraticEquation(coefficientA, coefficientB, coefficientC);
         if (roots == null) {
-            status.set(Status.NO_ROOTS.toString());
+            Status currentStatus = Status.NO_ROOTS;
+            status.set(currentStatus.toString());
         } else {
-            status.set(Status.SOLVED.toString());
+            Status currentStatus = Status.SOLVED;
+            status.set(currentStatus.toString());
         }
         result.set(createAnswerInStringFormat(roots));
 
         String message = String.format("%s Coefficients: a = %s; b = %s; c = %s",
-                LogMessages.SOLVE_BUTTON_WAS_PRESSED, coeffA, coeffB, coeffC);
-        qeLogger.log(message);
+                LogMessages.SOLVE_BUTTON_WAS_PRESSED, coefficientA, coefficientB, coefficientC);
+        quadraticEquationLogger.log(message);
         changeLogs();
     }
 
@@ -164,7 +167,7 @@ public class ViewModel {
             if (observer.wasChanged()) {
                 String message = String.format("%s Input coefficients are: %s;%s;%s",
                         LogMessages.EDITING_WAS_FINISHED, a.get(), b.get(), c.get());
-                qeLogger.log(message);
+                quadraticEquationLogger.log(message);
                 changeLogs();
                 observer.cache();
                 break;
@@ -174,20 +177,23 @@ public class ViewModel {
 
     private Status getInputStatus() {
         Status status = Status.READY;
-        if (a.get().isEmpty() || b.get().isEmpty() || c.get().isEmpty()) {
+        String coefficientA = a.get();
+        String coefficientB = b.get();
+        String coefficientC = c.get();
+        if (coefficientA.isEmpty() || coefficientB.isEmpty() || coefficientC.isEmpty()) {
             status = Status.WAIT;
         }
         try {
-            if (!a.get().isEmpty()) {
-                Float.parseFloat(a.get());
+            if (!coefficientA.isEmpty()) {
+                Float.parseFloat(coefficientA);
             }
-            if (!b.get().isEmpty()) {
-                Float.parseFloat(b.get());
+            if (!coefficientB.isEmpty()) {
+                Float.parseFloat(coefficientB);
             }
-            if (!c.get().isEmpty()) {
-                Float.parseFloat(c.get());
+            if (!coefficientC.isEmpty()) {
+                Float.parseFloat(coefficientC);
             }
-        } catch (NumberFormatException nfe) {
+        } catch (NumberFormatException numberFormatException) {
             status = Status.BAD_DATA;
         }
 
@@ -216,7 +222,7 @@ public class ViewModel {
 
     private void changeLogs() {
         String record = "";
-        List<String> log = qeLogger.getLog();
+        List<String> log = quadraticEquationLogger.getLog();
         for (String logLine : log) {
             record += String.format("%s\n", logLine);
         }

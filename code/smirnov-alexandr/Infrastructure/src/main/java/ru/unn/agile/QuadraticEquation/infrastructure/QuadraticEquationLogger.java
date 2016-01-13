@@ -11,32 +11,34 @@ public class QuadraticEquationLogger implements IQuadraticEquationLogger {
     private final String logName;
     private final BufferedWriter bufferedWriter;
 
-    public QuadraticEquationLogger(final String filename) {
-        this.logName = filename;
+    public QuadraticEquationLogger(final String fileName) {
+        this.logName = fileName;
 
         BufferedWriter logWriter = null;
         try {
-            logWriter = new BufferedWriter(new FileWriter(filename));
-        } catch (Exception e) {
-            e.printStackTrace();
+            logWriter = new BufferedWriter(new FileWriter(fileName));
+        } catch (Exception exception) {
+            exception.printStackTrace();
         }
         bufferedWriter = logWriter;
     }
 
     private static String timeNow() {
         Calendar calendar = Calendar.getInstance();
+        Date date = calendar.getTime();
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.ENGLISH);
-        return simpleDateFormat.format(calendar.getTime());
+        return simpleDateFormat.format(date);
     }
 
     @Override
     public void log(final String message) {
         try {
-            bufferedWriter.write(timeNow() + " : " + message);
+            String logLine = String.format("%s : %s", timeNow(), message);
+            bufferedWriter.write(logLine);
             bufferedWriter.newLine();
             bufferedWriter.flush();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        } catch (Exception exception) {
+            System.out.println(exception.getMessage());
         }
     }
 
@@ -45,14 +47,14 @@ public class QuadraticEquationLogger implements IQuadraticEquationLogger {
         ArrayList<String> logFile = new ArrayList<String>();
         try {
             BufferedReader bufferedReader = new BufferedReader(new FileReader(logName));
-            String txtLine = bufferedReader.readLine();
+            String logLine = bufferedReader.readLine();
 
-            while (txtLine != null) {
-                logFile.add(txtLine);
-                txtLine = bufferedReader.readLine();
+            while (logLine != null) {
+                logFile.add(logLine);
+                logLine = bufferedReader.readLine();
             }
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+        } catch (Exception exception) {
+            System.out.println(exception.getMessage());
         }
 
         return logFile;

@@ -13,32 +13,33 @@ import static org.junit.Assert.*;
 
 public class QuadraticEquationLoggerTests {
     private static final String FILE_NAME = "./LoggerTests.txt";
-    private QuadraticEquationLogger qeLogger;
+    private QuadraticEquationLogger quadraticEquationLogger;
 
     @Before
     public void setUp() {
-        qeLogger = new QuadraticEquationLogger(FILE_NAME);
+        quadraticEquationLogger = new QuadraticEquationLogger(FILE_NAME);
     }
 
     @Test
     public void canCreateLogFile() {
         try {
             new BufferedReader(new FileReader(FILE_NAME));
-        } catch (FileNotFoundException e) {
-            fail(FILE_NAME + " not found!");
+        } catch (FileNotFoundException fileNotFoundException) {
+            fail(String.format("%s not found!", FILE_NAME));
         }
     }
 
     @Test
     public void canCreateLogger() {
-        assertNotNull(qeLogger);
+        assertNotNull(quadraticEquationLogger);
     }
 
     @Test
     public void canAppendMessageToLog() {
         String testMessage = "message";
-        qeLogger.log(testMessage);
-        String message = qeLogger.getLog().get(0);
+        quadraticEquationLogger.log(testMessage);
+        List<String> log = quadraticEquationLogger.getLog();
+        String message = log.get(0);
         assertTrue(message.contains(testMessage));
     }
 
@@ -46,12 +47,12 @@ public class QuadraticEquationLoggerTests {
     public void canLogSomeMessages() {
         String[] messages = {"1", "2", "3"};
         for (String message : messages) {
-            qeLogger.log(message);
+            quadraticEquationLogger.log(message);
         }
-        List<String> addedMessages = qeLogger.getLog();
+        List<String> addedMessages = quadraticEquationLogger.getLog();
         for (int i = 0; i < addedMessages.size(); i++) {
-            assertTrue(addedMessages.get(i).contains(messages[i]));
+            String addedMessage = addedMessages.get(i);
+            assertTrue(addedMessage.contains(messages[i]));
         }
     }
 }
-

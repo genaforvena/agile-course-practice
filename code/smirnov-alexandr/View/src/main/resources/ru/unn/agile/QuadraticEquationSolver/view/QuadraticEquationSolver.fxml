@@ -10,9 +10,9 @@
       <ViewModel fx:id="viewModel" />
    </fx:define>
    <children>
-      <TextField fx:id="textFieldCoeffA" layoutX="43.0" layoutY="26.0" prefHeight="25.0" prefWidth="66.0" />
-      <TextField fx:id="textFieldCoeffB" layoutX="140.0" layoutY="26.0" prefHeight="25.0" prefWidth="66.0" />
-      <TextField fx:id="textFieldCoeffC" layoutX="236.0" layoutY="26.0" prefHeight="25.0" prefWidth="66.0" />
+      <TextField fx:id="textFieldCoefficientA" layoutX="43.0" layoutY="26.0" prefHeight="25.0" prefWidth="66.0" />
+      <TextField fx:id="textFieldCoefficientB" layoutX="140.0" layoutY="26.0" prefHeight="25.0" prefWidth="66.0" />
+      <TextField fx:id="textFieldCoefficientC" layoutX="236.0" layoutY="26.0" prefHeight="25.0" prefWidth="66.0" />
       <Label layoutX="28.0" layoutY="30.0" text="a" />
       <Label layoutX="119.0" layoutY="30.0" text="b" />
       <Label layoutX="216.0" layoutY="30.0" text="c" />

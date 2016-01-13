@@ -5,8 +5,8 @@ import ru.unn.agile.QuadraticEquationSolver.viewmodel.ViewModelTests;
 
 public class ViewModelWithLoggerTests extends ViewModelTests {
     public void setUp() {
-        QuadraticEquationLogger logger =
+        QuadraticEquationLogger quadraticEquationLogger =
                 new QuadraticEquationLogger("./ViewModelWithLoggerTests.log");
-        super.setExternalViewModel(new ViewModel(logger));
+        super.setExternalViewModel(new ViewModel(quadraticEquationLogger));
     }
 }
