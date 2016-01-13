@@ -52,13 +52,6 @@ public class PomodoroTimerViewModelShould {
         assertEquals(expectedMinutesNumber, pomodoroTimerViewModel.getMinutes());
     }
     @Test
-    public void changeCanStartTimerOnFalseWhenStartPomodoroAndOneSecondLeft() {
-        sessionManager.startNewPomodoro();
-        mockObservableTimer.throwTicks(1);
-
-        assertFalse(pomodoroTimerViewModel.getCanStartTimer());
-    }
-    @Test
     public void changeCurrentStatusOnBreakWhenPomodoroIsOver() {
         sessionManager.startNewPomodoro();
         completePomodoro();
@@ -99,15 +92,6 @@ public class PomodoroTimerViewModelShould {
         assertEquals(Status.WAITING.toString(), pomodoroTimerViewModel.getCurrentStatus());
     }
     @Test
-    public void changeCanStartTimerOnTrueWhenPomodoroAndBreakIsOver() {
-        sessionManager.startNewPomodoro();
-        completePomodoro();
-        completeBreak();
-
-        assertTrue(pomodoroTimerViewModel.getCanStartTimer());
-    }
-
-    @Test
     public void changeCurrentStatusOnBigBreakWhenFourPomodorosIsOver() {
         sessionManager.startNewPomodoro();
         completeFourPomodoros();
@@ -134,8 +118,7 @@ public class PomodoroTimerViewModelShould {
     }
     private boolean isDefaultValuesOnViewModel(final PomodoroTimerViewModel
                                                        pomodoroTimerViewModel) {
-        return  pomodoroTimerViewModel.getCanStartTimer()
-                && pomodoroTimerViewModel.getCurrentStatus().equals(
+        return  pomodoroTimerViewModel.getCurrentStatus().equals(
                 Status.WAITING.toString())
                 && pomodoroTimerViewModel.getMinutes().equals("00")
                 && pomodoroTimerViewModel.getPomodoroCount().equals("0")
