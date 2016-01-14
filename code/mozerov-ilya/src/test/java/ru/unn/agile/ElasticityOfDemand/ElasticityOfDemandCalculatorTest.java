@@ -34,7 +34,6 @@ public class ElasticityOfDemandCalculatorTest {
 
         double result = calculator.calculate(BigDecimal.TEN, BigDecimal.TEN, 110, 150);
 
-        assertTrue(Double.isInfinite(result));
         assertEquals(Double.NEGATIVE_INFINITY, result, ACCEPTABLE_DOUBLE_ACCURACY);
     }
 
@@ -45,7 +44,6 @@ public class ElasticityOfDemandCalculatorTest {
 
         double result = calculator.calculate(BigDecimal.TEN, BigDecimal.TEN, 150, 110);
 
-        assertTrue(Double.isInfinite(result));
         assertEquals(Double.POSITIVE_INFINITY, result, ACCEPTABLE_DOUBLE_ACCURACY);
     }
 
