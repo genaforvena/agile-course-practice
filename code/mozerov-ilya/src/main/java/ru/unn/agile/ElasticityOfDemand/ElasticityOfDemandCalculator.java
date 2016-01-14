@@ -3,35 +3,32 @@ package ru.unn.agile.ElasticityOfDemand;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-/**
- * Created by imozerov on 12.01.16.
- */
 public class ElasticityOfDemandCalculator {
     private static final int CHANGE_IN_PRICE_SCALE = 4;
 
-    public double calculate(final BigDecimal aPriceNew, final BigDecimal aPriceOld,
-                            final long aDemandQuantityNew, final long aDemandQuantityOld) {
-        if (!isBigDecimalValid(aPriceNew) || !isBigDecimalValid(aPriceOld)
-                || aDemandQuantityNew <= 0 || aDemandQuantityOld <= 0) {
+    public double calculate(final BigDecimal priceNew, final BigDecimal priceOld,
+                            final long demandQuantityNew, final long demandQuantityOld) {
+        if (!isBigDecimalValid(priceNew) || !isBigDecimalValid(priceOld)
+                || demandQuantityNew <= 0 || demandQuantityOld <= 0) {
             throw new IllegalArgumentException(
-                    String.format("Invalid input! aPriceNew: %s, aPriceOld: %s, "
-                            + "aDemandQuantityNew: %d, aDemandQuantityOld: %d",
-                    aPriceNew, aPriceOld, aDemandQuantityNew, aDemandQuantityOld));
+                    String.format("Invalid input! priceNew: %s, priceOld: %s, "
+                            + "demandQuantityNew: %d, demandQuantityOld: %d",
+                    priceNew, priceOld, demandQuantityNew, demandQuantityOld));
         }
-        return calculateChangeInDemand(aDemandQuantityNew, aDemandQuantityOld)
-                / calculateChangeInPrice(aPriceNew, aPriceOld);
+        return calculateChangeInDemand(demandQuantityNew, demandQuantityOld)
+                / calculateChangeInPrice(priceNew, priceOld);
     }
 
-    double calculateChangeInDemand(final long aDemandQuantityNew, final long aDemandQuantityOld) {
-        return (double) (aDemandQuantityNew - aDemandQuantityOld) / aDemandQuantityOld;
+    double calculateChangeInDemand(final long demandQuantityNew, final long demandQuantityOld) {
+        return (double) (demandQuantityNew - demandQuantityOld) / demandQuantityOld;
     }
 
-    double calculateChangeInPrice(final BigDecimal aPriceNew, final BigDecimal aPriceOld) {
-        return aPriceNew.subtract(aPriceOld)
-                .divide(aPriceOld, CHANGE_IN_PRICE_SCALE, RoundingMode.CEILING).doubleValue();
+    double calculateChangeInPrice(final BigDecimal priceNew, final BigDecimal priceOld) {
+        return priceNew.subtract(priceOld)
+                .divide(priceOld, CHANGE_IN_PRICE_SCALE, RoundingMode.CEILING).doubleValue();
     }
 
-    private boolean isBigDecimalValid(final BigDecimal aBigDecimal) {
-        return aBigDecimal != null && aBigDecimal.compareTo(BigDecimal.ZERO) > 0;
+    private boolean isBigDecimalValid(final BigDecimal bigDecimal) {
+        return bigDecimal != null && bigDecimal.compareTo(BigDecimal.ZERO) > 0;
     }
 }
