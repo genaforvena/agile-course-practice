@@ -66,7 +66,7 @@ public class QuadraticEquationTest {
     private float [] trySolveQuadraticEquation(final float a, final float b, final float c) {
         try {
             return QuadraticEquationSolver.solve(a, b, c);
-        } catch (Exception ex) {
+        } catch (Exception exception) {
             return null;
         }
     }
@@ -74,8 +74,8 @@ public class QuadraticEquationTest {
     private String getExceptionMessage(final float a, final float b, final float c) {
         try {
             QuadraticEquationSolver.solve(a, b, c);
-        } catch (Exception ex) {
-            return ex.getMessage();
+        } catch (Exception exception) {
+            return exception.getMessage();
         }
         return "";
     }

@@ -13,7 +13,7 @@ public final class QuadraticEquationSolver {
 
     public static float[] solve(final float a, final float b, final float c)  throws Exception {
         if (isQuadraticEquation(a)) {
-            roots = new ArrayList<Float>();
+            roots = new ArrayList<>();
             getSolution(a, b, c);
             if (roots.isEmpty()) {
                 throw new Exception("discriminant less than 0");
@@ -49,20 +49,17 @@ public final class QuadraticEquationSolver {
         float firstTerm = (-b) / divider;
         float secondTerm = discriminantSqrt / divider;
 
-        float root1 = firstTerm - secondTerm;
-        float root2 = firstTerm + secondTerm;
-        roots.add(Math.min(root1, root2));
-        roots.add(Math.max(root1, root2));
+        float firstRoot = firstTerm - secondTerm;
+        float secondRoot = firstTerm + secondTerm;
+        roots.add(Math.min(firstRoot, secondRoot));
+        roots.add(Math.max(firstRoot, secondRoot));
     }
 
     private static boolean isQuadraticEquation(final float a) {
         return !isNumberEqualZero(a);
     }
 
-    private static boolean isNumberEqualZero(final float num) {
-        if (Math.signum(num) == 0) {
-            return true;
-        }
-        return false;
+    private static boolean isNumberEqualZero(final float number) {
+        return Math.signum(number) == 0;
     }
 }
