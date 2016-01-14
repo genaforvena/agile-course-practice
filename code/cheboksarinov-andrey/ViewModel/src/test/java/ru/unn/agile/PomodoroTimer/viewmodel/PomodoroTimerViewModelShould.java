@@ -116,6 +116,13 @@ public class PomodoroTimerViewModelShould {
 
         assertEquals(defaultBreakMinutes, pomodoroTimerViewModel.getMinutes());
     }
+    @Test
+    public void changeCanStartTimerOnFalseWhenStartPomodoroAndOneSecondLeft() {
+        sessionManager.startNewPomodoro();
+        mockObservableTimer.throwTicks(1);
+
+        assertFalse(pomodoroTimerViewModel.getCanStartTimer());
+    }
     private boolean isDefaultValuesOnViewModel(final PomodoroTimerViewModel
                                                        pomodoroTimerViewModel) {
         return  pomodoroTimerViewModel.getCurrentStatus().equals(

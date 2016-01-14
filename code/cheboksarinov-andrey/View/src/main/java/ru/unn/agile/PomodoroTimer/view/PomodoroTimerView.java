@@ -51,12 +51,8 @@ public final class PomodoroTimerView {
     private void backBind() {
         pomodoroCountLabel.setText(viewModel.getPomodoroCount());
         currentStatusLabel.setText(viewModel.getCurrentStatus());
-        startTimerButton.setEnabled(isStatusWaiting(viewModel.getCurrentStatus()) ? true : false);
+        startTimerButton.setEnabled(viewModel.getCanStartTimer());
         secondsLabel.setText(viewModel.getSeconds());
         minutesLabel.setText(viewModel.getMinutes());
-    }
-
-    private boolean isStatusWaiting(final String currentStatus) {
-        return "Waiting".equals(currentStatus);
     }
 }
