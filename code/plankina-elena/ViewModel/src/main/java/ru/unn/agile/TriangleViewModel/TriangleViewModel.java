@@ -50,7 +50,7 @@ public class TriangleViewModel {
     }
 
     private void logValueChange(final String value) {
-        logger.addMessage(LogMessage.VALUE_WAS_CHANGED + value);
+        logger.add(LogMessage.VALUE_WAS_CHANGED + value);
     }
 
     private void logComputationResult() {
@@ -60,7 +60,7 @@ public class TriangleViewModel {
                 + "Point 3 (" + point3X + ", " + point3Y + ", " + point3Z + ")" + "\n"
                 + "Value to calculate: " + valueToCalculate + "\n"
                 + "The result is: " + result;
-        logger.addMessage(message);
+        logger.add(message);
     }
 
     public boolean isCalculateButtonEnabled() {

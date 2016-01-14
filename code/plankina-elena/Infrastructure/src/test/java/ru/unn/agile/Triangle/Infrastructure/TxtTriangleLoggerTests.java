@@ -34,7 +34,7 @@ public class TxtTriangleLoggerTests {
     public void canWriteToLogFile() {
         String message = "Message to log file";
 
-        txtLogger.addMessage(message);
+        txtLogger.add(message);
         String recordFromLogFile = txtLogger.getLog().get(0);
 
         assertTrue(recordFromLogFile.contains(message));
@@ -46,7 +46,7 @@ public class TxtTriangleLoggerTests {
         boolean areMessagesLogged = true;
 
         for (int i = 0; i < messages.length; i++) {
-            txtLogger.addMessage(messages[i]);
+            txtLogger.add(messages[i]);
         }
         List<String> log = txtLogger.getLog();
         for (int i = 0; i < log.size(); i++) {
@@ -60,7 +60,7 @@ public class TxtTriangleLoggerTests {
 
     @Test
     public void canSaveDateAndTime() {
-        txtLogger.addMessage("Action was done");
+        txtLogger.add("Action was done");
 
         String recordFromLogFile = txtLogger.getLog().get(0);
 

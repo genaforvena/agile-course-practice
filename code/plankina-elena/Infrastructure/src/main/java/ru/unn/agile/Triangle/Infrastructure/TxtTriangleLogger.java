@@ -24,9 +24,9 @@ public class TxtTriangleLogger implements ILogger {
         }
     }
     @Override
-    public void addMessage(final String message) {
+    public void add(final String newMessage) {
         try {
-            bufferedWriter.write("[" + getDateAndTime() + "] " + message);
+            bufferedWriter.write("[" + getDateAndTime() + "] " + newMessage);
             bufferedWriter.newLine();
             bufferedWriter.flush();
         } catch (Exception ex) {
