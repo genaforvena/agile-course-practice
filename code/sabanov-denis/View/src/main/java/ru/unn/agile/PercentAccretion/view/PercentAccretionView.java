@@ -1,21 +1,22 @@
 package ru.unn.agile.PercentAccretion.view;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 
 import ru.unn.agile.PercentAccretion.Model.PercentAccretionFactory;
+import ru.unn.agile.PercentAccretion.infrastructure.PercentAccretionLogger;
 import ru.unn.agile.PercentAccretion.viewmodel.PercentAccretionViewModel;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
+import java.util.List;
 
 public final class PercentAccretionView {
     private final PercentAccretionViewModel viewModel;
     private JTextField initialSumTextField;
     private JTextField percentRateTextField;
     private JTextField countOfYearsTextField;
-    private JTextArea errorTextArea;
     private JPanel labelPanel;
     private JPanel fieldsPanel;
     private JRadioButton simplePercentRadioButton;
@@ -29,6 +30,9 @@ public final class PercentAccretionView {
     private JPanel calculationPanel;
     private JPanel formPanel;
     private JTextField resultTextField;
+    private JPanel statusPanel;
+    private JLabel statusLabel;
+    private JList<String> logList;
     private final ButtonGroup radioButtonGroup;
 
     public static void main(final String[] args) {
@@ -40,7 +44,9 @@ public final class PercentAccretionView {
     }
 
     private PercentAccretionView() {
-        viewModel = new PercentAccretionViewModel();
+
+        viewModel = new PercentAccretionViewModel(new PercentAccretionLogger(
+                "./PercentAccretion.xml"));
 
         radioButtonGroup = new ButtonGroup();
         radioButtonGroup.add(simplePercentRadioButton);
@@ -63,29 +69,17 @@ public final class PercentAccretionView {
         simplePercentRadioButton.addActionListener(radioButtonListener);
         complexPercentRadioButton.addActionListener(radioButtonListener);
 
-        DocumentListener textFieldsListener = new DocumentListener() {
-            @Override
-            public void insertUpdate(final DocumentEvent e) {
+        FocusAdapter focusLostListener = new FocusAdapter() {
+            public void focusLost(final FocusEvent e) {
                 backBindPercentAccretionView();
-                bindPercentAccretionView();
-            }
-
-            @Override
-            public void removeUpdate(final DocumentEvent e) {
-                backBindPercentAccretionView();
-                bindPercentAccretionView();
-            }
-
-            @Override
-            public void changedUpdate(final DocumentEvent e) {
-                backBindPercentAccretionView();
+                PercentAccretionView.this.viewModel.focusLost();
                 bindPercentAccretionView();
             }
         };
 
-        initialSumTextField.getDocument().addDocumentListener(textFieldsListener);
-        countOfYearsTextField.getDocument().addDocumentListener(textFieldsListener);
-        percentRateTextField.getDocument().addDocumentListener(textFieldsListener);
+        initialSumTextField.addFocusListener(focusLostListener);
+        countOfYearsTextField.addFocusListener(focusLostListener);
+        percentRateTextField.addFocusListener(focusLostListener);
 
         calculateSumButton.addActionListener(new ActionListener() {
             @Override
@@ -101,8 +95,13 @@ public final class PercentAccretionView {
 
     private void bindPercentAccretionView() {
         calculateSumButton.setEnabled(viewModel.isCalculateButtonEnabled());
-        errorTextArea.setText(viewModel.getErrorMessage());
+
+        statusLabel.setText(viewModel.getStatusMessage());
         resultTextField.setText(viewModel.getResultSum());
+
+        List<String> log = viewModel.getLog();
+        String[] items = log.toArray(new String[log.size()]);
+        logList.setListData(items);
     }
 
     private void backBindPercentAccretionView() {

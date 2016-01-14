@@ -1,6 +1,6 @@
 dependencies {
     compile project(':sabanov-denis-ViewModel')
-    compile project(':sabanov-denis-Infrastructure')
+    testCompile project(':sabanov-denis-ViewModel').sourceSets.test.output
 }
 
 sourceSets {
