@@ -52,21 +52,16 @@ public class PomodoroTimerViewModel extends EventGenerator {
     }
 
     public String getSeconds() {
-        if (isStringContainOneCharNumber(seconds)) {
-            return String.format("0%1$d", Integer.parseInt(seconds));
-        }
-        return seconds;
+        return formatTimeString(seconds);
+    }
+
+
+    public String getMinutes() {
+        return formatTimeString(minutes);
     }
 
     private boolean isStringContainOneCharNumber(final String stringWithNumber) {
         return stringWithNumber.length() < 2;
-    }
-
-    public String getMinutes() {
-        if (isStringContainOneCharNumber(minutes)) {
-            return String.format("0%1$d", Integer.parseInt(minutes));
-        }
-        return minutes;
     }
 
     public void startSession() {
@@ -75,6 +70,13 @@ public class PomodoroTimerViewModel extends EventGenerator {
 
     private boolean isCurrentStatusWaiting() {
         return currentStatus.equals(Status.WAITING.toString());
+    }
+
+    private String formatTimeString(final String timeValue) {
+        if (isStringContainOneCharNumber(timeValue)) {
+            return String.format("0%1$d", Integer.parseInt(timeValue));
+        }
+        return timeValue;
     }
 
     public enum Status {
