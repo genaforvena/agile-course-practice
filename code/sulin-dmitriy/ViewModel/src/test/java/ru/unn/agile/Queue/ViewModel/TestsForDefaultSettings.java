@@ -10,7 +10,8 @@ public class TestsForDefaultSettings {
     private LabQueueViewModel viewModel;
     @Before
     public void setUpViewModel() {
-        viewModel = new LabQueueViewModel();
+        FakeQueueLogger fakeQueueLogger = new FakeQueueLogger();
+        viewModel = new LabQueueViewModel(fakeQueueLogger);
     }
 
     @Test

@@ -3,6 +3,7 @@ package ru.unn.agile.Queue.ViewModel;
 import ru.unn.agile.Queue.Model.LabQueue;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class LabQueueViewModel {
 
@@ -14,8 +15,12 @@ public class LabQueueViewModel {
     private boolean isFindButtonEnabled;
     private boolean isPopButtonEnabled;
     private final String errorMessage;
-
-    public LabQueueViewModel() {
+    private final ILabQueueLogger logger;
+    public LabQueueViewModel(final ILabQueueLogger logger) {
+        if (logger == null) {
+            throw new IllegalArgumentException("Error: logger is null");
+        }
+        this.logger = logger;
         size = 0;
         element = "";
         result = "";
@@ -73,12 +78,28 @@ public class LabQueueViewModel {
         isPopButtonEnabled = isPopEnabled;
     }
 
+    public List<String> getAllRecords() {
+        return logger.getAllRecords();
+    }
+
+    public String formRecordForLog(final String operation) {
+        final String record = "Last operation: " + operation
+                            + "; Data input: " + element
+                            + "; Result: " + result
+                            + "; Current size of queue: " + size
+                            + "; Current Head of queue: " + headElement;
+
+        return record;
+    }
+
     public void pushElement() {
         queue.push(element);
         updateHeadElement();
         updateSize();
         setFindButtonEnabled(true);
         setPopButtonEnabled(true);
+        String operation = "Push";
+        logger.addRecord(formRecordForLog(operation));
      }
 
     public void popElement() {
@@ -90,6 +111,8 @@ public class LabQueueViewModel {
             setFindButtonEnabled(false);
             setPopButtonEnabled(false);
         }
+        String operation = "Pop";
+        logger.addRecord(formRecordForLog(operation));
     }
 
     public void findElement() {
@@ -101,6 +124,8 @@ public class LabQueueViewModel {
             outputMessage = errorMessage;
         }
         setResult(outputMessage);
+        String operation = "Find";
+        logger.addRecord(formRecordForLog(operation));
     }
 
     public String getErrorMessage() {

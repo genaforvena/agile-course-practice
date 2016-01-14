@@ -297,6 +297,8 @@ include "code/sulin-dmitriy/View"
 project(":code/sulin-dmitriy/View").name = "sulin-dmitriy-View"
 include "code/sulin-dmitriy/ViewModel"
 project(":code/sulin-dmitriy/ViewModel").name = "sulin-dmitriy-ViewModel"
+include "code/sulin-dmitriy/Infrastructure"
+project(":code/sulin-dmitriy/Infrastructure").name = "sulin-dmitriy-Infrastructure"
 // Timonova Anastasiya
 // Vinnickij Vladimir
 
