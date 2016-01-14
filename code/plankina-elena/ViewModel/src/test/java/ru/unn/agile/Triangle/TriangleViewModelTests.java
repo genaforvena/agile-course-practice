@@ -8,6 +8,7 @@ import ru.unn.agile.TriangleViewModel.TriangleViewModel;
 import ru.unn.agile.TriangleViewModel.ValuesToCalculate;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.containsString;
@@ -32,6 +33,11 @@ public class TriangleViewModelTests {
         viewModel.setCoordinate3Z("1.5");
         viewModel.setValueToCalculate(ValuesToCalculate.PERIMETER);
     }
+
+    private String makePattern(final String value) {
+        return "^.*coordinate [XYZ] of point [123] : " + value + ".*$";
+    }
+
     @Test
     public void byDefaultCoordinate1XisEmptyString() {
         assertEquals(viewModel.getCoordinate1X(), "");
@@ -170,10 +176,8 @@ public class TriangleViewModelTests {
         setExampleValues();
         List<String> log = viewModel.getLog();
         String logString = log.toString();
-        boolean doesContainTemplateValue =
-                logString.contains(viewModel.getCoordinate1X().toString());
-        boolean doesContainTemplateField = logString.contains("coordinate X of point 1");
-        assertTrue(doesContainTemplateField && doesContainTemplateValue);
+        String pattern = makePattern(viewModel.getCoordinate1X().toString());
+        assertTrue(Pattern.matches(pattern, logString));
     }
 
     @Test
@@ -181,10 +185,8 @@ public class TriangleViewModelTests {
         setExampleValues();
         List<String> log = viewModel.getLog();
         String logString = log.toString();
-        boolean doesContainTemplateValue =
-                logString.contains(viewModel.getCoordinate1Y().toString());
-        boolean doesContainTemplateField = logString.contains("coordinate Y of point 1");
-        assertTrue(doesContainTemplateField && doesContainTemplateValue);
+        String pattern = makePattern(viewModel.getCoordinate1Y().toString());
+        assertTrue(Pattern.matches(pattern, logString));
     }
 
     @Test
@@ -192,10 +194,8 @@ public class TriangleViewModelTests {
         setExampleValues();
         List<String> log = viewModel.getLog();
         String logString = log.toString();
-        boolean doesContainTemplateValue =
-                logString.contains(viewModel.getCoordinate1Z().toString());
-        boolean doesContainTemplateField = logString.contains("coordinate Z of point 1");
-        assertTrue(doesContainTemplateField && doesContainTemplateValue);
+        String pattern = makePattern(viewModel.getCoordinate1Z().toString());
+        assertTrue(Pattern.matches(pattern, logString));
     }
 
     @Test
@@ -203,10 +203,8 @@ public class TriangleViewModelTests {
         setExampleValues();
         List<String> log = viewModel.getLog();
         String logString = log.toString();
-        boolean doesContainTemplateValue =
-                logString.contains(viewModel.getCoordinate2X().toString());
-        boolean doesContainTemplateField = logString.contains("coordinate X of point 2");
-        assertTrue(doesContainTemplateField && doesContainTemplateValue);
+        String pattern = makePattern(viewModel.getCoordinate2X().toString());
+        assertTrue(Pattern.matches(pattern, logString));
     }
 
     @Test
@@ -214,10 +212,8 @@ public class TriangleViewModelTests {
         setExampleValues();
         List<String> log = viewModel.getLog();
         String logString = log.toString();
-        boolean doesContainTemplateValue =
-                logString.contains(viewModel.getCoordinate2Y().toString());
-        boolean doesContainTemplateField = logString.contains("coordinate Y of point 2");
-        assertTrue(doesContainTemplateField && doesContainTemplateValue);
+        String pattern = makePattern(viewModel.getCoordinate2Y().toString());
+        assertTrue(Pattern.matches(pattern, logString));
     }
 
     @Test
@@ -225,10 +221,8 @@ public class TriangleViewModelTests {
         setExampleValues();
         List<String> log = viewModel.getLog();
         String logString = log.toString();
-        boolean doesContainTemplateValue =
-                logString.contains(viewModel.getCoordinate2Z().toString());
-        boolean doesContainTemplateField = logString.contains("coordinate Z of point 2");
-        assertTrue(doesContainTemplateField && doesContainTemplateValue);
+        String pattern = makePattern(viewModel.getCoordinate2Z().toString());
+        assertTrue(Pattern.matches(pattern, logString));
     }
 
     @Test
@@ -236,10 +230,8 @@ public class TriangleViewModelTests {
         setExampleValues();
         List<String> log = viewModel.getLog();
         String logString = log.toString();
-        boolean doesContainTemplateValue =
-                logString.contains(viewModel.getCoordinate3X().toString());
-        boolean doesContainTemplateField = logString.contains("coordinate X of point 3");
-        assertTrue(doesContainTemplateField && doesContainTemplateValue);
+        String pattern = makePattern(viewModel.getCoordinate3X().toString());
+        assertTrue(Pattern.matches(pattern, logString));
     }
 
     @Test
@@ -247,10 +239,8 @@ public class TriangleViewModelTests {
         setExampleValues();
         List<String> log = viewModel.getLog();
         String logString = log.toString();
-        boolean doesContainTemplateValue =
-                logString.contains(viewModel.getCoordinate3Y().toString());
-        boolean doesContainTemplateField = logString.contains("coordinate Y of point 3");
-        assertTrue(doesContainTemplateField && doesContainTemplateValue);
+        String pattern = makePattern(viewModel.getCoordinate3Y().toString());
+        assertTrue(Pattern.matches(pattern, logString));
     }
 
     @Test
@@ -258,10 +248,8 @@ public class TriangleViewModelTests {
         setExampleValues();
         List<String> log = viewModel.getLog();
         String logString = log.toString();
-        boolean doesContainTemplateValue =
-                logString.contains(viewModel.getCoordinate3Z().toString());
-        boolean doesContainTemplateField = logString.contains("coordinate Z of point 3");
-        assertTrue(doesContainTemplateField && doesContainTemplateValue);
+        String pattern = makePattern(viewModel.getCoordinate3Z().toString());
+        assertTrue(Pattern.matches(pattern, logString));
     }
 
     @Test
