@@ -226,7 +226,6 @@ include "code/paramuzov-vladimir/View"
 project(":code/paramuzov-vladimir/View").name = "paramuzov-vladimir-View"
 include "code/paramuzov-vladimir/Infrastructure"
 project(":code/paramuzov-vladimir/Infrastructure").name = "paramuzov-vladimir-Infrastructure"
-// Plankina Elena
 
 // Plankina Elena
 include "code/plankina-elena/Model"
@@ -235,6 +234,8 @@ include "code/plankina-elena/View"
 project(":code/plankina-elena/View").name = "plankina-elena-View"
 include "code/plankina-elena/ViewModel"
 project(":code/plankina-elena/ViewModel").name = "plankina-elena-ViewModel"
+include "code/plankina-elena/Infrastructure"
+project(":code/plankina-elena/Infrastructure").name = "plankina-elena-Infrastructure"
 
 // Pronina Anastasiya
 // Sabanov Denis

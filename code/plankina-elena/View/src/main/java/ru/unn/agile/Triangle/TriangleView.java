@@ -1,5 +1,6 @@
 package ru.unn.agile.Triangle;
 
+import ru.unn.agile.Triangle.Infrastructure.TxtTriangleLogger;
 import ru.unn.agile.TriangleViewModel.TriangleViewModel;
 import ru.unn.agile.TriangleViewModel.ValuesToCalculate;
 
@@ -8,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.List;
 
 public final class TriangleView {
     private JPanel main;
@@ -24,11 +26,13 @@ public final class TriangleView {
     private JButton calculate;
     private JTextField result;
     private JTextField status;
+    private JList<String> listForLogger;
 
-    private final TriangleViewModel viewModel = new TriangleViewModel();
+    private final TxtTriangleLogger logger = new TxtTriangleLogger("./Triangle-plankina.log");
+    private final TriangleViewModel viewModel = new TriangleViewModel(logger);
 
     private TriangleView() {
-        backBind();
+        bind();
         loadListOfValues();
         calculate.addActionListener(new ActionListener() {
             @Override
@@ -108,5 +112,10 @@ public final class TriangleView {
         point3Z.setText(viewModel.getCoordinate3Z());
         calculate.setEnabled(viewModel.isCalculateButtonEnabled());
         result.setText(viewModel.getResult());
+        valueToCalculate.setSelectedItem(viewModel.getValueToCalculate());
+
+        List<String> logs = viewModel.getLog();
+        String[] messages = logs.toArray(new String[logs.size()]);
+        listForLogger.setListData(messages);
     }
 }

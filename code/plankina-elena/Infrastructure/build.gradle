@@ -1,6 +1,6 @@
 dependencies {
     compile project(':plankina-elena-ViewModel')
-    compile project(':plankina-elena-Infrastructure')
+    testCompile project(':plankina-elena-ViewModel').sourceSets.test.output
 }
 
 sourceSets {

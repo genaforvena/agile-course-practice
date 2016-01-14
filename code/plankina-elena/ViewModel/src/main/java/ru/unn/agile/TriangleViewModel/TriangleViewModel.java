@@ -22,8 +22,13 @@ public class TriangleViewModel {
     private ValuesToCalculate valueToCalculate;
     private String result;
     private static final int DIMENSION = 3;
+    private final ILogger logger;
 
-    public TriangleViewModel() {
+    public TriangleViewModel(final ILogger logger) {
+        if (logger == null) {
+            throw new IllegalArgumentException("Logger is null");
+        }
+        this.logger = logger;
         status = Status.WAITING;
         isCalculateButtonEnabled = false;
         point1X = "";
@@ -40,47 +45,95 @@ public class TriangleViewModel {
 
     }
 
+    public List<String> getLog() {
+        return logger.getLog();
+    }
+
+    private void logValueChange(final String value) {
+        logger.add(LogMessage.VALUE_WAS_CHANGED + value);
+    }
+
+    private void logComputationResult() {
+        String message = LogMessage.COMPUTED
+                + "Point 1 (" + point1X + ", " + point1Y + ", " + point1Z + ")" + "\n"
+                + "Point 2 (" + point2X + ", " + point2Y + ", " + point2Z + ")" + "\n"
+                + "Point 3 (" + point3X + ", " + point3Y + ", " + point3Z + ")" + "\n"
+                + "Value to calculate: " + valueToCalculate + "\n"
+                + "The result is: " + result;
+        logger.add(message);
+    }
+
     public boolean isCalculateButtonEnabled() {
         return isCalculateButtonEnabled;
     }
 
     public void setCoordinate1X(final String point1X) {
+        if (!point1X.equals(this.point1X)) {
+            logValueChange("coordinate X of point 1 : " + point1X);
+        }
         this.point1X = point1X;
     }
 
     public void setCoordinate2X(final String point2X) {
+        if (!point2X.equals(this.point2X)) {
+            logValueChange("coordinate X of point 2 : " + point2X);
+        }
         this.point2X = point2X;
     }
 
     public void setCoordinate3X(final String point3X) {
+        if (!point3X.equals(this.point3X)) {
+            logValueChange("coordinate X of point 3 : " + point3X);
+        }
         this.point3X = point3X;
     }
 
     public void setCoordinate1Y(final String point1Y) {
+        if (!point1Y.equals(this.point1Y)) {
+            logValueChange("coordinate Y of point 1 : " + point1Y);
+        }
         this.point1Y = point1Y;
     }
 
     public void setCoordinate2Y(final String point2Y) {
+        if (!point2Y.equals(this.point2Y)) {
+            logValueChange("coordinate Y of point 2 : " + point2Y);
+        }
         this.point2Y = point2Y;
     }
 
     public void setCoordinate3Y(final String point3Y) {
+        if (!point3Y.equals(this.point3Y)) {
+            logValueChange("coordinate Y of point 3 : " + point3Y);
+        }
         this.point3Y = point3Y;
     }
 
     public void setCoordinate1Z(final String point1Z) {
+        if (!point1Z.equals(this.point1Z)) {
+            logValueChange("coordinate Z of point 1 : " + point1Z);
+        }
         this.point1Z = point1Z;
     }
 
     public void setCoordinate2Z(final String point2Z) {
+        if (!point2Z.equals(this.point2Z)) {
+            logValueChange("coordinate Z of point 2 : " + point2Z);
+        }
         this.point2Z = point2Z;
     }
 
     public void setCoordinate3Z(final String point3Z) {
+        if (!point3Z.equals(this.point3Z)) {
+            logValueChange("coordinate Z of point 3 : " + point3Z);
+        }
         this.point3Z = point3Z;
     }
 
     public void setValueToCalculate(final ValuesToCalculate valueToCalculate) {
+        if (valueToCalculate != this.valueToCalculate) {
+            logValueChange("value to calculate : " + valueToCalculate);
+        }
         this.valueToCalculate = valueToCalculate;
     }
 
@@ -243,6 +296,7 @@ public class TriangleViewModel {
                     break;
         }
         status = Status.SUCCESS;
+        logComputationResult();
         } catch (TriangleExceptions e) {
             status = e.toString();
         } catch (NullPointerException e) {
