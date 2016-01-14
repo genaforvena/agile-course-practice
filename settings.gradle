@@ -46,8 +46,12 @@ project(":code/kornyakov-kirill-lab3/Infrastructure").name = "kornyakov-kirill-l
 // Burago Pavel
 // Chataev Gleb
 // Cheboksarinov Andrej
-include "code/cheboksarinov-andrey"
-project(":code/cheboksarinov-andrey").name = "cheboksarinov-andrey-Model"
+include "code/cheboksarinov-andrey/Model"
+project(":code/cheboksarinov-andrey/Model").name = "cheboksarinov-andrey-Model"
+include "code/cheboksarinov-andrey/View"
+project(":code/cheboksarinov-andrey/View").name = "cheboksarinov-andrey-View"
+include "code/cheboksarinov-andrey/ViewModel"
+project(":code/cheboksarinov-andrey/ViewModel").name = "cheboksarinov-andrey-ViewModel"
 // Eremeeva Aleksandra
 include "code/eremeeva-alexandra/eremeeva-alexandra-lab1"
 project(":code/eremeeva-alexandra/eremeeva-alexandra-lab1").name = "eremeeva-alexandra-lab1-Model"

@@ -9,7 +9,7 @@ public class ObservableTimer implements ITimer, IObservableTimer {
     private ActionListener tickListener;
     @Override
     public void start() {
-        swingTimer = new Timer((int) TimeUnit.SECONDS.toSeconds(1), tickListener);
+        swingTimer = new Timer((int) TimeUnit.SECONDS.toMillis(1), tickListener);
         swingTimer.start();
     }
 

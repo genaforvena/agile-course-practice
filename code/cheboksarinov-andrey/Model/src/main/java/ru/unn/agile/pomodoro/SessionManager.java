@@ -3,14 +3,13 @@ package ru.unn.agile.pomodoro;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class SessionManager  implements ActionListener {
+public class SessionManager  extends EventGenerator implements ActionListener {
     static final int POMODORO_MINUTE_COUNT = 25;
     static final int BREAK_MINUTE_COUNT = 5;
     static final int BIG_BREAK_MINUTE_COUNT = 30;
     private int pomodoroCount;
-
     private String status;
-
+    private final ActionEvent timeChangedEvent;
     private final IObservableTimer internalTimer;
     private final SessionTimeManager sessionTimeManager;
 
@@ -18,7 +17,7 @@ public class SessionManager  implements ActionListener {
                           final IObservableTimer internalTimer) {
         this.sessionTimeManager = sessionTimeManager;
         this.internalTimer = internalTimer;
-
+        timeChangedEvent = new ActionEvent(this, 0, "Time changed");
         setStatus("Waiting");
         sessionTimeManager.setTime(POMODORO_MINUTE_COUNT, 0);
     }
@@ -31,14 +30,17 @@ public class SessionManager  implements ActionListener {
     }
 
     @Override
-    public void actionPerformed(final ActionEvent e) {
+    public void actionPerformed(final ActionEvent event) {
         updateSessionTime();
+        fireActionPerformed(timeChangedEvent);
     }
 
     public int getPomodoroCount() {
         return pomodoroCount;
     }
-
+    public PomodoroTime getPomodoroTime() {
+        return sessionTimeManager.getTime();
+    }
     public String getStatus() {
         return status;
     }
