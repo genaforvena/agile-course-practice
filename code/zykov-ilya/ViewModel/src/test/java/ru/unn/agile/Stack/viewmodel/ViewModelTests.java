@@ -35,7 +35,7 @@ public class ViewModelTests {
     public void byDefaultStackIsEmpty() {
         assertEquals(Arrays.asList(), viewModel.getStackAsList());
     }
-    
+
     @Test
     public void whenEnterPushValueConvertPushButtonIsEnabled() {
         viewModel.setTextFieldPushValue("1");
