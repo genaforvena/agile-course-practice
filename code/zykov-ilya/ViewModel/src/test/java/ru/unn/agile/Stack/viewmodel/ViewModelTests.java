@@ -17,11 +17,6 @@ public class ViewModelTests {
         viewModel = new ViewModel();
     }
 
-    @After
-    public void tearDown() {
-        viewModel = null;
-    }
-
     @Test
     public void byDefaultPushButtonIsDisabled() {
         assertFalse(viewModel.isPushButtonEnabled());
