@@ -23,7 +23,7 @@ public class ViewModel {
         return textFieldPush;
     }
 
-    public void setTextFieldPush(final String textFieldPush) {
+    public void setTextFieldPushValue(final String textFieldPush) {
         this.textFieldPush = textFieldPush;
         pushButtonEnabled = !textFieldPush.isEmpty();
     }

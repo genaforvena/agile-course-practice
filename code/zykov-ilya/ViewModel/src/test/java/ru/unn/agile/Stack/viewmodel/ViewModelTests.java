@@ -1,6 +1,5 @@
 package ru.unn.agile.Stack.viewmodel;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -39,22 +38,22 @@ public class ViewModelTests {
     
     @Test
     public void whenEnterPushValueConvertPushButtonIsEnabled() {
-        viewModel.setTextFieldPush("1");
+        viewModel.setTextFieldPushValue("1");
 
         assertTrue(viewModel.isPushButtonEnabled());
     }
 
     @Test
     public void whenClearPushTextFieldPushButtonIsDisabled() {
-        viewModel.setTextFieldPush("1");
-        viewModel.setTextFieldPush("");
+        viewModel.setTextFieldPushValue("1");
+        viewModel.setTextFieldPushValue("");
 
         assertFalse(viewModel.isPushButtonEnabled());
     }
 
     @Test
     public void whenPush1DisplayStackWith1() {
-        viewModel.setTextFieldPush("1");
+        viewModel.setTextFieldPushValue("1");
         viewModel.pressPushButton();
 
         assertEquals(Arrays.asList("1"), viewModel.getStackAsList());
@@ -62,7 +61,7 @@ public class ViewModelTests {
 
     @Test
     public void whenPopFromStack1DisplayStackWithEmpty() {
-        viewModel.setTextFieldPush("1");
+        viewModel.setTextFieldPushValue("1");
         viewModel.pressPushButton();
         viewModel.pressPopButton();
 
@@ -70,16 +69,16 @@ public class ViewModelTests {
     }
 
     @Test
-    public void whenStackIsNotEmptyConvertPopButtonEnabled() {
-        viewModel.setTextFieldPush("10");
+    public void whenStackIsNotEmptyPopButtonEnabled() {
+        viewModel.setTextFieldPushValue("10");
         viewModel.pressPushButton();
 
         assertTrue(viewModel.isPopButtonEnabled());
     }
 
     @Test
-    public void whenStackIsEmptyConvertPopButtonDisabled() {
-        viewModel.setTextFieldPush("10");
+    public void whenStackIsEmptyPopButtonDisabled() {
+        viewModel.setTextFieldPushValue("10");
         viewModel.pressPushButton();
         viewModel.pressPopButton();
 
@@ -87,9 +86,9 @@ public class ViewModelTests {
     }
 
     @Test
-    public void addSomeValuesToStack() {
+    public void isStackContainSixElementsAfterAdding() {
         for (Integer i = 1; i < 6; i++) {
-            viewModel.setTextFieldPush(i.toString());
+            viewModel.setTextFieldPushValue(i.toString());
             viewModel.pressPushButton();
         }
 

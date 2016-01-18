@@ -57,7 +57,6 @@ public final class StackView {
             }
         });
 
-
         bind();
     }
 
@@ -76,6 +75,6 @@ public final class StackView {
     }
 
     private void backBind() {
-        viewModel.setTextFieldPush(textFieldPush.getText());
+        viewModel.setTextFieldPushValue(textFieldPush.getText());
     }
 }
