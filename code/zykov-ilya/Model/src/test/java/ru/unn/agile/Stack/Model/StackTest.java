@@ -5,6 +5,8 @@ import org.junit.Test;
 import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 public class StackTest {
     @Test
@@ -136,5 +138,27 @@ public class StackTest {
         Stack myStack = new Stack(new Integer[]{1, 2, 3});
 
         assertEquals(Arrays.asList(1, 2, 3), myStack.toArrayList());
+    }
+
+    @Test
+    public void checkIsEmpty() {
+        Stack myStack = new Stack();
+
+        assertTrue(myStack.isEmpty());
+    }
+
+    @Test
+    public void checkIsNotEmpty() {
+        Stack myStack = new Stack(new Integer[]{1});
+
+        assertFalse(myStack.isEmpty());
+    }
+
+    @Test
+    public void checkIsEmptyAfterPop() {
+        Stack myStack = new Stack(new Integer[]{1});
+        myStack.pop();
+
+        assertTrue(myStack.isEmpty());
     }
 }
