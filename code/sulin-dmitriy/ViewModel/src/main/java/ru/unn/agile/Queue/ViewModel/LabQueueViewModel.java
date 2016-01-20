@@ -12,6 +12,7 @@ public class LabQueueViewModel {
     private String headElement;
     private String element;
     private String result;
+    private String operation;
     private boolean isFindButtonEnabled;
     private boolean isPopButtonEnabled;
     private final String errorMessage;
@@ -25,6 +26,7 @@ public class LabQueueViewModel {
         element = "";
         result = "";
         headElement = "";
+        operation = "";
         isFindButtonEnabled = false;
         isPopButtonEnabled = false;
         errorMessage = "Element not found.";
@@ -78,11 +80,15 @@ public class LabQueueViewModel {
         isPopButtonEnabled = isPopEnabled;
     }
 
+    public void setOperation(final String operation) {
+        this.operation = operation;
+    }
+
     public List<String> getAllRecords() {
         return logger.getAllRecords();
     }
 
-    public String formRecordForLog(final String operation) {
+    public String formRecordForLog() {
         final String record = "Last operation: " + operation
                             + "; Data input: " + element
                             + "; Result: " + result
@@ -98,8 +104,8 @@ public class LabQueueViewModel {
         updateSize();
         setFindButtonEnabled(true);
         setPopButtonEnabled(true);
-        String operation = "Push";
-        logger.addRecord(formRecordForLog(operation));
+        setOperation(NamesOfOperations.OPERATION_PUSH);
+        logger.addRecord(formRecordForLog());
      }
 
     public void popElement() {
@@ -111,8 +117,8 @@ public class LabQueueViewModel {
             setFindButtonEnabled(false);
             setPopButtonEnabled(false);
         }
-        String operation = "Pop";
-        logger.addRecord(formRecordForLog(operation));
+        setOperation(NamesOfOperations.OPERATION_POP);
+        logger.addRecord(formRecordForLog());
     }
 
     public void findElement() {
@@ -124,8 +130,8 @@ public class LabQueueViewModel {
             outputMessage = errorMessage;
         }
         setResult(outputMessage);
-        String operation = "Find";
-        logger.addRecord(formRecordForLog(operation));
+        setOperation(NamesOfOperations.OPERATION_FIND);
+        logger.addRecord(formRecordForLog());
     }
 
     public String getErrorMessage() {
