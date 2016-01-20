@@ -33,6 +33,7 @@ public class QueueLogger implements ILabQueueLogger {
         writer = tempWriter;
 
     }
+
     @Override
     public void addRecord(final String newRecord) {
         try {
