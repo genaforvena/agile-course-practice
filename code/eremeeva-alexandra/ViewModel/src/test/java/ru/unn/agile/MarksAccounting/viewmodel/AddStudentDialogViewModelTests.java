@@ -6,6 +6,7 @@ import org.junit.Before;
 import org.junit.Test;
 import ru.unn.agile.MarksAccounting.model.*;
 import javax.swing.*;
+import java.text.ParseException;
 
 public class AddStudentDialogViewModelTests {
     private DialogViewModel addStudentViewModel;
@@ -75,9 +76,8 @@ public class AddStudentDialogViewModelTests {
             addStudentViewModel.setDialogGroup("116");
             addStudentViewModel.setDialogInputTextBox("Smirnov");
             addStudentViewModel.changeTableOfMarks();
-        } catch (Exception e) {
-            ExceptionsChecker.checkException(e,
-                    new GroupDoesNotExistException("Required group does not exist!"));
+        } catch (ParseException e) {
+            fail();
         }
     }
 
@@ -87,9 +87,8 @@ public class AddStudentDialogViewModelTests {
             addStudentViewModel.setDialogGroup("1");
             addStudentViewModel.setDialogInputTextBox("Sidorov");
             addStudentViewModel.changeTableOfMarks();
-        } catch (Exception e) {
-            ExceptionsChecker.checkException(e,
-                    new StudentAlreadyExistsException("Student already exists!"));
+        } catch (ParseException e) {
+            fail();
         }
     }
 
@@ -99,9 +98,8 @@ public class AddStudentDialogViewModelTests {
             addStudentViewModel.setDialogGroup("1");
             addStudentViewModel.setDialogInputTextBox(" Petrov    ");
             addStudentViewModel.changeTableOfMarks();
-        } catch (Exception e) {
-            ExceptionsChecker.checkException(e,
-                    new StudentAlreadyExistsException("Student already exists!"));
+        } catch (ParseException e) {
+            fail();
         }
     }
 
@@ -111,9 +109,8 @@ public class AddStudentDialogViewModelTests {
             addStudentViewModel.setDialogGroup("3");
             addStudentViewModel.setDialogInputTextBox("   ");
             addStudentViewModel.changeTableOfMarks();
-        } catch (Exception e) {
-            ExceptionsChecker.checkException(e,
-                    new InputIsEmptyException("Input is empty!"));
+        } catch (ParseException e) {
+            fail();
         }
     }
 }

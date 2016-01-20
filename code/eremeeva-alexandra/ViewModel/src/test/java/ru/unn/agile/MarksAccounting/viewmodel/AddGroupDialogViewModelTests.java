@@ -8,6 +8,8 @@ import ru.unn.agile.MarksAccounting.model.Group;
 import ru.unn.agile.MarksAccounting.model.GroupAlreadyExistsException;
 import ru.unn.agile.MarksAccounting.model.TableOfMarks;
 
+import java.text.ParseException;
+
 public class AddGroupDialogViewModelTests {
     private DialogViewModel addGroupViewModel;
     private TableOfMarks tableOfMarks;
@@ -69,9 +71,8 @@ public class AddGroupDialogViewModelTests {
             addGroupViewModel.setDialogType(DialogType.ADD_GROUP);
             addGroupViewModel.setDialogInputTextBox("1");
             addGroupViewModel.changeTableOfMarks();
-        } catch (Exception e) {
-            ExceptionsChecker.checkException(e,
-                    new GroupAlreadyExistsException("Group already exists!"));
+        } catch (ParseException e) {
+            fail();
         }
     }
 
@@ -80,9 +81,8 @@ public class AddGroupDialogViewModelTests {
         try {
             addGroupViewModel.setDialogInputTextBox("   1 ");
             addGroupViewModel.changeTableOfMarks();
-        } catch (Exception e) {
-            ExceptionsChecker.checkException(e,
-                    new GroupAlreadyExistsException("Group already exists!"));
+        } catch (ParseException e) {
+            fail();
         }
     }
 
@@ -91,9 +91,8 @@ public class AddGroupDialogViewModelTests {
         try {
             addGroupViewModel.setDialogInputTextBox("   ");
             addGroupViewModel.changeTableOfMarks();
-        } catch (Exception e) {
-            ExceptionsChecker.checkException(e,
-                    new InputIsEmptyException("Input is empty!"));
+        } catch (ParseException e) {
+            fail();
         }
     }
 }

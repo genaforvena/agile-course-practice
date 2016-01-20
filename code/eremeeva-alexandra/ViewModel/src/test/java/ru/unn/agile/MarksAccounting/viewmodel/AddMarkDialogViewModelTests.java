@@ -112,9 +112,8 @@ public class AddMarkDialogViewModelTests {
             addMarkViewModel.setDialogDate("29-2-2016");
             addMarkViewModel.setDialogInputTextBox("4");
             addMarkViewModel.changeTableOfMarks();
-        } catch (Exception e) {
-            ExceptionsChecker.checkException(e,
-                    new GroupDoesNotExistException("Required group does not exist!"));
+        } catch (ParseException e) {
+            fail();
         }
     }
 
@@ -127,9 +126,8 @@ public class AddMarkDialogViewModelTests {
             addMarkViewModel.setDialogDate("5-3-2015");
             addMarkViewModel.setDialogInputTextBox("10");
             addMarkViewModel.changeTableOfMarks();
-        } catch (Exception e) {
-            ExceptionsChecker.checkException(e,
-                    new StudentDoesNotExistException("Required student does not exist!"));
+        } catch (ParseException e) {
+            fail();
         }
     }
 
@@ -142,9 +140,8 @@ public class AddMarkDialogViewModelTests {
             addMarkViewModel.setDialogDate("21-06-2015");
             addMarkViewModel.setDialogInputTextBox("4");
             addMarkViewModel.changeTableOfMarks();
-        } catch (Exception e) {
-            ExceptionsChecker.checkException(e, new AcademicSubjectDoesNotExistException(
-                    "Required academic subject does not exist!"));
+        } catch (ParseException e) {
+            fail();
         }
     }
 
@@ -157,9 +154,6 @@ public class AddMarkDialogViewModelTests {
             addMarkViewModel.setDialogDate("30/12/2015");
             addMarkViewModel.setDialogInputTextBox("2");
             addMarkViewModel.changeTableOfMarks();
-            fail();
-        } catch (RuntimeException e) {
-            fail();
         } catch (ParseException e) {
             assertTrue(true);
         }
@@ -174,13 +168,12 @@ public class AddMarkDialogViewModelTests {
             addMarkViewModel.setDialogDate("07-9-2015");
             addMarkViewModel.setDialogInputTextBox("-1");
             addMarkViewModel.changeTableOfMarks();
-        } catch (Exception e) {
-            ExceptionsChecker.checkException(e,
-                    new MarkIsNotPositiveException("Mark must be positive!"));
+        } catch (ParseException e) {
+            fail();
         }
     }
 
-    @Test
+    @Test(expected = NumberFormatException.class)
     public void canNotAddMarkWhenMarkIsNotAnInteger() {
         try {
             addMarkViewModel.setDialogGroup("1");
@@ -189,10 +182,7 @@ public class AddMarkDialogViewModelTests {
             addMarkViewModel.setDialogDate("1-1-2016");
             addMarkViewModel.setDialogInputTextBox("4.5");
             addMarkViewModel.changeTableOfMarks();
-            fail();
-        } catch (NumberFormatException e) {
-            assertTrue(true);
-        } catch (Exception e) {
+        } catch (ParseException e) {
             fail();
         }
     }
@@ -206,9 +196,8 @@ public class AddMarkDialogViewModelTests {
             addMarkViewModel.setDialogDate("13-2-2015");
             addMarkViewModel.setDialogInputTextBox("   ");
             addMarkViewModel.changeTableOfMarks();
-        } catch (Exception e) {
-            ExceptionsChecker.checkException(e,
-                    new InputIsEmptyException("Input is empty!"));
+        } catch (ParseException e) {
+            fail();
         }
     }
 }

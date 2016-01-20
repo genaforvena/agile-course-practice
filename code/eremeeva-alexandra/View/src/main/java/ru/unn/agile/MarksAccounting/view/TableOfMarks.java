@@ -32,7 +32,6 @@ public final class TableOfMarks {
         changingComboBox.setModel(mainFormViewModel.getChangingComboBoxModel());
 
         changingButton.addActionListener(new ActionListener() {
-            @Override
             public void actionPerformed(final ActionEvent e) {
                 bind();
                 makeDialog(DialogType.getType(changingComboBox.getSelectedItem().toString()));
@@ -47,7 +46,6 @@ public final class TableOfMarks {
         });
 
         groupsComboBox.addItemListener(new ItemListener() {
-            @Override
             public void itemStateChanged(final ItemEvent event) {
                 if (event.getStateChange() == ItemEvent.SELECTED) {
                     bind();
@@ -59,7 +57,6 @@ public final class TableOfMarks {
         });
 
         subjectsComboBox.addItemListener(new ItemListener() {
-            @Override
             public void itemStateChanged(final ItemEvent event) {
                 if (event.getStateChange() == ItemEvent.SELECTED) {
                     bind();

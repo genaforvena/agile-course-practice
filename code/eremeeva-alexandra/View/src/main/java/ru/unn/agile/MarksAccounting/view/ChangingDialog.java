@@ -36,7 +36,6 @@ public class ChangingDialog extends JDialog {
         backBind();
 
         groupComboBox.addItemListener(new ItemListener() {
-            @Override
             public void itemStateChanged(final ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     bind();
@@ -47,7 +46,6 @@ public class ChangingDialog extends JDialog {
         });
 
         studentComboBox.addItemListener(new ItemListener() {
-            @Override
             public void itemStateChanged(final ItemEvent e) {
                 if (e.getStateChange() == ItemEvent.SELECTED) {
                     bind();

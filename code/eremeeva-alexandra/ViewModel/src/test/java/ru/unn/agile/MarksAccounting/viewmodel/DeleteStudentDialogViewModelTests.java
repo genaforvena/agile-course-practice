@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import ru.unn.agile.MarksAccounting.model.*;
 import javax.swing.*;
+import java.text.ParseException;
 
 public class DeleteStudentDialogViewModelTests {
     private DialogViewModel deleteStudentViewModel;
@@ -91,9 +92,8 @@ public class DeleteStudentDialogViewModelTests {
             deleteStudentViewModel.setDialogGroup("116");
             deleteStudentViewModel.setDialogStudent("Sidorov");
             deleteStudentViewModel.changeTableOfMarks();
-        } catch (Exception e) {
-            ExceptionsChecker.checkException(e,
-                    new GroupDoesNotExistException("Required group does not exist!"));
+        } catch (ParseException e) {
+            fail();
         }
     }
 
@@ -103,9 +103,8 @@ public class DeleteStudentDialogViewModelTests {
             deleteStudentViewModel.setDialogGroup("3");
             deleteStudentViewModel.setDialogStudent("Sidorov");
             deleteStudentViewModel.changeTableOfMarks();
-        } catch (Exception e) {
-            ExceptionsChecker.checkException(e,
-                    new StudentDoesNotExistException("Required student does not exist!"));
+        } catch (ParseException e) {
+            fail();
         }
     }
 }

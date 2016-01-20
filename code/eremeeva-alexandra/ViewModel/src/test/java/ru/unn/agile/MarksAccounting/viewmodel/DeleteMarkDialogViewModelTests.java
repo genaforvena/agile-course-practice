@@ -107,9 +107,8 @@ public class DeleteMarkDialogViewModelTests {
             setFieldsForMarkDeleting();
             deleteMarkViewModel.setDialogGroup("116");
             deleteMarkViewModel.changeTableOfMarks();
-        } catch (Exception e) {
-            ExceptionsChecker.checkException(e,
-                    new GroupDoesNotExistException("Required group does not exist!"));
+        } catch (ParseException e) {
+            fail();
         }
     }
 
@@ -119,9 +118,8 @@ public class DeleteMarkDialogViewModelTests {
             setFieldsForMarkDeleting();
             deleteMarkViewModel.setDialogStudent("Smirnov");
             deleteMarkViewModel.changeTableOfMarks();
-        } catch (Exception e) {
-            ExceptionsChecker.checkException(e,
-                    new StudentDoesNotExistException("Required student does not exist!"));
+        } catch (ParseException e) {
+            fail();
         }
     }
 
@@ -131,9 +129,8 @@ public class DeleteMarkDialogViewModelTests {
             setFieldsForMarkDeleting();
             deleteMarkViewModel.setDialogSubject("Geography");
             deleteMarkViewModel.changeTableOfMarks();
-        } catch (Exception e) {
-            ExceptionsChecker.checkException(e, new AcademicSubjectDoesNotExistException(
-                    "Required academic subject does not exist!"));
+        } catch (ParseException e) {
+            fail();
         }
     }
 
@@ -145,9 +142,8 @@ public class DeleteMarkDialogViewModelTests {
             deleteMarkViewModel.setDialogSubject("History");
             deleteMarkViewModel.setDialogDate("02-2-2015");
             deleteMarkViewModel.changeTableOfMarks();
-        } catch (Exception e) {
-            ExceptionsChecker.checkException(e,
-                    new MarkDoesNotExistException("Required mark does not exist!"));
+        } catch (ParseException e) {
+            fail();
         }
     }
 

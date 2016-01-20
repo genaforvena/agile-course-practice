@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import ru.unn.agile.MarksAccounting.model.*;
 import javax.swing.*;
+import java.text.ParseException;
 
 public class DeleteSubjectDialogViewModelTests {
     private DialogViewModel deleteSubjectViewModel;
@@ -91,9 +92,8 @@ public class DeleteSubjectDialogViewModelTests {
             deleteSubjectViewModel.setDialogGroup("116");
             deleteSubjectViewModel.setDialogSubject("History");
             deleteSubjectViewModel.changeTableOfMarks();
-        } catch (Exception e) {
-            ExceptionsChecker.checkException(e,
-                    new GroupDoesNotExistException("Required group does not exist!"));
+        } catch (ParseException e) {
+            fail();
         }
     }
 
@@ -103,9 +103,8 @@ public class DeleteSubjectDialogViewModelTests {
             deleteSubjectViewModel.setDialogGroup("2");
             deleteSubjectViewModel.setDialogSubject("Geography");
             deleteSubjectViewModel.changeTableOfMarks();
-        } catch (Exception e) {
-            ExceptionsChecker.checkException(e, new AcademicSubjectDoesNotExistException(
-                    "Required academic subject does not exist!"));
+        } catch (ParseException e) {
+            fail();
         }
     }
 }

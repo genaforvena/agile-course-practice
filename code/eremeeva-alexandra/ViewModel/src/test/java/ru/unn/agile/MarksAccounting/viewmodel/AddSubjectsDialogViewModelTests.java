@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import ru.unn.agile.MarksAccounting.model.*;
 import javax.swing.*;
+import java.text.ParseException;
 
 public class AddSubjectsDialogViewModelTests {
     private DialogViewModel addSubjectViewModel;
@@ -65,7 +66,7 @@ public class AddSubjectsDialogViewModelTests {
             addSubjectViewModel.changeTableOfMarks();
 
             assertEquals(tableOfMarks, addSubjectViewModel.getTableOfMarks());
-        } catch (Exception e) {
+        } catch (ParseException e) {
             fail();
         }
     }
@@ -76,9 +77,8 @@ public class AddSubjectsDialogViewModelTests {
             addSubjectViewModel.setDialogGroup("116");
             addSubjectViewModel.setDialogInputTextBox("Geography");
             addSubjectViewModel.changeTableOfMarks();
-        } catch (Exception e) {
-            ExceptionsChecker.checkException(e,
-                    new GroupDoesNotExistException("Required group does not exist!"));
+        } catch (ParseException e) {
+            fail();
         }
     }
 
@@ -88,9 +88,8 @@ public class AddSubjectsDialogViewModelTests {
             addSubjectViewModel.setDialogGroup("1");
             addSubjectViewModel.setDialogInputTextBox("Maths");
             addSubjectViewModel.changeTableOfMarks();
-        } catch (Exception e) {
-            ExceptionsChecker.checkException(e,
-                    new SubjectAlreadyExistsException("Subject already exists!"));
+        } catch (ParseException e) {
+            fail();
         }
     }
 
@@ -100,9 +99,8 @@ public class AddSubjectsDialogViewModelTests {
             addSubjectViewModel.setDialogGroup("1");
             addSubjectViewModel.setDialogInputTextBox(" History    ");
             addSubjectViewModel.changeTableOfMarks();
-        } catch (Exception e) {
-            ExceptionsChecker.checkException(e,
-                    new SubjectAlreadyExistsException("Subject already exists!"));
+        } catch (ParseException e) {
+            fail();
         }
     }
 
@@ -112,9 +110,8 @@ public class AddSubjectsDialogViewModelTests {
             addSubjectViewModel.setDialogGroup("2");
             addSubjectViewModel.setDialogInputTextBox("   ");
             addSubjectViewModel.changeTableOfMarks();
-        } catch (Exception e) {
-            ExceptionsChecker.checkException(e,
-                    new InputIsEmptyException("Input is empty!"));
+        } catch (ParseException e) {
+            fail();
         }
     }
 }

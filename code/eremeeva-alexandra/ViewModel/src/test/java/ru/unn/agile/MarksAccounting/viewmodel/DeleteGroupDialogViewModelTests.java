@@ -9,6 +9,7 @@ import ru.unn.agile.MarksAccounting.model.Group;
 import ru.unn.agile.MarksAccounting.model.GroupDoesNotExistException;
 import ru.unn.agile.MarksAccounting.model.TableOfMarks;
 import javax.swing.*;
+import java.text.ParseException;
 
 public class DeleteGroupDialogViewModelTests {
     private DialogViewModel deleteGroupViewModel;
@@ -76,9 +77,8 @@ public class DeleteGroupDialogViewModelTests {
         try {
             deleteGroupViewModel.setDialogGroup("116");
             deleteGroupViewModel.changeTableOfMarks();
-        } catch (Exception e) {
-            ExceptionsChecker.checkException(e,
-                    new GroupDoesNotExistException("Required group does not exist!"));
+        } catch (ParseException e) {
+            fail();
         }
     }
 }
