@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.Locale;
 
 public class QueueLogger implements ILabQueueLogger {
-
     private final String nameOfFile;
     private static final String CURRENT_TIME = "yyyy-MM-dd HH:mm:ss";
     private final BufferedWriter writer;
@@ -43,13 +42,13 @@ public class QueueLogger implements ILabQueueLogger {
         } catch (Exception exception) {
             System.out.println(exception.getMessage());
         }
-
     }
 
     @Override
     public List<String> getAllRecords() {
         ArrayList<String> records = new ArrayList<>();
         BufferedReader reader;
+
         try {
             reader = new BufferedReader(new FileReader(nameOfFile));
 
@@ -61,6 +60,7 @@ public class QueueLogger implements ILabQueueLogger {
         } catch (Exception exception) {
             System.out.println(exception);
         }
+
         return records;
     }
 

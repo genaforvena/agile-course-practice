@@ -1,6 +1,5 @@
 package ru.unn.agile.Queue.ViewModel;
 
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -8,7 +7,6 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.*;
 
 public class ViewModelLoggerTests {
-
     private LabQueueViewModel viewModel;
 
     @Before

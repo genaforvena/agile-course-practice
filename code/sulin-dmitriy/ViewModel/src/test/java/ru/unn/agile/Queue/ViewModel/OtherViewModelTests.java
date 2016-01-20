@@ -8,7 +8,6 @@ import java.util.Random;
 import static org.junit.Assert.*;
 
 public class OtherViewModelTests {
-
     private LabQueueViewModel viewModel;
 
     public void setViewModel(final LabQueueViewModel viewModel) {

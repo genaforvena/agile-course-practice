@@ -82,7 +82,7 @@ public class LabQueueViewModel {
 
     public void setOperation(final String operation) {
         this.operation = operation;
-        }
+    }
 
     public List<String> getAllRecords() {
         return logger.getAllRecords();

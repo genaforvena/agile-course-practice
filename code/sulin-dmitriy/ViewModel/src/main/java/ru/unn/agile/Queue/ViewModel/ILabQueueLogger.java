@@ -1,6 +1,5 @@
 package ru.unn.agile.Queue.ViewModel;
 
-
 import java.util.List;
 
 public interface ILabQueueLogger {
