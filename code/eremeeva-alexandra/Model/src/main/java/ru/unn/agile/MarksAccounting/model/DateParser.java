@@ -15,14 +15,13 @@ public final class DateParser {
         DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy", Locale.ENGLISH);
         dateFormat.setLenient(false);
         ParsePosition position = new ParsePosition(0);
-        Date date;
-        date = dateFormat.parse(stringDate, position);
+        Date date = dateFormat.parse(stringDate, position);
         if (position.getIndex() != stringDate.length()) {
             throw new ParseException("Can't parse date!", -1);
         }
-        GregorianCalendar tempDate = new GregorianCalendar();
-        tempDate.setTime(date);
-        return tempDate;
+        GregorianCalendar resultCalendar = new GregorianCalendar();
+        resultCalendar.setTime(date);
+        return resultCalendar;
     }
 
     public static String formatDate(final GregorianCalendar date) {
