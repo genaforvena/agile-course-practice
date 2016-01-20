@@ -28,6 +28,7 @@ public final class QueueManager {
     private JLabel listLabel;
     private JPanel loggerPanel;
     private LabQueueViewModel viewModel;
+    private String operation;
 
     private QueueManager() { }
 
@@ -48,6 +49,7 @@ public final class QueueManager {
         pushElementButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent actionEvent) {
+                operation = "push";
                 backBindToViewModel();
                 viewModel.pushElement();
                 bindFromViewModel();
@@ -57,6 +59,7 @@ public final class QueueManager {
         findElementButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent actionEvent) {
+                operation = "find";
                 backBindToViewModel();
                 viewModel.findElement();
                 bindFromViewModel();
@@ -66,6 +69,7 @@ public final class QueueManager {
         popElementButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(final ActionEvent actionEvent) {
+                operation = "pop";
                 backBindToViewModel();
                 viewModel.popElement();
                 bindFromViewModel();

@@ -19,7 +19,10 @@ public class QueueLoggerTests {
 
     @Test
     public void canCreateLogger() {
-        assertNotNull(logger);
+        final String fileName = "./lol.txt";
+        QueueLogger newLogger = new QueueLogger(fileName);
+
+        assertNotNull(newLogger);
     }
 
     @Test
@@ -48,7 +51,6 @@ public class QueueLoggerTests {
         for (int i = 0; i < log.size(); i++) {
             if (!log.get(i).contains(records[i])) {
                 allRecordsLogged = false;
-                break;
             }
         }
         assertTrue(allRecordsLogged);

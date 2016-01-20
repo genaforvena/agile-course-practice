@@ -142,6 +142,9 @@ public class OtherViewModelTests {
 
     @Test
     public void canAcceptLogger() {
-        assertNotNull(viewModel);
+        FakeQueueLogger fakeLogger = new FakeQueueLogger();
+        LabQueueViewModel viewModelWithFakeLogger = new LabQueueViewModel(fakeLogger);
+
+        assertNotNull(viewModelWithFakeLogger);
     }
 }
