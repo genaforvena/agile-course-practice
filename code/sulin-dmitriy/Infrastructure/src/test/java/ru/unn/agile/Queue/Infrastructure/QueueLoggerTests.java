@@ -9,12 +9,12 @@ import static org.hamcrest.CoreMatchers.containsString;
 import static org.junit.Assert.*;
 
 public class QueueLoggerTests {
-    private static String fileName = "./log.txt";
+    private static String nameOfFile = "./log.txt";
     private QueueLogger logger;
 
     @Before
-    public void setUpLoggerForTests() {
-        logger = new QueueLogger(fileName);
+    public void setUpLogger() {
+        logger = new QueueLogger(nameOfFile);
     }
 
     @Test
@@ -24,11 +24,11 @@ public class QueueLoggerTests {
 
     @Test
     public void canAddRecord() {
-        String message = "SOMETHING";
+        String record = "SOMETHING";
 
-        logger.addRecord(message);
+        logger.addRecord(record);
 
-        assertThat(logger.getAllRecords().get(0), containsString(message));
+        assertThat(logger.getAllRecords().get(0), containsString(record));
     }
 
     @Test (expected = IllegalArgumentException.class)
@@ -39,7 +39,7 @@ public class QueueLoggerTests {
     @Test
     public void canAddSeveralRecords() {
         String[] records = {"Some", "messages", "for", "test"};
-        boolean allRecordsLogged = true;
+        boolean areAllRecordsLogged = true;
 
         for (int i = 0; i < records.length; i++) {
             logger.addRecord(records[i]);
@@ -47,10 +47,10 @@ public class QueueLoggerTests {
         List<String> log = logger.getAllRecords();
         for (int i = 0; i < log.size(); i++) {
             if (!log.get(i).contains(records[i])) {
-                allRecordsLogged = false;
+                areAllRecordsLogged = false;
                 break;
             }
         }
-        assertTrue(allRecordsLogged);
+        assertTrue(areAllRecordsLogged);
     }
 }

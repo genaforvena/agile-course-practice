@@ -7,8 +7,8 @@ public class FakeQueueLogger implements ILabQueueLogger {
     private ArrayList<String> records = new ArrayList<String>();
 
     @Override
-    public void addRecord(final String newRecord) {
-        records.add(newRecord);
+    public void addRecord(final String record) {
+        records.add(record);
     }
 
     @Override

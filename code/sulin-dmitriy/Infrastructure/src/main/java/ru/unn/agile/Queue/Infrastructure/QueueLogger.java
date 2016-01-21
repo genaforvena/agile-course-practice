@@ -22,21 +22,20 @@ public class QueueLogger implements ILabQueueLogger {
             throw new IllegalArgumentException("Name of file cannot be empty");
         }
         this.nameOfFile = nameOfFile;
-
-        BufferedWriter tempWriter = null;
+        BufferedWriter writer = null;
         try {
-            tempWriter = new BufferedWriter(new FileWriter(nameOfFile));
+            writer = new BufferedWriter(new FileWriter(nameOfFile));
         } catch (Exception exception) {
             exception.printStackTrace();
         }
-        writer = tempWriter;
+        this.writer = writer;
 
     }
 
     @Override
-    public void addRecord(final String newRecord) {
+    public void addRecord(final String record) {
         try {
-            writer.write(currentTime() + " >> " + newRecord);
+            writer.write(currentTime() + " >> " + record);
             writer.newLine();
             writer.flush();
         } catch (Exception exception) {

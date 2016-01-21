@@ -10,7 +10,7 @@ public class ViewModelLoggerTests {
     private LabQueueViewModel viewModel;
 
     @Before
-    public void initialize() {
+    public void setUpViewModel() {
         viewModel = new LabQueueViewModel(new FakeQueueLogger());
     }
 
