@@ -8,11 +8,16 @@ import java.util.Random;
 import static org.junit.Assert.*;
 
 public class OtherViewModelTests {
-
     private LabQueueViewModel viewModel;
+
+    public void setViewModel(final LabQueueViewModel viewModel) {
+        this.viewModel = viewModel;
+    }
+
     @Before
     public void setUpViewModel() {
-        viewModel = new LabQueueViewModel();
+        FakeQueueLogger fakeQueueLogger = new FakeQueueLogger();
+        viewModel = new LabQueueViewModel(fakeQueueLogger);
     }
 
     @Test
@@ -132,5 +137,10 @@ public class OtherViewModelTests {
             viewModel.pushElement();
         }
         assertArrayEquals(testAry, viewModel.getQueueAsArray());
+    }
+
+    @Test
+    public void canAcceptLogger() {
+        assertNotNull(viewModel);
     }
 }

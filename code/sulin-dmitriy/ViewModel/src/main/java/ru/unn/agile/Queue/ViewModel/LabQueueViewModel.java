@@ -3,6 +3,7 @@ package ru.unn.agile.Queue.ViewModel;
 import ru.unn.agile.Queue.Model.LabQueue;
 
 import java.util.Arrays;
+import java.util.List;
 
 public class LabQueueViewModel {
 
@@ -11,15 +12,21 @@ public class LabQueueViewModel {
     private String headElement;
     private String element;
     private String result;
+    private String operation;
     private boolean isFindButtonEnabled;
     private boolean isPopButtonEnabled;
     private final String errorMessage;
-
-    public LabQueueViewModel() {
+    private final ILabQueueLogger logger;
+    public LabQueueViewModel(final ILabQueueLogger logger) {
+        if (logger == null) {
+            throw new IllegalArgumentException("Error: logger is null");
+        }
+        this.logger = logger;
         size = 0;
         element = "";
         result = "";
         headElement = "";
+        operation = "";
         isFindButtonEnabled = false;
         isPopButtonEnabled = false;
         errorMessage = "Element not found.";
@@ -73,12 +80,32 @@ public class LabQueueViewModel {
         isPopButtonEnabled = isPopEnabled;
     }
 
+    public void setOperation(final String operation) {
+        this.operation = operation;
+    }
+
+    public List<String> getAllRecords() {
+        return logger.getAllRecords();
+    }
+
+    public String formRecordForLog() {
+        final String record = "Last operation: " + operation
+                            + "; Data input: " + element
+                            + "; Result: " + result
+                            + "; Current size of queue: " + size
+                            + "; Current Head of queue: " + headElement;
+
+        return record;
+    }
+
     public void pushElement() {
         queue.push(element);
         updateHeadElement();
         updateSize();
         setFindButtonEnabled(true);
         setPopButtonEnabled(true);
+        setOperation(NamesOfOperations.OPERATION_PUSH);
+        logger.addRecord(formRecordForLog());
      }
 
     public void popElement() {
@@ -90,6 +117,8 @@ public class LabQueueViewModel {
             setFindButtonEnabled(false);
             setPopButtonEnabled(false);
         }
+        setOperation(NamesOfOperations.OPERATION_POP);
+        logger.addRecord(formRecordForLog());
     }
 
     public void findElement() {
@@ -101,6 +130,8 @@ public class LabQueueViewModel {
             outputMessage = errorMessage;
         }
         setResult(outputMessage);
+        setOperation(NamesOfOperations.OPERATION_FIND);
+        logger.addRecord(formRecordForLog());
     }
 
     public String getErrorMessage() {
