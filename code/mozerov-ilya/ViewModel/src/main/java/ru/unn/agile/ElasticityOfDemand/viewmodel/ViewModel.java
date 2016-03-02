@@ -5,6 +5,8 @@ import javafx.beans.property.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import ru.unn.agile.ElasticityOfDemand.ElasticityOfDemandCalculator;
+import ru.unn.agile.ElasticityOfDemand.util.ILogger;
+import ru.unn.agile.ElasticityOfDemand.util.NullLogger;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,8 +24,16 @@ public final class ViewModel {
 
     private final StringProperty result = new SimpleStringProperty();
     private final StringProperty status = new SimpleStringProperty();
+    private final ILogger logger;
 
-    public ViewModel() {
+    public ViewModel(final ILogger logger) {
+        if (logger == null) {
+            this.logger = new NullLogger();
+        } else {
+            this.logger = logger;
+        }
+
+        logger.log("Creating view");
         initFieldValues();
 
         BooleanBinding isAbleCalculate = new BooleanBinding() {
@@ -60,6 +70,7 @@ public final class ViewModel {
     }
 
     public void calculate() {
+        logger.log("Calculation requested");
         if (isCalculationDisabled.get()) {
             return;
         }
@@ -71,6 +82,8 @@ public final class ViewModel {
                         stringToQuantity(newDemandQuantity.get()),
                         stringToQuantity(oldDemandQuantity.get()))
         );
+
+        logger.log(String.format("Calculation finished. Result: %s", resultValue));
 
         result.set(resultValue);
 
