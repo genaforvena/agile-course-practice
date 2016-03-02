@@ -210,6 +210,8 @@ include "code/mozerov-ilya/View"
 project(":code/mozerov-ilya/View").name = "mozerov-ilya-View"
 include "code/mozerov-ilya/ViewModel"
 project(":code/mozerov-ilya/ViewModel").name = "mozerov-ilya-ViewModel"
+include "code/mozerov-ilya/Infrastrucure"
+project(":code/mozerov-ilya/Infrastrucure").name = "mozerov-ilya-Infrastrucure"
 
 // Nesmelov Aleksej
 include "code/nesmelov-aleksey/Model"
