@@ -1,5 +1,7 @@
 package ru.unn.agile.ElasticityOfDemand.view;
 
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
@@ -28,6 +30,11 @@ public class CalculatorView {
         txtNewDemandQuantity.textProperty()
                 .bindBidirectional(viewModel.newDemandQuantityProperty());
 
-        btnCalc.setOnAction(event -> viewModel.calculate());
+        btnCalc.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                viewModel.calculate();
+            }
+        });
     }
 }
