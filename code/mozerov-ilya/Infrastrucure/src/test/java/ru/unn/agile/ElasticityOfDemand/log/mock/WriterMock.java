@@ -12,7 +12,7 @@ public class WriterMock extends Writer {
     private final List<String> logMessages = new ArrayList<>();
 
     @Override
-    public void write(char[] cbuf, int off, int len) throws IOException {
+    public void write(final char[] cbuf, final int off, final int len) throws IOException {
         logMessages.add(String.copyValueOf(cbuf));
     }
 

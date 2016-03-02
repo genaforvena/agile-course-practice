@@ -5,6 +5,5 @@ javafx {
 }
 
 dependencies {
-    compile project(':mozerov-ilya-Infrastructure')
     compile project(':mozerov-ilya-Model')
 }

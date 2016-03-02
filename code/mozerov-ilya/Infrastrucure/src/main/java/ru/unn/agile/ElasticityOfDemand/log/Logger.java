@@ -11,7 +11,7 @@ public class Logger implements ILogger {
     private static final String DATE_FORMAT_NOW = "yyyy-MM-dd HH:mm:ss";
     private final Writer writer;
 
-    public Logger(Writer writer) {
+    public Logger(final Writer writer) {
         this.writer = writer;
     }
 
@@ -22,7 +22,7 @@ public class Logger implements ILogger {
     }
 
     @Override
-    public void log(String logMessage) {
+    public void log(final String logMessage) {
         try {
             writer.write(now() + " > " + logMessage + System.lineSeparator());
             writer.flush();

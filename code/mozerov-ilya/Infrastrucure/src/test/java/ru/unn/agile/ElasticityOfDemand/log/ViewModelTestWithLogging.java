@@ -17,7 +17,9 @@ public class ViewModelTestWithLogging extends ViewModelTests {
     @Override
     public void setUp() {
         try {
-            ILogger realLogger = new Logger(new BufferedWriter(new FileWriter("./ViewModel_with_TxtLogger_Tests-lab3.log")));
+            ILogger realLogger = new Logger(
+                    new BufferedWriter(
+                            new FileWriter("./ViewModel_with_TxtLogger_Tests-lab3.log")));
             setExternalViewModel(new ViewModel(realLogger));
         } catch (IOException e) {
             fail("Unable to create real logger for tests!");

@@ -2,6 +2,7 @@ apply from:   rootDir.getAbsolutePath() + '/code/config/scripts/javafx.plugin'
 
 dependencies {
     compile project(':mozerov-ilya-ViewModel')
+    compile project(':mozerov-ilya-Infrastrucure')
 }
 
 sourceSets {
