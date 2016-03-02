@@ -32,7 +32,7 @@ public class CalculatorView {
 
         btnCalc.setOnAction(new EventHandler<ActionEvent>() {
             @Override
-            public void handle(ActionEvent event) {
+            public void handle(final ActionEvent event) {
                 viewModel.calculate();
             }
         });
