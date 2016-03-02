@@ -204,8 +204,12 @@ include "code/moshkov-yuriy/Infrastructure"
 project(":code/moshkov-yuriy/Infrastructure").name = "moshkov-yuriy-Infrastructure"
 
 // Mozerov Ilya
-include "code/mozerov-ilya"
-project(":code/mozerov-ilya").name = "mozerov-ilya-Model"
+include "code/mozerov-ilya/Model"
+project(":code/mozerov-ilya/Model").name = "mozerov-ilya-Model"
+include "code/mozerov-ilya/View"
+project(":code/mozerov-ilya/View").name = "mozerov-ilya-View"
+include "code/mozerov-ilya/ViewModel"
+project(":code/mozerov-ilya/ViewModel").name = "mozerov-ilya-ViewModel"
 
 // Nesmelov Aleksej
 include "code/nesmelov-aleksey/Model"
