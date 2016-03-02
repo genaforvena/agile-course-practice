@@ -202,7 +202,11 @@ include "code/moshkov-yuriy/ViewModel"
 project(":code/moshkov-yuriy/ViewModel").name = "moshkov-yuriy-ViewModel"
 include "code/moshkov-yuriy/Infrastructure"
 project(":code/moshkov-yuriy/Infrastructure").name = "moshkov-yuriy-Infrastructure"
+
 // Mozerov Ilya
+include "code/mozerov-ilya"
+project(":code/mozerov-ilya").name = "mozerov-ilya-Model"
+
 // Nesmelov Aleksej
 include "code/nesmelov-aleksey/Model"
 project(":code/nesmelov-aleksey/Model").name = "nesmelov-aleksey-Model"
